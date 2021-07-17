@@ -18,17 +18,16 @@ RUN echo ${API_URL}
 
 WORKDIR ${HOME}
 
-#COPY package*.json ./
+COPY package*.json ./
 
 # 追加
-#RUN apk update && \
-#    apk upgrade && \
-#    apk add --no-cache make gcc g++ python && \
-    # yarn installの記載場所を移動
-#    yarn install
+RUN apk update && \
+   apk upgrade && \
+   apk add --no-cache make gcc g++ python && \
+   yarn install
 
-#COPY . .
+COPY . .
 
-#RUN yarn run build
+RUN yarn run build
 
 EXPOSE ${CONTAINER_PORT}  

@@ -36,7 +36,6 @@ services:
     command: yarn run dev
     volumes:
       - ./front:/$WORKDIR
-      - front-node-modules:/app/node_modules
     ports:
       - "$FRONT_PORT:$CONTAINER_PORT"
     depends_on:
