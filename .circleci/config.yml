@@ -1,0 +1,56 @@
+version: 2.1
+jobs: 
+  build: 
+    docker:
+      - image: circleci/ruby:2.7.1-node-browsers
+
+      - image: circleci/postgres:13.3
+
+    working_directory: ~/repo
+
+    # 処理内容
+    steps: 
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "~/repo/api/Gemfile.lock" }}
+            - v1-dependencies-
+          working_directory: ~/repo/api
+
+      # runのたび
+      - run:
+          name: install dependencies
+          command: |
+            gem install bundler
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+          working_directory: ~/repo/api
+
+      - save_cache:
+          paths: 
+            - .vendor/bundle
+          key: v1-dependencies-{{ checksum "~/repo/api/Gemfile.lock" }}
+          working_directory: ~/repo/api
+
+      # Database setup
+      - run: 
+          command: bundle exec rake db:create
+          working_directory: ~/repo/api
+      - run:
+          command: bundle exec rake db:migrate
+          working_directory: ~/repo/api
+
+      # run tests
+      - run:
+          name: RSpec
+          command: |
+            DISABLE_SPRING=true bundle exec rspec
+          working_directory: ~/repo/api
+
+      # collect reports
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
