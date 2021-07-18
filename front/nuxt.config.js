@@ -42,7 +42,11 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: [
+    '@nuxtjs/axios',
+  ],
+  axios: {
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
