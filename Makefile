@@ -9,7 +9,7 @@ down:
 	docker-compose -f docker-compose.yaml down
 
 dbset:
-	docker-compose run rails db:environment:set RAILS_ENV=development
+	docker-compose run api rails db:environment:set RAILS_ENV=development
 
 
 # Vue
