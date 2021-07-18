@@ -5,14 +5,11 @@ jobs:
       - image: circleci/ruby:2.7.1-node
         environment:
           RAILS_ENV: test
-          POSTGRES_HOST: db
-          POSTGRES_USER: postgres
 
       - image: circleci/postgres:13.3
         environment:
-          POSTGRES_USER: postgres
-          POSTGRES_HOST_AUTH_METHOD: trust
-          POSTGRES_DB: app_test
+          - POSTGRES_ALLOW_EMPTY_PASSWORD: 'true'
+          - POSTGRES_ROOT_HOST: '%'
 
     working_directory: ~/repo
 
@@ -38,6 +35,8 @@ jobs:
             - .vendor/bundle
           key: v1-dependencies-{{ checksum "~/repo/api/Gemfile.lock" }}
           working_directory: ~/repo/api
+
+      - run: mv api/config/database.yml.ci api/config/database.yml
 
       - run:
           name: Wait for DB
