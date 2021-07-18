@@ -2,13 +2,21 @@ version: 2.1
 jobs: 
   build: 
     docker:
-      - image: circleci/ruby:2.7.1-node-browsers
+      - image: circleci/ruby:2.7.1-node
+        environment:
+          RAILS_ENV: test
+          DB_HOST: db
+          DB_USERNAME: postgres
+          DB_PASSWORD: <%= ENV["POSTGRES_PASSWORD"] %>
 
       - image: circleci/postgres:13.3
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: til_test
 
     working_directory: ~/repo
 
-    # 処理内容
     steps: 
       - checkout
 
@@ -19,7 +27,6 @@ jobs:
             - v1-dependencies-
           working_directory: ~/repo/api
 
-      # runのたび
       - run:
           name: install dependencies
           command: |
@@ -33,6 +40,10 @@ jobs:
           key: v1-dependencies-{{ checksum "~/repo/api/Gemfile.lock" }}
           working_directory: ~/repo/api
 
+      - run:
+        name: Wait for DB
+        command: dockerize -wait tcp://127.0.0.1:5432 -timeout 120s
+
       # Database setup
       - run: 
           command: bundle exec rake db:create
@@ -45,7 +56,13 @@ jobs:
       - run:
           name: RSpec
           command: |
-            DISABLE_SPRING=true bundle exec rspec
+            mkdir /tmp/test-results
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+            bundle exec rspec --format progress \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress \
+                            $TEST_FILES
           working_directory: ~/repo/api
 
       # collect reports
