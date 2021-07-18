@@ -8,7 +8,7 @@ jobs:
 
       - image: circleci/postgres:13.3
         environment:
-          - POSTGRES_ALLOW_EMPTY_PASSWORD: 'true'
+          - POSTGRES_HOST_AUTH_METHOD: trust
           - POSTGRES_ROOT_HOST: '%'
 
     working_directory: ~/repo
