@@ -5,9 +5,8 @@ jobs:
       - image: circleci/ruby:2.7.1-node
         environment:
           RAILS_ENV: test
-          DB_HOST: db
-          DB_USERNAME: postgres
-          DB_PASSWORD: <%= ENV["POSTGRES_PASSWORD"] %>
+          POSTGRES_HOST: db
+          POSTGRES_USER: postgres
 
       - image: circleci/postgres:13.3
         environment:
