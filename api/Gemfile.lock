@@ -170,6 +170,8 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.10.2)
+    rspec_junit_formatter (0.4.1)
+      rspec-core (>= 2, < 4, != 2.12.0)
     rubyzip (2.3.2)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
@@ -217,6 +219,7 @@ DEPENDENCIES
   puma (~> 4.1)
   rails (~> 6.0.4)
   rspec-rails
+  rspec_junit_formatter
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
