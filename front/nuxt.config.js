@@ -43,9 +43,23 @@ export default {
    */
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
   axios: {
+    baseURL: 'http://localhost:3000/'
   },
+  auth: {
+    strategises: {
+      local: {
+        endpoints: {
+          login: { url: 'api/v1/auth/sign_in', method: 'post', propertyName: 'token' },
+          user: false,
+          logout: false
+        }
+      }
+    }
+  },
+
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
