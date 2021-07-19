@@ -8,7 +8,7 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
     it 'ユーザー登録できる' do
       subject
       res = JSON.parse(response.body)
-      expect(res['status']).to eq('success')
+      expect(res["status"]).to eq("success")
       expect(res['data']['id']).to eq(User.last.id.to_s)
       expect(res['data']['attributes']['name']).to eq(User.last.name)
       expect(response).to have_http_status(200)
