@@ -43,7 +43,7 @@ RSpec.describe User, type: :model do
 
   describe 'validates length' do
     context 'パスワードが８文字以下の場合' do
-      let!(:user2) { build(:user, password: '12345') }
+      let!(:user) { build(:user, password: '12345') }
 
       it 'エラーになる' do
         user.valid?

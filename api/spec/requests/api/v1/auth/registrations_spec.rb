@@ -137,7 +137,7 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
         subject
         res = JSON.parse(response.body)
         expect(res['success']).to eq(false)
-        expect(res['error']).to include('Please submit proper account update data in request body.')
+        expect(res['errors']).to include('Please submit proper account update data in request body.')
       end
     end
   end  
