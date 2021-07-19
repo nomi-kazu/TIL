@@ -15,7 +15,7 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
   end
 
   describe 'DELETE /api/v1/auth' do
-    subject { post(api_v1_user_registration_path, params: login_params)
+    subject { post(api_v1_user_session_path, params: login_params)
       delete(api_v1_user_registration_path, headers: {
         uid: response.headers['uid'],
         client: response.headers['client'],
@@ -111,7 +111,7 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
   end
 
   describe 'PUT /api/v1/auth' do
-    subject { post(api_v1_user_registration_path, params: login_params)
+    subject { post(api_v1_user_session_path, params: login_params)
       put(api_v1_user_registration_path, params: params, headers: {
         uid: response.headers['uid'],
         client: response.headers['client'],
