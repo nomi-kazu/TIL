@@ -7,8 +7,10 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins '*' #ここに許可したいオリジンを設定
+    origins '*'
     resource '*',
-      headers: :any, methods: [:get, :post, :options], :expose => ['access-token']
+             :headers => :any,
+             :expose => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+             :methods => [:get, :post, :options, :delete, :put]
   end
 end
