@@ -1,10 +1,12 @@
 import axios from 'axios'
-// const cookieparser = process.server ? require('cookieparser') : undefined
+import { headerSize } from 'tar'
+import Cookies from 'universal-cookie'
 
 export const state = () => {
   return {
-    access_token: null,
-    uid: null,
+    access_token: '',
+    uid: '',
+    client: '',
     id: ''
   }
 }
@@ -12,9 +14,14 @@ export const state = () => {
 export const mutations = {
   setUser (state, res) {
     state.access_token = res.headers['access-token']
-    state.uid = res.data.data.uid
+    state.uid = res.headers['uid']
+    state.client = res.headers['client']
     state.id = res.data.data.id
-    // state.client
+  },
+  setHeader (state, headers) {
+    state.access_token = headers['access-token']
+    state.uid = headers['uid']
+    state.client = headers['client']
   }
 }
 
@@ -24,7 +31,7 @@ export const actions = {
       await axios.post('http://localhost:3000/api/v1/auth/sign_in', { email, password }
       ).then(res => {
           console.log(res)
-          // console.log(res.data.data.uid)
+          console.log(res.data.data.uid)
           commit('setUser', res)
       })
     } catch (error) {
@@ -34,5 +41,15 @@ export const actions = {
       throw error
     }
   },
+  nuxtServerInit ({ commit }, { req }) {
+    if (req.headers.cookie) {
+      try {
+        const { cookies } = new Cookies(req.headers.cookie)
+        commit('setHeader', { headers: cookies })
+      } catch (err) {
+        // No valid cookie found
+      }
+    }
+  }
 
 }
