@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { headerSize } from 'tar'
 import Cookies from 'universal-cookie'
 
 export const state = () => {
