@@ -27,7 +27,7 @@ export default {
    ** Global CSS
    */
   css: [
-    { src: '~/assets/sass/common.scss', lang: 'scss' },
+    { src: '~/assets/sass/commons.scss', lang: 'scss' },
   ],
   /*
    ** Plugins to load before mounting the App
@@ -47,7 +47,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     ['nuxt-sass-resources-loader', [
-      '~/assets/sass/variable.scss',
+      '~/assets/sass/variables.scss',
     ]],
   ],
   axios: {
