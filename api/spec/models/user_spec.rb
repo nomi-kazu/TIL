@@ -4,7 +4,6 @@ RSpec.describe User, type: :model do
   describe 'validates presence' do
     context '全カラムの値を指定しているとき' do
       let!(:user) { create(:user) }
-
       it 'userレコードが作成される' do
         expect(user).to be_valid
       end
@@ -12,7 +11,6 @@ RSpec.describe User, type: :model do
 
     context 'emailを指定していないとき' do
       let!(:user) { build(:user, email: nil) }
-
       it 'エラーになる' do
         user.valid?
         expect(user.errors.messages[:email]).to include "can't be blank"
@@ -21,10 +19,17 @@ RSpec.describe User, type: :model do
 
     context 'passwordを指定していないとき' do
       let!(:user) { build(:user, password: nil) }
-
       it 'エラーになる' do
         user.valid?
         expect(user.errors.messages[:password]).to include "can't be blank"
+      end
+    end
+
+    context "nameを指定していないとき" do
+      let!(:user) { build(:user, name: nil) }
+      it 'エラーになる' do
+        user.valid?
+        expect(user.errors.messages[:name]).to include "can't be blank"
       end
     end
   end
@@ -33,7 +38,6 @@ RSpec.describe User, type: :model do
     context '保存されているメールアドレスが再度指定されたとき' do
       let!(:user1) { create(:user) }
       let!(:user2) { build(:user, email: user1.email) }
-
       it 'エラーになる' do
         user2.valid?
         expect(user2.errors.messages[:email]).to include "has already been taken"
@@ -44,10 +48,26 @@ RSpec.describe User, type: :model do
   describe 'validates length' do
     context 'パスワードが８文字以下の場合' do
       let!(:user) { build(:user, password: '12345') }
-
       it 'エラーになる' do
         user.valid?
         expect(user.errors.messages[:password]).to include "is too short (minimum is 8 characters)"
+      end
+    end
+
+    context "nameが50文字以上のとき" do
+      let!(:user) { build(:user, name: 'a' * 51) }
+      it 'エラーになる' do
+        user.valid?
+        expect(user.errors.messages[:name]).to include "is too long (maximum is 50 characters)"
+      end
+    end
+
+    context "addressが30文字以上のとき" do
+      let!(:user) { build(:user, address: 'a' * 31) }
+
+      it 'エラーになる' do
+        user.valid?
+        expect(user.errors.messages[:address]).to include "is too long (maximum is 30 characters)"
       end
     end
   end
