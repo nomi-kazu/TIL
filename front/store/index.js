@@ -25,6 +25,13 @@ export const mutations = {
     state.uid = headers['uid']
     state.client = headers['client']
     state.isAuthenticated = true
+  },
+  logoutUser (state) {
+    state.access_token = null;
+    state.isAuthenticated = null;
+    state.uid = null;
+    state.client = null;
+    state.id = null;
   }
 }
 
@@ -33,8 +40,8 @@ export const actions = {
     try {
       await axios.post('http://localhost:3000/api/v1/auth/sign_in', { email, password }
       ).then(res => {
-          console.log(res)
-          console.log(res.data.data.uid)
+          // console.log(res)
+          // console.log(res.data.data.uid)
           commit('setUser', res)
       })
     } catch (error) {
@@ -43,6 +50,23 @@ export const actions = {
       }
       throw error
     }
+  },
+  async logout ({ commit }, { access_token, client, uid }) {
+    try {
+      await axios.delete('http://localhost:3000/api/v1/auth/sign_out', {
+        headers: {
+          'access-token': access_token,
+          client: client,
+          uid: uid
+        }
+      })
+      commit('logoutUser')
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        throw new Error('Bad credentials')
+      }
+      throw error
+    } 
   },
   nuxtServerInit ({ commit }, { req }) {
     if (req.headers.cookie) {
