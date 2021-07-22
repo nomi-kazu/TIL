@@ -1,6 +1,5 @@
 import axios from '~/plugins/axios'
-import Cookies from 'universal-cookie'
-import isAuthenticated from '../middleware/isAuthenticated'
+const cookieparser = process.server ? require('cookieparser') : undefined
 
 export const state = () => {
   return {
@@ -19,7 +18,7 @@ export const mutations = {
     state.uid = res.headers['uid']
     state.client = res.headers['client']
     state.id = res.data.data.id
-    state.isAuthenticated = false
+    state.isAuthenticated = true
   },
   setHeader (state, { headers, auth_flag }) {
     state.access_token = headers['access-token']
@@ -29,7 +28,7 @@ export const mutations = {
   },
   logoutUser (state) {
     state.access_token = null;
-    state.isAuthenticated = null;
+    state.isAuthenticated = false;
     state.uid = null;
     state.client = null;
     state.id = null;
@@ -74,13 +73,13 @@ export const actions = {
   },
   nuxtServerInit ({ commit }, { req }) {
     if (req.headers.cookie) {
+      const parsed = cookieparser.parse(req.headers.cookie)
       try {
-        const { cookies } = new Cookies(req.headers.cookie)
         let auth_flag = false
-        if(cookies.uid) {
+        if(parsed.uid) {
           auth_flag = true
         }
-        commit('setHeader', { headers: cookies, auth_flag: auth_flag })
+        commit('setHeader', { header :parsed, auth_flag: auth_flag } )
       } catch (err) {
         // No valid cookie found
       }
