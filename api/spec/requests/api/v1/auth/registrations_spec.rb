@@ -15,17 +15,10 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
   end
 
   describe 'DELETE /api/v1/auth' do
-    subject { post(api_v1_user_session_path, params: login_params)
-      delete(api_v1_user_registration_path, headers: {
-        uid: response.headers['uid'],
-        client: response.headers['client'],
-        'access-token': response.headers['access-token']
-      }) }
-
       let!(:user) { create(:confirmed_user) }
-      let!(:login_params) { { email: user.email, password: user.password } }
+      let!(:headers) { user.create_new_auth_token }
     it 'ユーザー削除できる' do
-      subject
+      delete(api_v1_user_registration_path, headers: headers)
       res = JSON.parse(response.body)
       expect(res['status']).to eq 'success'
       expect(User.all.size).to eq 0
@@ -49,8 +42,8 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
     end
 
     context '有効化したが、emailが正しくないとき' do
-      let!(:current_user) { create(:confirmed_user) }
-      let!(:params) { { email: 'test@example.com', password: current_user.password } }
+      let!(:user) { create(:confirmed_user) }
+      let!(:params) { { email: 'invalid@example.com', password: user.password } }
       it 'ログインできない' do
         subject
         res = JSON.parse(response.body)
@@ -64,8 +57,8 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
     end
 
     context '有効化したが、passwordが正しくないとき' do
-      let!(:current_user) { create(:confirmed_user) }
-      let!(:params) { { email: current_user.email, password: 'password' } }
+      let!(:user) { create(:confirmed_user) }
+      let!(:params) { { email: user.email, password: 'invalidpassword' } }
       it 'ログインできない' do
         subject
         res = JSON.parse(response.body)
@@ -79,8 +72,8 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
     end
 
     context 'email, passwordは正しいが、有効化されていないとき' do
-      let!(:current_user) { create(:user) }
-      let!(:params) { { email: current_user.email, password: current_user.password } }
+      let!(:user) { create(:user) }
+      let!(:params) { { email: user.email, password: user.password } }
       it 'ログインできない' do
         subject
         res = JSON.parse(response.body)
@@ -94,15 +87,10 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
 
   describe 'DELETE /api/v1/auth/sign_out' do
     context 'ユーザーがログインしているとき' do
-      let!(:confirmed_user) { create(:confirmed_user) }
-      let!(:params) { { email: confirmed_user.email, password: confirmed_user.password } }
+      let!(:user) { create(:confirmed_user) }
+      let!(:headers) { user.create_new_auth_token }
       it 'ログアウトできる' do
-        post(api_v1_user_session_path, params: params)
-        delete(destroy_api_v1_user_session_path, { headers: {
-          uid: response.headers['uid'],
-          client: response.headers['client'],
-          'access-token': response.headers['access-token']
-        }})
+        delete(destroy_api_v1_user_session_path, headers: headers)
         res = JSON.parse(response.body)
         expect(res['success']).to be_truthy
         expect(response).to have_http_status(200)
@@ -111,18 +99,12 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
   end
 
   describe 'PUT /api/v1/auth' do
-    subject { post(api_v1_user_session_path, params: login_params)
-      put(api_v1_user_registration_path, params: params, headers: {
-        uid: response.headers['uid'],
-        client: response.headers['client'],
-        'access-token': response.headers['access-token']
-      }) }
     context '渡す値が正しいとき' do
       let!(:user) { create(:confirmed_user) }
+      let!(:headers) { user.create_new_auth_token}
       let!(:params) { { name: 'テストくん', profile: 'テストマンだよ', address: 'テスト県', image: 'https://image_url' } }
-      let!(:login_params) { { email: user.email, password: user.password } }
       it '値を変更できる' do
-        subject
+        put api_v1_user_registration_path, params: params, headers: headers
         res = JSON.parse(response.body)
         expect(res['data']['attributes']['name']).to eq('テストくん')
         expect(res['data']['attributes']['profile']).to eq('テストマンだよ')
@@ -133,9 +115,8 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
     context '渡す値が正しくないとき' do
       let!(:user) { create(:confirmed_user) }
       let!(:params) { { id: '3' } }
-      let!(:login_params) { { email: user.email, password: user.password } }
       it '値を変更できない' do
-        subject
+        put api_v1_user_registration_path, params: params, headers: headers
         res = JSON.parse(response.body)
         expect(res['success']).to eq(false)
         expect(res['errors']).to include('Please submit proper account update data in request body.')
@@ -145,15 +126,10 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
 
   describe 'GET /api/v1/auth/edit' do
     context 'ユーザーがログインしているとき' do
-      let!(:confirmed_user) { create(:confirmed_user) }
-      let!(:params) { { email: confirmed_user.email, password: confirmed_user.password } }
+      let!(:user) { create(:confirmed_user) }
+      let!(:headers) { user.create_new_auth_token }
       it 'ユーザーの情報を返す' do
-        post(api_v1_user_session_path, params: params)
-        get(edit_api_v1_user_registration_path, { headers: {
-          uid: response.headers['uid'],
-          client: response.headers['client'],
-          'access-token': response.headers['access-token']
-        }})
+        get(edit_api_v1_user_registration_path, headers: headers)
         res = JSON.parse(response.body)
         expect(res['data']['id']).to eq(User.last.id.to_s)
         expect(res['data']['attributes']['name']).to eq(User.last.name)
