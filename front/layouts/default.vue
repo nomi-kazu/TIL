@@ -136,7 +136,8 @@ export default {
         await this.$store.dispatch('logout',
         { access_token: Cookie.get('access-token'),
           client: Cookie.get('client'),
-          uid: Cookie.get('uid')})
+          uid: Cookie.get('uid')
+        })
         Cookie.remove('access-token')
         Cookie.remove('client')
         Cookie.remove('uid')
