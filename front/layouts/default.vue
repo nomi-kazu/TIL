@@ -1,93 +1,120 @@
 <template>
-  <v-app dark>
+  <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
       app
     >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
+      <v-list dence>
+        <nuxt-link to="/">
+        <v-list-item link>
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon>mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title>ホーム</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
-    </v-app-bar>
-    <v-content>
-      <v-container>
-        <nuxt />
-      </v-container>
-    </v-content>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
+        </nuxt-link>
+
+        <nuxt-link to="/user/login">
+        <v-list-item link>
           <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
+            <v-icon>mdi-account-arrow-right</v-icon>
           </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
+          <v-list-item-content>
+            <v-list-item-title>ログイン</v-list-item-title>
+          </v-list-item-content>
         </v-list-item>
+        </nuxt-link>
+
+        <nuxt-link to="/user/sign_up">
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-plus</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>新規登録</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        </nuxt-link>
+
+        <nuxt-link to="/user/1">
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-details</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>マイページ</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        </nuxt-link>
+
+        <nuxt-link to="#">
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-book-open-variant</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>メモ一覧</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        </nuxt-link>
       </v-list>
     </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+
+  <v-card class="overflow-hidden header">
+    <v-app-bar
+      absolute
+      elevate-on-scroll
+      app
+      color="white"
+      scroll-target="#scrolling-techniques-7"
+    >
+      <v-app-bar-nav-icon @click="drawer = !drawer" />
+      <v-toolbar-title>Application</v-toolbar-title>
+    </v-app-bar>
+    <v-sheet
+      id="scrolling-techniques-7"
+      class="overflow-y-auto"
+      max-height=" 100vh"
+    >
+    <v-content>
+      <!-- <v-container
+        class="main"
+        fluid
+        style="height: 120vh;"
+      > -->
+        <nuxt/>
+      <!-- </v-container> -->
+    </v-content>
+      <!-- <v-footer
+        color="indigo"
+        app
+      >
+        <span class="white--text">&copy; nomi-kazu</span>
+      </v-footer> -->
+    </v-sheet>
+  </v-card>
   </v-app>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
-    }
-  }
+  props: {
+    source: String,
+  },
+  data: () => ({
+    drawer: null,
+  }),
 }
 </script>
+
+<style scoped>
+  a {
+    text-decoration: none;
+  }
+
+  .main {
+    margin-top: 10px;
+  }
+</style>
