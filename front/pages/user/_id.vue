@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <showNotification />
     <div class="top">
       <h3 class="name">{{ data.data.attributes.name }}</h3>
     </div>
@@ -8,13 +9,12 @@
 
       </div>
     </div>
-    <!-- <h3>ユーザーID： {{ $store.state.id }}</h3>
-    <nuxt-link to="/">Home</nuxt-link> -->
   </v-app>
 </template>
 
 <script>
 import axios from 'axios'
+import showNotification from '~/components/material/show-notification'
 
 export default {
   asyncData ({ $axios, params }) {
@@ -22,6 +22,9 @@ export default {
     .then((res) => {
       return { data: res }
     })
+  },
+  components: {
+    showNotification
   }
 }
 </script>
