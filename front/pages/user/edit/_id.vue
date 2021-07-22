@@ -2,6 +2,7 @@
   <v-app>
     <div class="title">
       <h2 class="main-title">ユーザー編集</h2>
+      <p>{{ info }}</p>
     </div>
 
     <v-card width="600px" class="mx-auto mt-5">
@@ -13,26 +14,15 @@
           label="名前" />
 
           <v-text-field
-          v-bind:rules="[rules.required]"
-          v-model="email"
-          label="メール" />
+          v-model="address"
+          label="都道府県" />
 
-          <v-text-field
-          v-bind:rules="[rules.required]"
+          <v-textarea
           v-model="selfIntroduction"
           label="プロフィール" />
 
-          <v-text-field
-          v-bind:rules="[rules.required, rules.min]"
-          v-model="password"
-          v-bind:type="showPassword ? 'text' : 'password'" 
-          v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          label="パスワード"
-          counter
-          @click:append="showPassword = !showPassword" />
-
           <v-card-actions>
-            <v-btn :disabled="isNotValid" v-on:click="signUp" class="info" large block>編集</v-btn>
+            <v-btn :disabled="isNotValid" class="info" large block>保存</v-btn>
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -41,7 +31,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+const Cookie = process.client ? require('js-cookie') : undefined
 
 export default {
   data: () => ({
@@ -49,6 +39,7 @@ export default {
     isNotValid: true,
     name: "",
     email: "",
+    address: "",
     password: "",
     selfIntroduction: "",
     rules: {
@@ -78,6 +69,19 @@ export default {
         this.isNotValid = true;
       }
     },
-  }
+  },
+  asyncData({ $axios, params }) {
+    return $axios.$get(`http://localhost:3000/api/v1/auth/edit`,
+      { headers: {
+        access_token: Cookie.get('access-token'),
+        client: Cookie.get('client'),
+        uid: Cookie.get('uid')
+        }
+      }
+    )
+    .then((res) => {
+      return { info: res }
+    })
+  },
 };
 </script>

@@ -21,11 +21,11 @@ export const mutations = {
     state.id = res.data.data.id
     state.isAuthenticated = false
   },
-  setHeader (state, headers) {
+  setHeader (state, { headers, auth_flag }) {
     state.access_token = headers['access-token']
     state.uid = headers['uid']
     state.client = headers['client']
-    state.isAuthenticated = false
+    state.isAuthenticated = auth_flag
   },
   logoutUser (state) {
     state.access_token = null;
@@ -76,7 +76,11 @@ export const actions = {
     if (req.headers.cookie) {
       try {
         const { cookies } = new Cookies(req.headers.cookie)
-        commit('setHeader', { headers: cookies })
+        let auth_flag = false
+        if(cookies.uid) {
+          auth_flag = true
+        }
+        commit('setHeader', { headers: cookies, auth_flag: auth_flag })
       } catch (err) {
         // No valid cookie found
       }
