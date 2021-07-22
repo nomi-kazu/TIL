@@ -119,7 +119,7 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
       }) }
     context '渡す値が正しいとき' do
       let!(:user) { create(:confirmed_user) }
-      let!(:params) { { name: 'テストくん', profile: 'テストマンだよ', address: 'テスト県' image: 'https://image_url' } }
+      let!(:params) { { name: 'テストくん', profile: 'テストマンだよ', address: 'テスト県', image: 'https://image_url' } }
       let!(:login_params) { { email: user.email, password: user.password } }
       it '値を変更できる' do
         subject
