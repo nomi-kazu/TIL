@@ -5,6 +5,7 @@
       app
     >
       <v-list dence>
+
         <nuxt-link to="/">
         <v-list-item link>
           <v-list-item-action>
@@ -23,6 +24,17 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>ログイン</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        </nuxt-link>
+
+        <nuxt-link to="/user/logout">
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-cancel-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>ログアウト</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         </nuxt-link>
@@ -59,6 +71,18 @@
           </v-list-item-content>
         </v-list-item>
         </nuxt-link>
+
+        <nuxt-link to="/memos/write">
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-border-color</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>メモする</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        </nuxt-link>
+        
       </v-list>
     </v-navigation-drawer>
 

@@ -1,12 +1,14 @@
 import axios from 'axios'
 import Cookies from 'universal-cookie'
+import isAuthenticated from '../middleware/isAuthenticated'
 
 export const state = () => {
   return {
     access_token: '',
     uid: '',
     client: '',
-    id: ''
+    id: '',
+    isAuthenticated: false
   }
 }
 
@@ -16,11 +18,13 @@ export const mutations = {
     state.uid = res.headers['uid']
     state.client = res.headers['client']
     state.id = res.data.data.id
+    state.isAuthenticated = true
   },
   setHeader (state, headers) {
     state.access_token = headers['access-token']
     state.uid = headers['uid']
     state.client = headers['client']
+    state.isAuthenticated = true
   }
 }
 
