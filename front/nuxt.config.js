@@ -52,18 +52,7 @@ export default {
   ],
   axios: {
   },
-  // auth: {
-  //   strategises: {
-  //     local: {
-  //       endpoints: {
-  //         login: { url: 'api/v1/auth/sign_in', method: 'post', propertyName: 'token' },
-  //         user: false,
-  //         logout: false
-  //       }
-  //     }
-  //   }
-  // },
-
+  
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -93,5 +82,8 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
-  }
+  },
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  },
 }

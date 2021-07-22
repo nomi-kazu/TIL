@@ -143,7 +143,7 @@ export default {
         Cookie.remove('uid')
         this.$router.push(`/user/login`)
       } catch (e) {
-        console.log(this.formError)
+        console.error(e)
       }
     }
   }
