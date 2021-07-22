@@ -78,7 +78,7 @@ RSpec.describe 'Api::V1::Auth::Registrations', type: :request do
         expect(response.headers['uid']).not_to be_present
         expect(response.headers['access-token']).not_to be_present
         expect(response.headers['client']).not_to be_present
-        expect(response.status).to eq 200
+        expect(response.status).to eq 401
       end
     end
   end
