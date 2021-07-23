@@ -9,7 +9,7 @@
       <v-card-text>
         <v-form>
           <v-text-field
-            v-bind:rules="[rules.required]"
+            :rules="[rules.required]"
             v-model="name"
             label="名前"
           />
@@ -27,7 +27,7 @@
           <v-card-actions>
             <v-btn
               :disabled="isNotValid"
-              v-on:click="store"
+              @click="store"
               class="info"
               large
               block
