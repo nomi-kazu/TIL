@@ -32,7 +32,9 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    '~/plugins/axios'
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -51,6 +53,7 @@ export default {
     ]],
   ],
   axios: {
+    base_URL: 'http://localhost:3000'
   },
   
   /*

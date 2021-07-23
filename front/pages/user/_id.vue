@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import axios from '~/plugins/axios'
 import showNotification from '~/components/material/show-notification'
 
 export default {
   middleware: 'authenticated',
   asyncData ({ $axios, params }) {
-    return $axios.$get(`${process.env.baseUrl}/api/v1/users/${params.id}`)
+    return $axios
+    .$get(`${$axios.defaults.baseURL}/api/v1/users/${params.id}`)
     .then((res) => {
       return { data: res }
     })
