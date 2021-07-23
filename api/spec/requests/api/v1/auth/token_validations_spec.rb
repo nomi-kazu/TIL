@@ -16,3 +16,5 @@ RSpec.describe "Api::V1::Auth::TokenValidations", type: :request do
         expect(response.status).to eq 200
       end
     end
+  end
+end
