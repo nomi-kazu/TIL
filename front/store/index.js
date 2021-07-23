@@ -1,4 +1,4 @@
-const cookieparser = process.server ? require('cookieparser') : undefined;
+const cookieparser = process.server ? require("cookieparser") : undefined;
 
 export const state = () => {
   return {
@@ -25,7 +25,7 @@ export const mutations = {
     state.client = headers["client"];
     state.isAuthenticated = auth_flag;
   },
-  logoutUser(state) {
+  clearUser(state) {
     state.access_token = null;
     state.isAuthenticated = false;
     state.uid = null;
@@ -45,11 +45,11 @@ export const actions = {
         password
       })
       .then(res => {
-        commit('setUser', res);
+        commit("setUser", res);
       });
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        throw new Error('Bad credentials');
+        throw new Error("Bad credentials");
       }
       throw error;
     }
@@ -61,16 +61,16 @@ export const actions = {
         `/api/v1/auth/sign_out`,
         {
           headers: {
-            'access-token': access_token,
+            "access-token": access_token,
             client: client,
             uid: uid
           }
         }
       );
-      commit('logoutUser');
+      commit("clearUser");
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        throw new Error('Bad credentials');
+        throw new Error("Bad credentials");
       }
       throw error;
     } 
@@ -81,7 +81,7 @@ export const actions = {
       const parsed = cookieparser.parse(req.headers.cookie);
       try {
         const auth_flag = parsed.uid ? true : false;
-        commit('setHeader', { header :parsed, auth_flag });
+        commit("setHeader", { header :parsed, auth_flag });
       } catch (err) {
         // No valid cookie found
       }
@@ -89,6 +89,6 @@ export const actions = {
   },
 
   async showFlashMessage({ commit }, message) {
-    commit('setMessage', message); // mutationsに値を渡す
+    commit("setMessage", message); // mutationsに値を渡す
   }
 };
