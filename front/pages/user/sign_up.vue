@@ -6,30 +6,40 @@
       <p class="sub-title">ユーザー登録をする必要があります。</p>
     </div>
 
-    <v-card>
+    <v-card width="600px" class="mx-auto mt-5">
       <v-card-text>
         <v-form>
           <v-text-field
-          v-bind:rules="[rules.required]"
-          v-model="name"
-          label="名前" />
+            v-bind:rules="[rules.required]"
+            v-model="name"
+            label="名前"
+          />
 
           <v-text-field
-          v-bind:rules="[rules.required]"
-          v-model="email"
-          label="メール" />
+            v-bind:rules="[rules.required]"
+            v-model="email"
+            label="メール"
+          />
 
           <v-text-field
-          v-bind:rules="[rules.required, rules.min]"
-          v-model="password"
-          v-bind:type="showPassword ? 'text' : 'password'" 
-          v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          label="パスワード"
-          counter
-          @click:append="showPassword = !showPassword" />
+            v-bind:rules="[rules.required, rules.min]"
+            v-model="password"
+            v-bind:type="showPassword ? 'text' : 'password'" 
+            v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            label="パスワード"
+            counter
+            @click:append="showPassword = !showPassword"
+          />
 
           <v-card-actions>
-            <v-btn :disabled="isNotValid" v-on:click="signUp" class="info" large block>新規登録</v-btn>
+            <v-btn
+              :disabled="isNotValid"
+              v-on:click="signUp"
+              class="info"
+              large
+              block
+              >新規登録</v-btn
+            >
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -46,22 +56,25 @@ export default {
     email: "",
     password: "",
     rules: {
-      required: value => { return !!value || '入力してください' },
-      min: value => { return value.length >= 8 || '８文字以上入力してください' },
+      required: value => {
+        return !!value || '入力してください';
+      },
+      min: value => {
+        return value.length >= 8 || '８文字以上入力してください';
+      },
     },
   }),
   methods: {
     async signUp() {
       try {
-        await this.$axios.post(`${this.$axios.defaults.baseURL}/api/v1/auth`, 
-        {
+        await this.$axios.post(`${this.$axios.defaults.baseURL}/api/v1/auth`, {
           name: this.name,
           email: this.email,
           password: this.password
-        })
-        this.$router.push(`/user/confirm`)
+        });
+        this.$router.push(`/user/confirm`);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     },
     checkPassword() {
@@ -70,21 +83,21 @@ export default {
   },
   watch: {
     name: function(e) {
-      if ( this.name&&this.email&&this.checkPassword() ) {
+      if ( this.name && this.email && this.checkPassword() ) {
         this.isNotValid = false;
       } else {
         this.isNotValid = true;
       }
     },
     email: function(e) {
-      if ( this.name&&this.email&&this.checkPassword() ) {
+      if ( this.name && this.email && this.checkPassword() ) {
         this.isNotValid = false;
       } else {
         this.isNotValid = true;
       }
     },
     password: function(e) {
-      if ( this.name&&this.email&&this.checkPassword() ) {
+      if ( this.name && this.email && this.checkPassword() ) {
         this.isNotValid = false;
       } else {
         this.isNotValid = true;
@@ -94,6 +107,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

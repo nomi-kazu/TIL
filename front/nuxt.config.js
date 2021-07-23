@@ -1,4 +1,4 @@
-import colors from 'vuetify/es5/util/colors'
+import colors from "vuetify/es5/util/colors"
 
 export default {
   ssr: false,
@@ -6,54 +6,52 @@ export default {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    titleTemplate: "%s - " + process.env.npm_package_name,
+    title: process.env.npm_package_name || "",
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
       {
-        hid: 'description',
-        name: 'description',
-        content: process.env.npm_package_description || ''
+        hid: "description",
+        name: "description",
+        content: process.env.npm_package_description || ""
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: "#fff" },
   /*
    ** Global CSS
    */
   css: [
-    { src: '~/assets/sass/commons.scss', lang: 'scss' },
+    { src: "~/assets/sass/commons.scss", lang: "scss" },
   ],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/axios'
+    "~/plugins/axios"
   ],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/vuetify',
+    "@nuxtjs/vuetify",
   ],
   /*
    ** Nuxt.js modules
    */
   modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/auth',
-    ['nuxt-sass-resources-loader', [
-      '~/assets/sass/variables.scss',
-    ]],
+    "@nuxtjs/axios",
+    "@nuxtjs/auth",
+    ["nuxt-sass-resources-loader", ["~/assets/sass/variables.scss",]],
   ],
   axios: {
-    base_URL: 'http://localhost:3000'
+    base_URL: "http://localhost:3000"
   },
   
   /*
@@ -61,7 +59,7 @@ export default {
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    customVariables: ["~/assets/variables.scss"],
     theme: {
       dark: true,
       themes: {
@@ -87,6 +85,6 @@ export default {
     extend(config, ctx) {}
   },
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+    baseUrl: process.env.BASE_URL || "http://localhost:3000"
   },
-}
+};

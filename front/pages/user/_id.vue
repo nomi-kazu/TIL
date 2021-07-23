@@ -14,21 +14,21 @@
 </template>
 
 <script>
-import showNotification from '~/components/material/show-notification'
+import showNotification from "~/components/material/show-notification"
 
 export default {
-  middleware: 'authenticated',
+  middleware: "authenticated",
   asyncData ({ $axios, params }) {
     return $axios
     .$get(`${$axios.defaults.baseURL}/api/v1/users/${params.id}`)
     .then((res) => {
-      return { data: res }
-    })
+      return { data: res };
+    });
   },
   components: {
     showNotification
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

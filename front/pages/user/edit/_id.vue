@@ -9,20 +9,30 @@
       <v-card-text>
         <v-form>
           <v-text-field
-          v-bind:rules="[rules.required]"
-          v-model="name"
-          label="名前" />
+            v-bind:rules="[rules.required]"
+            v-model="name"
+            label="名前"
+          />
 
           <v-text-field
-          v-model="address"
-          label="都道府県" />
+            v-model="address"
+            label="都道府県"
+          />
 
           <v-textarea
-          v-model="profile"
-          label="プロフィール" />
+            v-model="profile"
+            label="プロフィール"
+          />
 
           <v-card-actions>
-            <v-btn :disabled="isNotValid" v-on:click="store" class="info" large block>保存</v-btn>
+            <v-btn
+              :disabled="isNotValid"
+              v-on:click="store"
+              class="info"
+              large
+              block
+              >保存</v-btn
+            >
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -31,7 +41,7 @@
 </template>
 
 <script>
-const Cookie = process.client ? require('js-cookie') : undefined
+const Cookie = process.client ? require("js-cookie") : undefined;
 
 export default {
   data: () => ({
@@ -41,23 +51,26 @@ export default {
     address: "",
     profile: "",
     rules: {
-      required: value => { return !!value || '入力してください' },
-      min: value => { return value.length >= 8 || '８文字以上入力してください' },
+      required: value => {
+        return !!value || "入力してください";
+      },
+      min: value => {
+        return value.length >= 8 || "８文字以上入力してください";
+      },
     },
   }),
   mounted() {
-    this.name = this.info.data.attributes.name
-    this.profile = this.info.data.attributes.profile
-    this.address = this.info.data.attributes.address
+    this.name = this.info.data.attributes.name;
+    this.profile = this.info.data.attributes.profile;
+    this.address = this.info.data.attributes.address;
   },
   methods: {
     store: function() {
-      this.$axios.put(`${this.$axios.defaults.baseURL}/api/v1/auth`,
-      {
+      this.$axios.put(`${this.$axios.defaults.baseURL}/api/v1/auth`, {
         name: this.name,
         profile: this.profile,
         address: this.address,
-      })
+      });
     }
   },
   watch: {
@@ -74,7 +87,7 @@ export default {
     .$get(`${$axios.defaults.baseURL}/api/v1/auth/edit`)
     .then((res) => {
       return { info: res }
-    })
+    });
   },
 };
 </script>

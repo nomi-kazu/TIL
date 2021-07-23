@@ -1,31 +1,31 @@
-const cookieparser = process.server ? require('cookieparser') : undefined
+const cookieparser = process.server ? require('cookieparser') : undefined;
 
 export const state = () => {
   return {
-    access_token: '',
-    uid: '',
-    client: '',
-    id: '',
+    access_token: "",
+    uid: "",
+    client: "",
+    id: "",
     isAuthenticated: false,
-    text: '',
-  }
-}
+    text: "",
+  };
+};
 
 export const mutations = {
-  setUser (state, res) {
-    state.access_token = res.headers['access-token']
-    state.uid = res.headers['uid']
-    state.client = res.headers['client']
-    state.id = res.data.data.id
-    state.isAuthenticated = true
+  setUser(state, res) {
+    state.access_token = res.headers["access-token"];
+    state.uid = res.headers["uid"];
+    state.client = res.headers["client"];
+    state.id = res.data.data.id;
+    state.isAuthenticated = true;
   },
-  setHeader (state, { headers, auth_flag }) {
-    state.access_token = headers['access-token']
-    state.uid = headers['uid']
-    state.client = headers['client']
-    state.isAuthenticated = auth_flag
+  setHeader(state, { headers, auth_flag }) {
+    state.access_token = headers["access-token"];
+    state.uid = headers["uid"];
+    state.client = headers["client"];
+    state.isAuthenticated = auth_flag;
   },
-  logoutUser (state) {
+  logoutUser(state) {
     state.access_token = null;
     state.isAuthenticated = false;
     state.uid = null;
@@ -35,52 +35,60 @@ export const mutations = {
   setMessage: (state, payload) => {
     state.text = payload.text; // stateの状態を変更
   }
-}
+};
 
 export const actions = {
   async login ({ commit }, { email, password }) {
     try {
-      await this.$axios.post(`${this.$axios.defaults.baseURL}/api/v1/auth/sign_in`, { email, password }
-      ).then(res => {
-          commit('setUser', res)
+      await this.$axios.post(`${this.$axios.defaults.baseURL}/api/v1/auth/sign_in`, {
+        email,
+        password
       })
+      .then(res => {
+        commit('setUser', res);
+      });
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        throw new Error('Bad credentials')
+        throw new Error('Bad credentials');
       }
-      throw error
+      throw error;
     }
   },
+
   async logout ({ commit }, { access_token, client, uid }) {
     try {
-      await this.$axios.delete(`${this.$axios.defaults.baseURL}/api/v1/auth/sign_out`, {
-        headers: {
-          'access-token': access_token,
-          client: client,
-          uid: uid
+      await this.$axios.delete(
+        `${this.$axios.defaults.baseURL}/api/v1/auth/sign_out`,
+        {
+          headers: {
+            'access-token': access_token,
+            client: client,
+            uid: uid
+          }
         }
-      })
-      commit('logoutUser')
+      );
+      commit('logoutUser');
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        throw new Error('Bad credentials')
+        throw new Error('Bad credentials');
       }
-      throw error
+      throw error;
     } 
   },
+
   nuxtServerInit ({ commit }, { req }) {
     if (req.headers.cookie) {
-      const parsed = cookieparser.parse(req.headers.cookie)
+      const parsed = cookieparser.parse(req.headers.cookie);
       try {
-        const auth_flag = parsed.uid ? true : false
-        commit('setHeader', { header :parsed, auth_flag })
+        const auth_flag = parsed.uid ? true : false;
+        commit('setHeader', { header :parsed, auth_flag });
       } catch (err) {
         // No valid cookie found
       }
     }
   },
+  
   async showFlashMessage({ commit }, message) {
     commit('setMessage', message); // mutationsに値を渡す
   }
-
-}
+};
