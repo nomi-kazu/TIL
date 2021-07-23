@@ -8,21 +8,11 @@
     <v-card width="600px" class="mx-auto mt-5">
       <v-card-text>
         <v-form>
-          <v-text-field
-            :rules="[rules.required]"
-            v-model="name"
-            label="名前"
-          />
+          <v-text-field :rules="[rules.required]" v-model="name" label="名前" />
 
-          <v-text-field
-            v-model="address"
-            label="都道府県"
-          />
+          <v-text-field v-model="address" label="都道府県" />
 
-          <v-textarea
-            v-model="profile"
-            label="プロフィール"
-          />
+          <v-textarea v-model="profile" label="プロフィール" />
 
           <v-card-actions>
             <v-btn
@@ -59,18 +49,22 @@ export default {
       },
     },
   }),
-  mounted() {
+  created() {
     this.name = this.info.data.attributes.name;
     this.profile = this.info.data.attributes.profile;
     this.address = this.info.data.attributes.address;
   },
   methods: {
-    store: function() {
-      this.$axios.put(`/api/v1/auth`, {
-        name: this.name,
-        profile: this.profile,
-        address: this.address,
-      });
+    async store() {
+      try {
+        await this.$axios.put(`/api/v1/auth`, {
+          name: this.name,
+          profile: this.profile,
+          address: this.address,
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
   },
   watch: {
@@ -83,10 +77,8 @@ export default {
     },
   },
   asyncData({ $axios, params }) {
-    return $axios
-    .$get(`/api/v1/auth/edit`)
-    .then((res) => {
-      return { info: res }
+    return $axios.$get(`/api/v1/auth/edit`).then(res => {
+      return { info: res };
     });
   },
 };
