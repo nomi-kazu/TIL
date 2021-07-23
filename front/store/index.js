@@ -40,7 +40,7 @@ export const mutations = {
 export const actions = {
   async login ({ commit }, { email, password }) {
     try {
-      await this.$axios.post(`${this.$axios.defaults.baseURL}/api/v1/auth/sign_in`, {
+      await this.$axios.post(`/api/v1/auth/sign_in`, {
         email,
         password
       })
@@ -58,7 +58,7 @@ export const actions = {
   async logout ({ commit }, { access_token, client, uid }) {
     try {
       await this.$axios.delete(
-        `${this.$axios.defaults.baseURL}/api/v1/auth/sign_out`,
+        `/api/v1/auth/sign_out`,
         {
           headers: {
             'access-token': access_token,
@@ -87,7 +87,7 @@ export const actions = {
       }
     }
   },
-  
+
   async showFlashMessage({ commit }, message) {
     commit('setMessage', message); // mutationsに値を渡す
   }
