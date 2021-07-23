@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <showNotification />
     <div class="top">
       <h3 class="name">{{ data.data.attributes.name }}</h3>
@@ -10,7 +10,7 @@
 
       </div>
     </div>
-  </v-app>
+  </div>
 </template>
 
 <script>
