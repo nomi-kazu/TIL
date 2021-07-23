@@ -1,16 +1,30 @@
 const cookieparser = process.server ? require("cookieparser") : undefined;
 
-export const state = () => {
-  return {
-    access_token: "",
-    uid: "",
-    client: "",
-    id: "",
-    isAuthenticated: false,
-  };
+export const state = () => ({
+  access_token: null,
+  uid: null,
+  client: null,
+  id: null,
+  isAuthenticated: false,
+});
+
+export const getters = {
+  access_token: (state) => state.access_token,
+  client: (state) => state.client,
+  uid: (state) => state.uid,
+  id: (state) => state.id,
+  isAuthenticated: (state) => state.isAuthenticated,
 };
 
 export const mutations = {
+  clearUser(state) {
+    state.access_token = null;
+    state.uid = null;
+    state.client = null;
+    state.id = null;
+    state.isAuthenticated = false;
+  },
+
   setUser(state, res) {
     state.access_token = res.headers["access-token"];
     state.uid = res.headers["uid"];
@@ -18,18 +32,12 @@ export const mutations = {
     state.id = res.data.data.id;
     state.isAuthenticated = true;
   },
+
   setHeader(state, { headers, auth_flag }) {
     state.access_token = headers["access-token"];
     state.uid = headers["uid"];
     state.client = headers["client"];
     state.isAuthenticated = auth_flag;
-  },
-  clearUser(state) {
-    state.access_token = null;
-    state.isAuthenticated = false;
-    state.uid = null;
-    state.client = null;
-    state.id = null;
   }
 };
 
