@@ -27,6 +27,11 @@ gem 'devise_token_auth'
 #クロスオリジン対策
 gem 'rack-cors'
 
+# sns認証
+gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-twitter'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
@@ -41,6 +46,7 @@ group :development, :test do
   gem 'faker'
   gem 'pry-rails'
   gem 'pry-byebug'
+  gem 'dotenv-rails'
 end
 
 group :development do
