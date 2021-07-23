@@ -1,6 +1,6 @@
 <template>
   <div>
-    <showNotification />
+    <showNotification text="ログインしました!"></showNotification>
     <div class="top">
       <h3 class="name">{{ data.attributes.name }}</h3>
       <nuxt-link to="/user/edit/1"><p>編集する</p></nuxt-link>
@@ -15,6 +15,7 @@
 
 <script>
 import showNotification from "~/components/material/show-notification"
+import ShowNotification from '../../components/material/show-notification.vue';
 
 export default {
   middleware: "authenticated",

@@ -7,7 +7,6 @@ export const state = () => {
     client: "",
     id: "",
     isAuthenticated: false,
-    text: "",
   };
 };
 
@@ -31,9 +30,6 @@ export const mutations = {
     state.uid = null;
     state.client = null;
     state.id = null;
-  },
-  setMessage: (state, payload) => {
-    state.text = payload.text; // stateの状態を変更
   }
 };
 
@@ -86,9 +82,5 @@ export const actions = {
         // No valid cookie found
       }
     }
-  },
-
-  async showFlashMessage({ commit }, message) {
-    commit("setMessage", message); // mutationsに値を渡す
   }
 };
