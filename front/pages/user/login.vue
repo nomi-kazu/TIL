@@ -40,7 +40,6 @@
 
 <script>
 const Cookie = process.client ? require("js-cookie") : undefined;
-import { mapActions } from "vuex";
 
 export default {
   data: () => ({
@@ -59,23 +58,20 @@ export default {
     }
   }),
   methods: {
-    ...mapActions({
-    showFlashMessage: "showFlashMessage",
-      async login(e) {
-        try {
-          await this.$store.dispatch("login", {
-            email: this.email,
-            password: this.password
-          });
-          Cookie.set("access-token", this.$store.state.access_token);
-          Cookie.set("client", this.$store.state.client);
-          Cookie.set("uid", this.$store.state.uid);
-          this.$router.push(`/user/${this.$store.state.id}`);
-        } catch (e) {
-          console.log(this.formError);
-        }
+    async login(e) {
+      try {
+        await this.$store.dispatch("login", {
+          email: this.email,
+          password: this.password
+        });
+        Cookie.set("access-token", this.$store.state.access_token);
+        Cookie.set("client", this.$store.state.client);
+        Cookie.set("uid", this.$store.state.uid);
+        this.$router.push(`/user/${this.$store.state.id}`);
+      } catch (e) {
+        console.log(this.formError);
       }
-    })
+    }
   },
   watch: {
     email: function(e) {

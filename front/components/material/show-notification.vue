@@ -3,7 +3,7 @@
     <notification
       class="mb-3"
       color="info"
-      v-if="text"
+      v-if="!hidden"
     >
     {{ text }}
     </notification>
@@ -24,15 +24,19 @@ export default {
       default: ''
     }
   },
+  data: () => ({
+    hidden: false
+  }),
   methods: {
+    //TODO: ボタンでflashを削除したい
     del() {
-      this.text = null
+      this.hidden = true
     }
   },
   mounted() {
     const self = this
     setTimeout( () => {
-      this.text = null
+      this.hidden = true
     }, 3000);
   }
 }
