@@ -4,6 +4,8 @@ export default axios.create({
   baseURL: process.env.baseUrl
 })
 
+// TODO: page>user>_id.vueでヘッダーをセットしているので、どのリクエストでもセットするように改善
+
 // const Cookie = process.client ? require('js-cookie') : undefined
 
 // axios.interceptors.request.use( config => {

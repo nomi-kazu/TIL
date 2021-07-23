@@ -101,20 +101,8 @@
       max-height=" 100vh"
     >
     <v-content>
-      <!-- <v-container
-        class="main"
-        fluid
-        style="height: 120vh;"
-      > -->
         <nuxt/>
-      <!-- </v-container> -->
     </v-content>
-      <!-- <v-footer
-        color="indigo"
-        app
-      >
-        <span class="white--text">&copy; nomi-kazu</span>
-      </v-footer> -->
     </v-sheet>
   </v-card>
   </v-app>
