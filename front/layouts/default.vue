@@ -14,7 +14,7 @@
           </v-list-item>
         </nuxt-link>
 
-        <nuxt-link to="/user/login" v-if="!($store.state.isAuthenticated)">
+        <nuxt-link to="/user/login" v-if="!$store.state.isAuthenticated">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-account-arrow-right</v-icon>
@@ -28,7 +28,7 @@
         <v-list-item
           link
           @click="logout"
-          v-if="!($store.state.isAuthenticated)"
+          v-if="$store.state.isAuthenticated"
         >
           <v-list-item-action>
             <v-icon>mdi-account-cancel-outline</v-icon>
@@ -38,7 +38,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <nuxt-link to="/user/sign_up">
+        <nuxt-link to="/user/sign_up" v-if="!$store.state.isAuthenticated">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-account-plus</v-icon>
@@ -49,7 +49,7 @@
           </v-list-item>
         </nuxt-link>
 
-        <nuxt-link to="/user/1" v-if="!($store.state.isAuthenticated)">
+        <nuxt-link to="/user/1" v-if="$store.state.isAuthenticated">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-account-details</v-icon>
@@ -71,7 +71,7 @@
           </v-list-item>
         </nuxt-link>
 
-        <nuxt-link to="/memos/write" v-if="!($store.state.isAuthenticated)">
+        <nuxt-link to="/memos/write" v-if="$store.state.isAuthenticated">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-border-color</v-icon>
@@ -102,7 +102,7 @@
         max-height=" 100vh"
       >
       <v-content>
-          <nuxt/>
+        <nuxt />
       </v-content>
       </v-sheet>
     </v-card>
