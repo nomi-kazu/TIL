@@ -11,4 +11,6 @@ class User < ActiveRecord::Base
   validates :address, length: { maximum: 30 }
   validates :username, length: { maximum: 30 }, uniqueness: true, allow_nil: true
   validates :username, presence: true, on: :update
+
+  has_many :posts, dependent: :destroy
 end
