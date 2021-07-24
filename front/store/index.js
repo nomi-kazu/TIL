@@ -75,7 +75,7 @@ export const actions = {
       if (error.response && error.response.status === 401) {
         throw new Error("Bad credentials");
       }
-      throw error;
+      throw new Error("Internal Server Error");
     } 
   },
 

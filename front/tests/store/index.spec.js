@@ -16,6 +16,12 @@ jest.mock('axios', () => ({
       return Promise.reject(mockAxiosGetResult);
     }
       return Promise.resolve(mockAxiosGetResult);
+  }),
+  delete: jest.fn(() => {
+    if (mockAxiosError) {
+      return Promise.reject(mockAxiosGetResult);
+    }
+      return Promise.resolve(mockAxiosGetResult);
   })
 }));
 
@@ -85,6 +91,7 @@ describe('store/index.js', () => {
 
     beforeEach(() => {
       store.$axios = axios; // @nuxtjs/axiosの代わりにaxios
+      mockAxiosError = false; // テスト前にfalseに戻す
     });
 
     it('loginできる(正常系)', async () => {
@@ -129,6 +136,68 @@ describe('store/index.js', () => {
 
       await expect(
         store.dispatch('login', { email: 'foo@example.com', password: 'password'})
+      ).rejects.toThrow("Bad credentials");
+    })
+
+    it('logoutできる(正常系)', async () => {
+      const res = {
+        headers: {
+          "access-token": "8LccRgu2PKQ-E__vtMZ1Wm",
+          client: "CIhbiSpae_3G4Q_k5rtJmb",
+          uid: "foo@example.com",
+        },
+        data: { data: { id: "1" } }
+      };
+      store.commit('setUser', res);
+
+      mockAxiosGetResult = {
+        success: "true"
+      };
+
+      await store.dispatch('logout', {
+        access_token: "8LccRgu2PKQ-E__vtMZ1Wm",
+        client: "CIhbiSpae_3G4Q_k5rtJmb",
+        uid: "foo@example.com",
+      });
+
+      expect(store.getters.access_token).toBeNull();
+      expect(store.getters.client).toBeNull();
+      expect(store.getters.uid).toBeNull();
+      expect(store.getters.id).toBeNull();
+      expect(store.getters.isAuthenticated).toBeFalsy();
+    })
+
+    it('logoutできない(異常系:Internal Server Error)', async () => {
+      mockAxiosError = true;
+      mockAxiosGetResult = {
+        response: {
+          status: 500
+        }
+      };
+
+      await expect(
+        store.dispatch('logout', {
+          access_token: "8LccRgu2PKQ-E__vtMZ1Wm",
+          client: "CIhbiSpae_3G4Q_k5rtJmb",
+          uid: "foo@example.com",
+        })
+      ).rejects.toThrow("Internal Server Error");
+    })
+
+    it('logoutできない(異常系:Bad credentials)', async () => {
+      mockAxiosError = true;
+      mockAxiosGetResult = {
+        response: {
+          status: 401
+        }
+      };
+
+      await expect(
+        store.dispatch('logout', {
+          access_token: "8LccRgu2PKQ-E__vtMZ1Wm",
+          client: "CIhbiSpae_3G4Q_k5rtJmb",
+          uid: "foo@example.com",
+        })
       ).rejects.toThrow("Bad credentials");
     })
   })
