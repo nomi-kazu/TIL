@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import colors from "vuetify/es5/util/colors"
 
 export default {
@@ -41,6 +43,7 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     "@nuxtjs/vuetify",
+    "@nuxtjs/dotenv",
   ],
   /*
    ** Nuxt.js modules
@@ -51,7 +54,7 @@ export default {
     ["nuxt-sass-resources-loader", ["~/assets/sass/variables.scss",]],
   ],
   axios: {
-    base_URL: "http://localhost:3000"
+    baseURL: process.env.BASE_URL || "http://localhost:3000"
   },
   
   /*
