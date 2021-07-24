@@ -13,7 +13,7 @@ RSpec.describe User, type: :model do
       let!(:user) { build(:user, email: nil) }
       it "エラーになる" do
         user.valid?
-        expect(user.errors.messages[:email]).to include "can"t be blank"
+        expect(user.errors.messages[:email]).to include "can't be blank"
       end
     end
 
