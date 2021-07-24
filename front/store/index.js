@@ -44,18 +44,17 @@ export const mutations = {
 export const actions = {
   async login ({ commit }, { email, password }) {
     try {
-      await this.$axios.post(`/api/v1/auth/sign_in`, {
+      const res = await this.$axios.post(`/api/v1/auth/sign_in`, {
         email,
         password
       })
-      .then(res => {
-        commit("setUser", res);
-      });
+
+      commit("setUser", res);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         throw new Error("Bad credentials");
       }
-      throw error;
+      throw new Error("Internal Server Error");
     }
   },
 
