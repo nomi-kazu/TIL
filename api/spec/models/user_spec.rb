@@ -48,7 +48,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "validates length" do
-    context "パスワードが８文字以下の場合" do
+    context "パスワードが８文字未満の場合" do
       let!(:user) { build(:user, password: "12345") }
       it "エラーになる" do
         user.valid?
@@ -56,7 +56,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context "nameが50文字以上のとき" do
+    context "nameが51文字以上のとき" do
       let!(:user) { build(:user, name: "a" * 51) }
       it "エラーになる" do
         user.valid?
@@ -64,7 +64,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context "addressが30文字以上のとき" do
+    context "addressが31文字以上のとき" do
       let!(:user) { build(:user, address: "a" * 31) }
 
       it "エラーになる" do
@@ -73,11 +73,44 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context "usernameが30文字以上のとき" do
+    context "usernameが31文字以上のとき" do
       let!(:user) { build(:user, username: "a" * 31) }
       it "エラーになる" do
         user.valid?
         expect(user.errors.messages[:username]).to include "is too long (maximum is 30 characters)"
+      end
+    end
+  end
+
+  describe "validates regular expression" do
+    context "passwordが制御文字と半角を除いたASCII文字のとき" do
+      let!(:user) { build(:user, password: 'pass_*&^%word') }
+      it "正常に保存できる" do
+        expect(user).to be_valid
+      end
+    end
+
+    context "passwordが制御文字と半角を除いたASCII文字以外を含むとき" do
+      let!(:user) { build(:user, password: 'a' * 7 + 'あ') }
+      it "エラーになる" do
+        user.valid?
+        expect(user.errors.messages[:password]).to include "is invalid"
+      end
+    end
+
+    context "usernameが半角英数字とアンダーバーのみのとき" do
+      let!(:user) { create(:user) }
+      it "正常に更新できる" do
+        user.update(username: 'user_name')
+        expect(user).to be_valid
+      end
+    end
+
+    context "usernameが半角英数字とアンダーバー以外を含むとき" do
+      let!(:user) { create(:user) }
+      it "エラーになる" do
+        user.update(username: 'a' * 7 + 'あ')
+        expect(user.errors.messages[:username]).to include "is invalid"
       end
     end
   end
