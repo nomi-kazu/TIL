@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2021_07_24_022918) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.string "name", limit: 50, null: false
+    t.string "name", limit: 50
     t.string "image"
     t.string "email"
     t.json "tokens"
