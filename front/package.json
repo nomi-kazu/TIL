@@ -32,6 +32,7 @@
     "eslint-plugin-nuxt": ">=0.4.2",
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^26.6.3",
+    "lodash.clonedeep": "^4.5.0",
     "node-sass": "^6.0.1",
     "nuxt-sass-resources-loader": "^2.0.5",
     "prettier": "^1.19.1",
