@@ -48,7 +48,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "validates length" do
-    context "パスワードが８文字以下の場合" do
+    context "パスワードが８文字未満の場合" do
       let!(:user) { build(:user, password: "12345") }
       it "エラーになる" do
         user.valid?
@@ -56,7 +56,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context "nameが50文字以上のとき" do
+    context "nameが51文字以上のとき" do
       let!(:user) { build(:user, name: "a" * 51) }
       it "エラーになる" do
         user.valid?
@@ -64,7 +64,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context "addressが30文字以上のとき" do
+    context "addressが31文字以上のとき" do
       let!(:user) { build(:user, address: "a" * 31) }
 
       it "エラーになる" do
@@ -73,7 +73,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context "usernameが30文字以上のとき" do
+    context "usernameが31文字以上のとき" do
       let!(:user) { build(:user, username: "a" * 31) }
       it "エラーになる" do
         user.valid?
