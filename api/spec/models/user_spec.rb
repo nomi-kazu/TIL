@@ -81,4 +81,37 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "validates regular expression" do
+    context "passwordが半角英数字とアンダーバーのみのとき" do
+      let!(:user) { build(:user, password: 'pass_word') }
+      it "正常に保存できる" do
+        expect(user).to be_valid
+      end
+    end
+
+    context "passwordが半角英数字とアンダーバー以外を含むとき" do
+      let!(:user) { build(:user, password: 'a' * 7 + 'あ') }
+      it "エラーになる" do
+        user.valid?
+        expect(user.errors.messages[:password]).to include "is invalid"
+      end
+    end
+
+    context "usernameが半角英数字とアンダーバーのみのとき" do
+      let!(:user) { create(:user) }
+      it "正常に更新できる" do
+        user.update(username: 'user_name')
+        expect(user).to be_valid
+      end
+    end
+
+    context "usernameが半角英数字とアンダーバー以外を含むとき" do
+      let!(:user) { create(:user) }
+      it "エラーになる" do
+        user.update(username: 'a' * 7 + 'あ')
+        expect(user.errors.messages[:username]).to include "is invalid"
+      end
+    end
+  end
 end
