@@ -24,6 +24,7 @@ RSpec.describe User, type: :model do
         expect(user.errors.messages[:password]).to include "can't be blank"
       end
     end
+  end
 
   describe "validates uniqueness" do
     context "保存されているメールアドレスが再度指定されたとき" do
