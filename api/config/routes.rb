@@ -7,7 +7,7 @@ Rails.application.routes.draw do
         sessions: 'api/v1/auth/sessions',
         omniauth_callbacks: 'api/v1/auth/omniauth_callbacks'
       }
-      resources :posts
+      resources :posts, only: [:show, :new, :create, :edit, :update, :destroy]
     end
   end
   
