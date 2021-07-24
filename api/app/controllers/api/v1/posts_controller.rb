@@ -1,6 +1,7 @@
 class Api::V1::PostsController < ApplicationController
   before_action :authenticate_api_v1_user!, except: [:show]
-  before_action :set_posts, except: [:new, :create, :show]
+  before_action :set_post, except: [:new, :create, :show]
+
 
   def show
     render json: @post, serializer: PostSerializer
@@ -14,9 +15,9 @@ class Api::V1::PostsController < ApplicationController
   def create
     @post = current_api_v1_user.posts.build(post_params)
     if @post.save
-      render status: :success, json: @post
+      render json: @post, serializer: PostSerializer
     else
-      render status: error, json: @post.errors
+      render json: { success: false, errors: @post.errors }
     end
   end
 
@@ -25,18 +26,18 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def update
-    if @post.update(update_post_params)
-      render status: :success, json: @post
+    if @post.update(post_params)
+      render json: @post, serializer: PostSerializer
     else
-      render status: error, json: @post.errors
+      render json: { success: false, errors: @post.errors }
     end
   end
 
   def destroy
     if @post.destroy
-      render status: :success, json: @post
+      render json: @post, serializer: PostSerializer
     else
-      render status: error, json: @post.errors
+      render json: { success: false, errors: @post.errors }
     end
   end
 
@@ -46,12 +47,14 @@ class Api::V1::PostsController < ApplicationController
     params.require(:post).permit(:user_id, :name, :content, :public)
   end
 
-  def set_posts
+  def set_post
     @post = Post.find(params[:id])
   end
 
-  def update_post_params
-    params.require(:post).permit(:name, :content, public)
+  def correct_user?
+    return if current_api_v1_user == @post.user
+    render json: { success: false,
+                   error: "You don't have the right to access this resource" }
   end
 
 end
