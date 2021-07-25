@@ -1,13 +1,21 @@
 <template>
   <div>
-    <p>{{ $store.state.uid }} : {{ $store.state.access_token }} : {{ $store.state.isAuthenticated }}</p>
+    <p>{{ uid }} : {{ accessToken }} : {{ isAuthenticated }}</p>
   </div>
 </template>
 
 <script>
-const Cookie = process.client ? require('js-cookie') : undefined
-
 export default {
-
+  computed: {
+    uid() {
+      return this.$store.getters["authentication/uid"];
+    },
+    accessToken() {
+      return this.$store.getters["authentication/accessToken"];
+    },
+    isAuthenticated() {
+      return this.$store.getters["authentication/isAuthenticated"];
+    },
+  },
 }
 </script>

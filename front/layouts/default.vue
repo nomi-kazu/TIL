@@ -14,7 +14,7 @@
           </v-list-item>
         </nuxt-link>
 
-        <nuxt-link to="/user/login" v-if="!$store.state.isAuthenticated">
+        <nuxt-link to="/user/login" v-if="!isAuthenticated">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-account-arrow-right</v-icon>
@@ -28,7 +28,7 @@
         <v-list-item
           link
           @click="logout"
-          v-if="$store.state.isAuthenticated"
+          v-if="isAuthenticated"
         >
           <v-list-item-action>
             <v-icon>mdi-account-cancel-outline</v-icon>
@@ -38,7 +38,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <nuxt-link to="/user/sign_up" v-if="!$store.state.isAuthenticated">
+        <nuxt-link to="/user/sign_up" v-if="!isAuthenticated">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-account-plus</v-icon>
@@ -49,7 +49,7 @@
           </v-list-item>
         </nuxt-link>
 
-        <nuxt-link to="/user/1" v-if="$store.state.isAuthenticated">
+        <nuxt-link to="/user/1" v-if="isAuthenticated">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-account-details</v-icon>
@@ -71,7 +71,7 @@
           </v-list-item>
         </nuxt-link>
 
-        <nuxt-link to="/memos/write" v-if="$store.state.isAuthenticated">
+        <nuxt-link to="/memos/write" v-if="isAuthenticated">
           <v-list-item link>
             <v-list-item-action>
               <v-icon>mdi-border-color</v-icon>
@@ -110,27 +110,20 @@
 </template>
 
 <script>
-const Cookie = process.client ? require("js-cookie") : undefined;
-
 export default {
-  props: {
-    source: String,
-  },
   data: () => ({
     drawer: null,
   }),
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters["authentication/isAuthenticated"]
+    }
+  },
   methods: {
     async logout() {
       try {
-        await this.$store.dispatch("logout", {
-          access_token: Cookie.get("access-token"),
-          client: Cookie.get("client"),
-          uid: Cookie.get("uid")
-        });
-        Cookie.remove("access-token");
-        Cookie.remove("client");
-        Cookie.remove("uid");
-        this.$router.push(`/user/login`);
+        await this.$store.dispatch("authentication/logout");
+        this.$router.push(`/user/login`)
       } catch (e) {
         console.error(e);
       }
