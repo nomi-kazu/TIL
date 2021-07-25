@@ -1,7 +1,7 @@
 const cookie = process.client ? requestAnimationFrame("js-cookie") : undefined;
 
 export const state = () => ({
-  access_token: null,
+  accessToken: null,
   uid: null,
   client: null,
   id: null,
@@ -9,7 +9,7 @@ export const state = () => ({
 });
 
 export const getters = {
-  access_token: (state) => state.access_token,
+  accessToken: (state) => state.accessToken,
   client: (state) => state.client,
   uid: (state) => state.uid,
   id: (state) => state.id,
@@ -18,7 +18,7 @@ export const getters = {
 
 export const mutations = {
   clearUser(state) {
-    state.access_token = null;
+    state.accessToken = null;
     state.uid = null;
     state.client = null;
     state.id = null;
@@ -26,7 +26,7 @@ export const mutations = {
   },
 
   setUser(state, res) {
-    state.access_token = res.headers["access-token"];
+    state.accessToken = res.headers["access-token"];
     state.uid = res.headers["uid"];
     state.client = res.headers["client"];
     state.id = res.data.data.id;
@@ -34,7 +34,7 @@ export const mutations = {
   },
 
   setHeader(state, { headers, auth_flag }) {
-    state.access_token = headers["access-token"];
+    state.accessToken = headers["access-token"];
     state.uid = headers["uid"];
     state.client = headers["client"];
     state.isAuthenticated = auth_flag;
@@ -52,7 +52,7 @@ export const actions = {
       commit("setUser", res);
 
       // Cookieにセット
-      Cookie.set("access-token", getters.access_token);
+      Cookie.set("access-token", getters.accessToken);
       Cookie.set("client", getters.client);
       Cookie.set("uid", getters.uid);
 
@@ -67,7 +67,7 @@ export const actions = {
   // ログアウト
   async logout ({ commit }) {
     try {
-      const access_token = Cookie.get("access-token");
+      const accessToken = Cookie.get("access-token");
       const client = Cookie.get("client");
       const uid = Cookie.get("uid");
 
@@ -75,7 +75,7 @@ export const actions = {
         `/api/v1/auth/sign_out`,
         {
           headers: {
-            "access-token": access_token,
+            "access-token": accessToken,
             client: client,
             uid: uid
           }

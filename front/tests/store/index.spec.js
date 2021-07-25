@@ -35,7 +35,7 @@ describe('store/index.js', () => {
 
   describe('mutations', () => {
     it('setHeaderの正常系', () => {
-      expect(store.getters.access_token).toBeNull();
+      expect(store.getters.accessToken).toBeNull();
       expect(store.getters.client).toBeNull();
       expect(store.getters.uid).toBeNull();
       expect(store.getters.isAuthenticated).toBeFalsy();
@@ -48,14 +48,14 @@ describe('store/index.js', () => {
 
       store.commit('setHeader', { headers: parsedCookie, auth_flag: true });
 
-      expect(store.getters.access_token).toBe("8LccRgu2PKQ-E__vtMZ1Wm");
+      expect(store.getters.accessToken).toBe("8LccRgu2PKQ-E__vtMZ1Wm");
       expect(store.getters.client).toBe("CIhbiSpae_3G4Q_k5rtJmb");
       expect(store.getters.uid).toBe("foo@example.com");
       expect(store.getters.isAuthenticated).toBeTruthy();
     })
 
     it('setUserとclearUserの正常系', () => {
-      expect(store.getters.access_token).toBeNull();
+      expect(store.getters.accessToken).toBeNull();
       expect(store.getters.client).toBeNull();
       expect(store.getters.uid).toBeNull();
       expect(store.getters.id).toBeNull();
@@ -72,14 +72,14 @@ describe('store/index.js', () => {
 
       store.commit('setUser', res);
 
-      expect(store.getters.access_token).toBe("8LccRgu2PKQ-E__vtMZ1Wm");
+      expect(store.getters.accessToken).toBe("8LccRgu2PKQ-E__vtMZ1Wm");
       expect(store.getters.client).toBe("CIhbiSpae_3G4Q_k5rtJmb");
       expect(store.getters.uid).toBe("foo@example.com");
       expect(store.getters.id).toBe("1");
       expect(store.getters.isAuthenticated).toBeTruthy();
 
       store.commit('clearUser');
-      expect(store.getters.access_token).toBeNull();
+      expect(store.getters.accessToken).toBeNull();
       expect(store.getters.client).toBeNull();
       expect(store.getters.uid).toBeNull();
       expect(store.getters.id).toBeNull();
@@ -106,7 +106,7 @@ describe('store/index.js', () => {
 
       await store.dispatch('login', { email: 'foo@example.com', password: 'password'});
 
-      expect(store.getters.access_token).toBe("8LccRgu2PKQ-E__vtMZ1Wm");
+      expect(store.getters.accessToken).toBe("8LccRgu2PKQ-E__vtMZ1Wm");
       expect(store.getters.client).toBe("CIhbiSpae_3G4Q_k5rtJmb");
       expect(store.getters.uid).toBe("foo@example.com");
       expect(store.getters.id).toBe("1");
@@ -155,12 +155,12 @@ describe('store/index.js', () => {
       };
 
       await store.dispatch('logout', {
-        access_token: "8LccRgu2PKQ-E__vtMZ1Wm",
+        accessToken: "8LccRgu2PKQ-E__vtMZ1Wm",
         client: "CIhbiSpae_3G4Q_k5rtJmb",
         uid: "foo@example.com",
       });
 
-      expect(store.getters.access_token).toBeNull();
+      expect(store.getters.accessToken).toBeNull();
       expect(store.getters.client).toBeNull();
       expect(store.getters.uid).toBeNull();
       expect(store.getters.id).toBeNull();
@@ -177,7 +177,7 @@ describe('store/index.js', () => {
 
       await expect(
         store.dispatch('logout', {
-          access_token: "8LccRgu2PKQ-E__vtMZ1Wm",
+          accessToken: "8LccRgu2PKQ-E__vtMZ1Wm",
           client: "CIhbiSpae_3G4Q_k5rtJmb",
           uid: "foo@example.com",
         })
@@ -194,7 +194,7 @@ describe('store/index.js', () => {
 
       await expect(
         store.dispatch('logout', {
-          access_token: "8LccRgu2PKQ-E__vtMZ1Wm",
+          accessToken: "8LccRgu2PKQ-E__vtMZ1Wm",
           client: "CIhbiSpae_3G4Q_k5rtJmb",
           uid: "foo@example.com",
         })

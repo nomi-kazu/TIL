@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{ uid }} : {{ access_token }} : {{ isAuthenticated }}</p>
+    <p>{{ uid }} : {{ accessToken }} : {{ isAuthenticated }}</p>
   </div>
 </template>
 
@@ -10,8 +10,8 @@ export default {
     uid() {
       return this.$store.getters["authentication/uid"];
     },
-    access_token() {
-      return this.$store.getters["authentication/access_token"];
+    accessToken() {
+      return this.$store.getters["authentication/accessToken"];
     },
     isAuthenticated() {
       return this.$store.getters["authentication/isAuthenticated"];
