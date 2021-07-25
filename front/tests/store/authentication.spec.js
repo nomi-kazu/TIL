@@ -1,6 +1,6 @@
 import Vuex from 'vuex';
 import axios from 'axios';
-import * as index from '~/store/index';
+import * as authentication from '~/store/authentication';
 import { createLocalVue } from '@vue/test-utils';
 import cloneDeep from 'lodash.clonedeep';
 
@@ -25,12 +25,12 @@ jest.mock('axios', () => ({
   })
 }));
 
-describe('store/index.js', () => {
+describe('store/authentication.js', () => {
   let store;
 
   // mockのVueインスタンス作成
   beforeEach(() => {
-    store = new Vuex.Store(cloneDeep(index))
+    store = new Vuex.Store(cloneDeep(authentication))
   })
 
   describe('mutations', () => {
@@ -122,7 +122,7 @@ describe('store/index.js', () => {
       };
 
       await expect(
-        store.dispatch('login', { email: 'foo@example.com', password: 'password'})
+        store.dispatch('login', { email: 'foo@example.com', password: 'password' })
       ).rejects.toThrow("Internal Server Error");
     })
 
@@ -135,7 +135,7 @@ describe('store/index.js', () => {
       };
 
       await expect(
-        store.dispatch('login', { email: 'foo@example.com', password: 'password'})
+        store.dispatch('login', { email: 'foo@example.com', password: 'password' })
       ).rejects.toThrow("Bad credentials");
     })
 
@@ -154,11 +154,7 @@ describe('store/index.js', () => {
         success: "true"
       };
 
-      await store.dispatch('logout', {
-        accessToken: "8LccRgu2PKQ-E__vtMZ1Wm",
-        client: "CIhbiSpae_3G4Q_k5rtJmb",
-        uid: "foo@example.com",
-      });
+      await store.dispatch('logout');
 
       expect(store.getters.accessToken).toBeNull();
       expect(store.getters.client).toBeNull();
@@ -176,11 +172,7 @@ describe('store/index.js', () => {
       };
 
       await expect(
-        store.dispatch('logout', {
-          accessToken: "8LccRgu2PKQ-E__vtMZ1Wm",
-          client: "CIhbiSpae_3G4Q_k5rtJmb",
-          uid: "foo@example.com",
-        })
+        store.dispatch('logout')
       ).rejects.toThrow("Internal Server Error");
     })
 
@@ -193,11 +185,7 @@ describe('store/index.js', () => {
       };
 
       await expect(
-        store.dispatch('logout', {
-          accessToken: "8LccRgu2PKQ-E__vtMZ1Wm",
-          client: "CIhbiSpae_3G4Q_k5rtJmb",
-          uid: "foo@example.com",
-        })
+        store.dispatch('logout')
       ).rejects.toThrow("Bad credentials");
     })
   })

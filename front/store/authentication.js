@@ -1,4 +1,4 @@
-const cookie = process.client ? requestAnimationFrame("js-cookie") : undefined;
+const Cookie = process.client ? require("js-cookie") : undefined;
 
 export const state = () => ({
   accessToken: null,
@@ -42,6 +42,8 @@ export const mutations = {
 };
 
 export const actions = {
+
+  // ログイン
   async login ({ commit, getters }, { email, password }) {
     try {
       const res = await this.$axios.post(`/api/v1/auth/sign_in`, {
@@ -52,7 +54,7 @@ export const actions = {
       commit("setUser", res);
 
       // Cookieにセット
-      if (Cookie != undefined) {
+      if (Cookie !== undefined) {
         Cookie.set("access-token", getters.accessToken);
         Cookie.set("client", getters.client);
         Cookie.set("uid", getters.uid);
@@ -68,7 +70,7 @@ export const actions = {
   // ログアウト
   async logout ({ commit, getters }) {
     try {
-      const accessToken = getters.access-token;
+      const accessToken = getters.accessToken;
       const client = getters.client;
       const uid = getters.uid;
 
@@ -85,10 +87,10 @@ export const actions = {
 
       commit("clearUser");
 
-      if (Cookie != undefined) {
+      if (Cookie !== undefined) {
         Cookie.remove("access-token");
         Cookie.remove("client");
-        Cookie.remoce("uid");
+        Cookie.remove("uid");
       } 
     } catch (error) {
       if (error.response && error.response.status === 401) {
