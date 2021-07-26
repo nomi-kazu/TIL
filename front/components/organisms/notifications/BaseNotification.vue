@@ -2,52 +2,72 @@
   <v-alert
     v-bind="$attrs"
     :class="[`elevation-${elevation}`]"
-    :value="value"
-    color="info"
+    :value="isDisplay"
+    :color="color"
+    :type="type"
     class="v-alert--notification mb-3"
-    v-if="!hidden"
   >
-    {{ text }}
     <slot />
   </v-alert>
 </template>
 
 <script>
 export default {
-  inheritAttrs: false,
-
   props: {
+    color: {
+      type: String,
+      default: "info"
+    },
+
     elevation: {
       type: [Number, String],
       default: 6
     },
-    value: {
+
+    hiddenForce: {
       type: Boolean,
-      default: true
+      default: false
     },
-    text: {
+
+    time: {
+      type: Number,
+      default: 3000
+    },
+    
+    type: {
       type: String,
-      default: "",
+      default: undefined
     }
   },
+
   data: () => ({
     hidden: false
   }),
+
+  computed: {
+    isDisplay() {
+      return !this.hidden || this.hiddenForce
+    }
+  },
+
   methods: {
     //TODO: ボタンでflashを削除したい
     del() {
       this.hidden = true
     }
   },
+
+  inheritAttrs: false,
+
   mounted() {
     setTimeout( () => {
-      this.hidden = true
-    }, 3000);
+      this.del()
+    }, this.time);
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .v-alert--notification {
   border-radius: 4px !important;
   border-top: none !important;
