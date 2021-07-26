@@ -1,6 +1,6 @@
 <template>
   <div>
-    <notification text="ログインしました!"></notification>
+    <login-success-notification text="ログインしました!" />
     <div class="top">
       <h3 class="name">{{ data.attributes.name }}</h3>
       <nuxt-link to="/user/edit/1"><p>編集する</p></nuxt-link>
@@ -14,10 +14,15 @@
 </template>
 
 <script>
-import notification from "~/components/material/notification"
+import LoginSuccessNotification from "~/components/organisms/notifications/LoginSuccessNotification";
 
 export default {
+  components: {
+    LoginSuccessNotification
+  },
+
   middleware: "authenticated",
+
   async asyncData ({ $axios, params }) {
     try {
       const { data } = await $axios.$get(`/api/v1/users/${params.id}`);
@@ -26,9 +31,6 @@ export default {
       console.error(e);
     }
   },
-  components: {
-    notification
-  }
 };
 </script>
 
