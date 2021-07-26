@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import SBothTemplate from '~/components/templates/EditFileSBothTemplate'
-import SEditTemplate from '~/components/templates/EditFileSEditTemplate'
-import SViewTemplate from '~/components/templates/EditFileSViewTemplate'
+import SBothTemplate from '~/components/templates/EditFileidSBothTemplate'
+import SEditTemplate from '~/components/templates/EditFileidSEditTemplate'
+import SViewTemplate from '~/components/templates/EditFileidSViewTemplate'
 
 const DEFAULT_STATUS = 'both'
 
