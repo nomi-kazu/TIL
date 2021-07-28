@@ -1,6 +1,7 @@
 <template>
-  <!-- fileのバリデーションを追加 -->
-  <v-file-input />
+  <div>
+    <!-- fileの内容を表示 -->
+  </div>
 </template>
 
 <script>
