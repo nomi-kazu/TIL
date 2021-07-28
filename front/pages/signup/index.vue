@@ -1,10 +1,15 @@
 <template>
-  <h1>新規登録</h1>
+  <div>
+    <signup-template />
+  </div>
 </template>
 
 <script>
+import SignupTemplate from '~/components/templates/SignupTemplate'
 export default {
-  
+  components: {
+    SignupTemplate
+  }
 }
 </script>
 

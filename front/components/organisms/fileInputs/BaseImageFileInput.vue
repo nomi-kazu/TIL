@@ -1,5 +1,5 @@
 <template>
-  <!-- fileのバリデーションを追加 -->
+  <!-- 画像のバリデーションを追加 -->
   <v-file-input />
 </template>
 
