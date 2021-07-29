@@ -19,6 +19,13 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
-    'vue/comment-directive': 0
+    "semi": [2, "never"],
+    "no-console": "off",
+    "vue/max-attributes-per-line": "off",
+    "vue/html-self-closing": ["error", {
+      "html": {
+        "void": "always",
+      }
+    }],
   }
 }
