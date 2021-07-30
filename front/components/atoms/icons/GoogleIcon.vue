@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <!-- google icon png  -->
-  </div>
+  <v-icon color="white">mdi-google</v-icon>
 </template>
 
 <script>
