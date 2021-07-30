@@ -6,7 +6,7 @@
 
 <script>
 import OneColumnContainer from '~/components/molecules/containers/OneColumnContainer'
-import ChangeUsernameCard from '~/organisms/organisms/cards/ChangeUsernameCard'
+import ChangeUsernameCard from '~/components/organisms/cards/ChangeUsernameCard'
 
 export default {
   components: {

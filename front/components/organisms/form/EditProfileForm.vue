@@ -12,7 +12,7 @@
 
 <script>
 import PreviewImageFileInput from '~/components/organisms/fileInputs/PreviewImageFileInput'
-import TieSnsBtnGroup from '~/components/organisms/fileInputs/TieSnsBtnGroup'
+import TieSnsBtnGroup from '~/components/organisms/btnGroup/TieSnsBtnGroup'
 
 export default {
   components: {
