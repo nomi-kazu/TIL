@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ChangeUsernameForm from '~/components/organisms/form/ChangeUsername/Form'
+import ChangeUsernameForm from '~/components/organisms/form/ChangeUsernameForm'
 
 export default {
   components: {

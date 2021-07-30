@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import UsernameTextField from '~/components/textFields/UsernameTextField'
+import UsernameTextField from '~/components/organisms/textFields/UsernameTextField'
 
 export default {
   components: {
