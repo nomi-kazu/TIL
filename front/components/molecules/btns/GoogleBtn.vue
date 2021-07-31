@@ -1,21 +1,22 @@
 <template>
-  <v-btn :dark="dark" :href="href" :to="to" @click="onClick">
-    <github-icon />
+  <v-btn :dark="dark" :href="href" :to="to" @click="onClick" color="#DB4A39" class="white--text">
+    <google-icon />
+    <slot />
   </v-btn>
 </template>
 
 <script>
-import GithubIcon from '~/components/atoms/icons/GithubIcon'
+import GoogleIcon from '~/components/atoms/icons/GoogleIcon'
 
 export default {
   components: {
-    GithubIcon
+    GoogleIcon
   },
 
   props: {
     dark: {
       type: Boolean,
-      default: true
+      default: false
     },
 
     to: {
@@ -37,6 +38,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+  .v-icon {
+    margin-right: 4px;
+  }
 </style>

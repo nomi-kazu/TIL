@@ -1,5 +1,5 @@
 <template>
-  <v-btn :dark="dark" :href="href" :to="to" @click="onClick">
+  <v-btn :dark="dark" :href="href" :to="to" @click="onClick" color="#00AEEF" class="white--text">
     <twitter-icon />
   </v-btn>
 </template>
@@ -15,7 +15,7 @@ export default {
   props: {
     dark: {
       type: Boolean,
-      default: true
+      default: false
     },
 
     to: {
@@ -37,6 +37,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+  .v-icon {
+    margin-right: 4px;
+  }
 </style>
