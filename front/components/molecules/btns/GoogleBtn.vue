@@ -38,8 +38,6 @@ export default {
 }
 </script>
 
-<style>
-  .v-icon {
-    margin-right: 4px;
-  }
+<style lang="scss" scoped>
+
 </style>
