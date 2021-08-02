@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <twitter-btn>Twitter</twitter-btn>
-    <google-btn>Google</google-btn>
+  <div class="d-flex flex-column">
+    <twitter-btn class="mb-4">Twitter</twitter-btn>
+    <google-btn class="mb-4">Google</google-btn>
     <github-btn>Github</github-btn>
   </div>
 </template>
