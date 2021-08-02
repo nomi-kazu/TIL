@@ -1,0 +1,36 @@
+{
+  "data": {
+    "guest": ["home", "login", "register"],
+    "login": ["home", "settings", "username", "logout"]
+  },
+  "items": {
+    "home": { "name": "Home", "to": "/", "icon": "mdi-home"},
+    "login": {
+      "name": "ログイン",
+      "to": "/user/login",
+      "icon": "mdi-account-arrow-right",
+      "btn": true
+    },
+    "logout": {
+      "name": "ログアウト",
+      "to": "mdi-account-cancel-outline",
+      "event": "logout"
+    },
+    "register": {
+      "name": "新規登録",
+      "to": "/user/sign_up",
+      "icon": "mdi-account-plus",
+      "btn": true
+    },
+    "settings": {
+      "name": "設定",
+      "to": "/settings/profile",
+      "icon": "mdi-cog"
+    },
+    "username": {
+      "name": "投稿する",
+      "to": "mdi-pencil",
+      "event": "username"
+    }
+  }
+}

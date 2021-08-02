@@ -1,5 +1,7 @@
 <template>
-  <v-icon color="white">mdi-twitter</v-icon>
+  <div>
+    <!-- twitter icon png  -->
+  </div>
 </template>
 
 <script>

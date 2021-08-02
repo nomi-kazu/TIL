@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <!-- github icon png  -->
-  </div>
+  <v-icon color="white">mdi-twitter</v-icon>
 </template>
 
 <script>
