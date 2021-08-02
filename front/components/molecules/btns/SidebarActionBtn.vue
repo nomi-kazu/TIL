@@ -7,7 +7,7 @@
       outlined
       large
       :to="to"
-      width="70%"
+      :width="width"
       @click="onClick()"
     />
   </client-only>
@@ -24,6 +24,11 @@ export default {
     to: {
       type: [String, Object],
       default: undefined
+    },
+
+    width: {
+      type: [String, Number],
+      default: '70%'
     }
   },
 
@@ -38,5 +43,7 @@ export default {
 <style lang="scss" scoped>
   .sidebar-btn {
     font-size: 1.1rem;
+    border-color: #2196F3;
+    border-radius: 8px;
   }
 </style>
