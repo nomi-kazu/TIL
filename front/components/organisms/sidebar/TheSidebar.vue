@@ -1,14 +1,15 @@
 <template>
-  <sidebar-container>
-    <guest-sidebar v-if="isGuest" />>
-    <login-sidebar v-if="isLogin" />
+  <sidebar-container v-model="drawer">
+    <keep-alive>
+      <component :is="getComponentName" />
+    </keep-alive>
   </sidebar-container>
 </template>
 
 <script>
-import SidebarContainer from '~/components/organisms/sidebar/SidebarContainer'
-import GuestSidebar from '~/components/organisms/sidebar/GuestSidebar'
-import LoginSidebar from '~/components/organisms/sidebar/LoginSidebar'
+const SidebarContainer = () => import('~/components/organisms/sidebar/SidebarContainer')
+const GuestSidebar = () => import('~/components/organisms/sidebar/GuestSidebar')
+const LoginSidebar = () => import('~/components/organisms/sidebar/LoginSidebar')
 
 export default {
   components: {
@@ -17,22 +18,29 @@ export default {
     LoginSidebar
   },
 
+  props: {
+    drawer: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   computed: {
-    computed: {
-    isLogin() {
-      // TODO: login済みか判定
-      return false
+    getComponentName() {
+      return this.isLogin ? 'LoginSidebar' : 'GuestSidebar'
     },
 
-    isGuest() {
-      // TODO: loginしていないか判定
-      return true
+    isLogin() {
+      return this.$store.getters["authentication/isAuthenticated"]
+    },
+
+    onInput(newVal) {
+      return this.$emit('input', newVal)
     }
-  }
   }
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
