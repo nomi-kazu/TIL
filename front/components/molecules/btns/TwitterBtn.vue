@@ -42,7 +42,7 @@ export default {
 
   computed: {
     xSmall() {
-      return this.fab ? true : false
+      return this.fab
     }
   }
 }

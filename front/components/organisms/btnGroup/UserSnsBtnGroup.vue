@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- 各ユーザーのsnsへのリンク -->
-    <twitter-icon fab :v-if="twitterLinkIsExists" />
-    <github-btn fab :v-if="githubLinkIsExists" />
+    <twitter-icon fab v-if="twitterLinkIsExists" />
+    <github-btn fab v-if="githubLinkIsExists" />
   </div>
 </template>
 
