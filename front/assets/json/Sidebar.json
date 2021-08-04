@@ -14,7 +14,8 @@
     "logout": {
       "name": "ログアウト",
       "to": "mdi-account-cancel-outline",
-      "event": "logout"
+      "event": "logout",
+      "btn": true
     },
     "register": {
       "name": "新規登録",
