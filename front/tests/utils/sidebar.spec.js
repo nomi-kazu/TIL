@@ -1,5 +1,5 @@
 import * as sidebarService from '~/utils/services/sidebarService'
-import sidebar from '~/assets/json/sidebar.json'
+import sidebar from '~/assets/json/Sidebar.json'
 import * as sidebarModel from '~/utils/models/sidebarModel'
 
 describe('utils/sidebar', () => {

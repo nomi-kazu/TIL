@@ -1,18 +1,15 @@
 <template>
-  <v-card>
+  <v-card width="800" class="mx-auto pt-10 pl-6">
     <edit-profile-form />
-    <user-sns-btn-group />
   </v-card>
 </template>
 
 <script>
 const EditProfileForm = () => import('~/components/organisms/form/EditProfileForm')
-const UserSnsBtnGroup = () => import('~/components/organisms/btnGroup/UserSnsBtnGroup')
 
 export default {
   components: {
     EditProfileForm,
-    UserSnsBtnGroup
   }
 }
 </script>
