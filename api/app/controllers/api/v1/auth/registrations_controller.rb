@@ -9,7 +9,7 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
   private
 
   def sign_up_params
-    params.permit(:email, :password, :username)
+    params.permit(:email, :password, :username).merge(username: default_username)
   end
 
   def account_update_params
@@ -29,11 +29,8 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
     @resource.update
   end
 
-  def sign_up_params
-    params.permit(*params_for_resource(:sign_up)).merge(username: default_username)
-  end
-
   def default_username
     SecureRandom.alphanumeric(15)
   end
+  
 end
