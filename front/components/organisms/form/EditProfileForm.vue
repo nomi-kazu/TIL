@@ -41,13 +41,11 @@ export default {
     TieSnsLinkField
   },
 
-  data: () => {
-    return {
-      userName: undefined,
-      selfIntroduction: undefined,
-      from: undefined
-    }
-  },
+  data: () => ({
+    userName: undefined,
+    selfIntroduction: undefined,
+    from: undefined
+  }),
 
   created() {
     // formに初期値を入れる
