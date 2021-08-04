@@ -1,6 +1,7 @@
 class Api::V1::PostsController < ApplicationController
   before_action :authenticate_api_v1_user!, except: [:show]
-  before_action :set_post, except: [:new, :create, :show]
+  before_action :set_post, except: [:new, :create]
+  before_action :correct_user?, only: [:update, :destroy]
 
 
   def show
@@ -17,7 +18,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.save
       render json: @post, serializer: PostSerializer
     else
-      render json: { success: false, errors: @post.errors }
+      render json: { status: "error", errors: @post.errors }
     end
   end
 
@@ -29,7 +30,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.update(post_params)
       render json: @post, serializer: PostSerializer
     else
-      render json: { success: false, errors: @post.errors }
+      render json: { status: "error", errors: @post.errors }
     end
   end
 
@@ -37,7 +38,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.destroy
       render json: @post, serializer: PostSerializer
     else
-      render json: { success: false, errors: @post.errors }
+      render json: { status: "error", errors: @post.errors }
     end
   end
 
