@@ -114,4 +114,12 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "Association" do
+    it "Postテーブルに正しく紐付いていること" do
+      rel = described_class.reflect_on_association(:posts)
+      expect(rel.macro).to eq :has_many
+      expect(rel.options[:dependent]).to eq :destroy
+    end
+  end
 end
