@@ -5,8 +5,8 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
   describe 'POST /api/v1/auth/sign_in' do
     subject(:call_api) { post(api_v1_user_session_path, params: params) }
     context 'email, passwordが正しく、有効化もされているとき' do
-      let!(:confirmed_user) { create(:confirmed_user) }
-      let!(:params) { { email: confirmed_user.email, password: confirmed_user.password } }
+      let(:confirmed_user) { create(:confirmed_user) }
+      let(:params) { { email: confirmed_user.email, password: confirmed_user.password } }
       it 'ログインできる' do
         call_api
         res = JSON.parse(response.body)
@@ -18,8 +18,8 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
     end
 
     context '有効化したが、emailが正しくないとき' do
-      let!(:user) { create(:confirmed_user) }
-      let!(:params) { { email: 'invalid@example.com', password: user.password } }
+      let(:user) { create(:confirmed_user) }
+      let(:params) { { email: 'invalid@example.com', password: user.password } }
       it 'ログインできない' do
         call_api
         res = JSON.parse(response.body)
@@ -33,8 +33,8 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
     end
 
     context '有効化したが、passwordが正しくないとき' do
-      let!(:user) { create(:confirmed_user) }
-      let!(:params) { { email: user.email, password: 'invalidpassword' } }
+      let(:user) { create(:confirmed_user) }
+      let(:params) { { email: user.email, password: 'invalidpassword' } }
       it 'ログインできない' do
         call_api
         res = JSON.parse(response.body)
@@ -48,8 +48,8 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
     end
 
     context 'email, passwordは正しいが、有効化されていないとき' do
-      let!(:user) { create(:user) }
-      let!(:params) { { email: user.email, password: user.password } }
+      let(:user) { create(:user) }
+      let(:params) { { email: user.email, password: user.password } }
       it 'ログインできない' do
         call_api
         res = JSON.parse(response.body)
@@ -63,8 +63,8 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
 
   describe 'DELETE /api/v1/auth/sign_out' do
     context 'ユーザーがログインしているとき' do
-      let!(:user) { create(:confirmed_user) }
-      let!(:headers) { user.create_new_auth_token }
+      let(:user) { create(:confirmed_user) }
+      let(:headers) { user.create_new_auth_token }
       it 'ログアウトできる' do
         delete(destroy_api_v1_user_session_path, headers: headers)
         res = JSON.parse(response.body)
