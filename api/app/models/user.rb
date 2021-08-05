@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   include DeviseTokenAuth::Concerns::User
 
+  has_many :posts, dependent: :destroy
+
   VALID_USERNAME_REGIX = /\A[\w_]+\z/i
   VALID_PASSWORD_REGIX = /\A[!-~]+\z/
 
@@ -14,6 +16,4 @@ class User < ActiveRecord::Base
   validates :address, length: { maximum: 30 }
   validates :username, length: { maximum: 30 }, uniqueness: true, allow_nil: true, presence: true, format: { with: VALID_USERNAME_REGIX }
   validates :password, format: { with: VALID_PASSWORD_REGIX }, allow_nil: true
-
-  has_many :posts, dependent: :destroy
 end

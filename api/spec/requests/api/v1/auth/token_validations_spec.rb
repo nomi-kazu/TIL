@@ -5,8 +5,8 @@ RSpec.describe "Api::V1::Auth::TokenValidations", type: :request do
   describe 'GET /api/v1/auth/validate_token' do
     subject(:call_api) { get(api_v1_auth_validate_token_path, headers: headers) }
     context 'リクエストヘッダが正常なとき' do
-      let!(:confirmed_user) { create(:confirmed_user) }
-      let!(:headers) { confirmed_user.create_new_auth_token } 
+      let(:confirmed_user) { create(:confirmed_user) }
+      let(:headers) { confirmed_user.create_new_auth_token } 
       it 'ユーザー情報が返ってくる' do
         call_api
         res = JSON.parse(response.body)
