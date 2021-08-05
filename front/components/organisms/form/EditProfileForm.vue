@@ -41,6 +41,13 @@ export default {
     TieSnsLinkField
   },
 
+  props: {
+    info: {
+      type: Object,
+      default: undefined
+    }
+  },
+
   data: () => ({
     userName: undefined,
     selfIntroduction: undefined,
@@ -48,7 +55,10 @@ export default {
   }),
 
   created() {
-    // formに初期値を入れる
+    this.userName = this.info.attributes.name
+    this.selfIntroduction = this.info.attributes.profile
+    this.from = this.info.attributes.address
+    console.log(this.info)
   }
 }
 </script>
