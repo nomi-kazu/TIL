@@ -1,7 +1,7 @@
 <template>
   <one-column-container>
     <h1>プロフィール編集</h1>
-    <setting-profile-card />
+    <setting-profile-card :info="info" />
   </one-column-container>
 </template>
 
@@ -13,7 +13,14 @@ export default {
   components: {
     OneColumnContainer,
     SettingProfileCard
-  }
+  },
+  
+  props: {
+    info: {
+      type: Object,
+      default: undefined
+    }
+  },
 }
 </script>
 

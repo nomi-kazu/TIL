@@ -13,42 +13,71 @@
     
     <!-- 各divをコンポーネントに切り出す -->
     <div class="mb-8">
-      <p>ユーザー名</p>
-      <v-text-field v-model="userName" outlined dense />
+      <p>名前</p>
+      <v-text-field v-model="name" outlined dense />
     </div>
 
     <div class="mb-8">
       <p>自己紹介</p>
-      <v-text-area v-model="selfIntroduction" outlined heignt="80" />
+      <v-text-area v-model="profile" outlined heignt="80" />
     </div>
 
     <div class="mb-8">
       <p>出身</p>
-      <v-text-field v-model="from" outlined dense />
+      <v-text-field v-model="address" outlined dense />
     </div>
 
     <tie-sns-link-field />
+
+    <div class="d-flex justify-center mt-5">
+      <orange-btn @onClick="save">保存する</orange-btn>
+    </div>
   </v-form>
 </template>
 
 <script>
 const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/PreviewImageFileInput')
 const TieSnsLinkField = () => import('~/components/organisms/textFields/TieSnsLinkField')
+const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
 
 export default {
   components: {
     PreviewImageFileInput,
-    TieSnsLinkField
+    TieSnsLinkField,
+    OrangeBtn
+  },
+
+  props: {
+    info: {
+      type: Object,
+      default: undefined
+    }
   },
 
   data: () => ({
-    userName: undefined,
-    selfIntroduction: undefined,
-    from: undefined
+    name: undefined,
+    profile: undefined,
+    address: undefined
   }),
 
   created() {
-    // formに初期値を入れる
+    this.name = this.info.attributes.name
+    this.profile = this.info.attributes.profile
+    this.address = this.info.attributes.address
+  },
+
+  methods: {
+    async save() {
+      try {
+        await this.$axios.put(`/api/v1/auth`, {
+          name: this.name,
+          profile: this.profile,
+          address: this.address
+        })
+      } catch (e) {
+        console.error(e)
+      }
+    }
   }
 }
 </script>
