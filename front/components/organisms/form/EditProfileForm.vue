@@ -14,17 +14,17 @@
     <!-- 各divをコンポーネントに切り出す -->
     <div class="mb-8">
       <p>名前</p>
-      <v-text-field v-model="user.userInfo.name" outlined dense />
+      <v-text-field v-model="user.name" outlined dense />
     </div>
 
     <div class="mb-8">
       <p>自己紹介</p>
-      <v-text-area v-model="user.userInfo.profile" outlined heignt="80" />
+      <v-text-area v-model="user.profile" outlined heignt="80" />
     </div>
 
     <div class="mb-8">
       <p>出身</p>
-      <v-text-field v-model="user.userInfo.address" outlined dense />
+      <v-text-field v-model="user.address" outlined dense />
     </div>
 
     <tie-sns-link-field />
@@ -40,19 +40,17 @@ const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/Pr
 const TieSnsLinkField = () => import('~/components/organisms/textFields/TieSnsLinkField')
 const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
 
-class User {
+class UserInfo {
   constructor() {
-    this.userInfo = {
-      name: "",
-      profile: "",
-      address: ""
-    }
+    this.name = null
+    this.profile = null
+    this.address = null
   }
 
   infoToUserInfo(info) {
-    this.name = this.info && this.info.attributes && this.info.attributes.name
-    this.profile = this.info && this.info.attributes && this.info.attributes.profile
-    this.address = this.info && this.info.attributes && this.info.attributes.address
+    this.name = info && info.attributes && info.attributes.name
+    this.profile = info && info.attributes && info.attributes.profile
+    this.address = info && info.attributes && info.attributes.address
   }
 }
 
@@ -71,7 +69,7 @@ export default {
   },
 
   data: () => ({
-    user: new User
+    user: new UserInfo
   }),
 
   created() {
@@ -80,7 +78,7 @@ export default {
 
   methods: {
     onClick() {
-      this.$emit('save', this.user.userInfo)
+      this.$emit('save', this.user)
     }
   }
 }
