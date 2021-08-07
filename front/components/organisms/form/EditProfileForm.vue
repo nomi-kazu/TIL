@@ -14,17 +14,17 @@
     <!-- 各divをコンポーネントに切り出す -->
     <div class="mb-8">
       <p>名前</p>
-      <v-text-field v-model="name" outlined dense />
+      <v-text-field v-model="user.userInfo.name" outlined dense />
     </div>
 
     <div class="mb-8">
       <p>自己紹介</p>
-      <v-text-area v-model="profile" outlined heignt="80" />
+      <v-text-area v-model="user.userInfo.profile" outlined heignt="80" />
     </div>
 
     <div class="mb-8">
       <p>出身</p>
-      <v-text-field v-model="address" outlined dense />
+      <v-text-field v-model="user.userInfo.address" outlined dense />
     </div>
 
     <tie-sns-link-field />
@@ -39,6 +39,22 @@
 const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/PreviewImageFileInput')
 const TieSnsLinkField = () => import('~/components/organisms/textFields/TieSnsLinkField')
 const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
+
+class User {
+  constructor() {
+    this.userInfo = {
+      name: "",
+      profile: "",
+      address: ""
+    }
+  }
+
+  infoToUserInfo(info) {
+    this.name = this.info && this.info.attributes && this.info.attributes.name
+    this.profile = this.info && this.info.attributes && this.info.attributes.profile
+    this.address = this.info && this.info.attributes && this.info.attributes.address
+  }
+}
 
 export default {
   components: {
@@ -55,21 +71,16 @@ export default {
   },
 
   data: () => ({
-    name: undefined,
-    profile: undefined,
-    address: undefined
+    user: new User
   }),
 
   created() {
-    this.name = this.info && this.info.attributes && this.info.attributes.name
-    this.profile = this.info && this.info.attributes && this.info.attributes.profile
-    this.address = this.info && this.info.attributes && this.info.attributes.address
+    this.user.infoToUserInfo(this.info)
   },
 
   methods: {
     onClick() {
-      const userInfo = { name: this.name, profile: this.profile, address: this.address }
-      this.$emit('save', userInfo)
+      this.$emit('save', this.user.userInfo)
     }
   }
 }
