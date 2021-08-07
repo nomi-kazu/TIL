@@ -4,9 +4,11 @@
     <email-text-field @input="setEmailValue" :value="email" />
     <password-text-field @input="setPasswordValue" :value="passoword" />
     <p class="mb-6">※半角英数字のみ使用可能です</p>
-    <orange-btn type="submit" :disabled="!isValid" @onClick="onClick">
-      新規登録
-    </orange-btn>
+    <div class="text-center">
+      <orange-btn type="submit" :disabled="!isValid" @onClick="onClick">
+        新規登録
+      </orange-btn>
+    </div>
   </v-form>
 </template>
 
