@@ -19,7 +19,7 @@
     },
     "register": {
       "name": "新規登録",
-      "to": "/user/sign_up",
+      "to": "/signup",
       "icon": "mdi-account-plus",
       "btn": true
     },
