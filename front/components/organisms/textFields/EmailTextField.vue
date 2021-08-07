@@ -1,6 +1,6 @@
 <template>
   <!-- validationの処理もここにしたい -->
-  <v-text-field label="メール" v-model="valueModel" :rules="[rules.required]" />
+  <v-text-field label="メール" v-model="valueModel" :rules="[rules.required]" outlined dense />
 </template>
 
 <script>

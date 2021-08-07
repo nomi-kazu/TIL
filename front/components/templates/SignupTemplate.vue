@@ -1,7 +1,7 @@
 <template>
   <one-column-container>
-    <h1>新規登録</h1>
-    <signup-card />
+    <h1 class="mb-7">新規登録</h1>
+    <signup-card @signup="signup" />
   </one-column-container>
 </template>
 
@@ -13,6 +13,12 @@ export default {
   components: {
     OneColumnContainer,
     SignupCard
+  },
+
+  methods: {
+    signup(userInfo) {
+      this.$emit('signup', userInfo)
+    }
   }
 }
 </script>
