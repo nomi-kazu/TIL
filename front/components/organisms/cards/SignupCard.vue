@@ -1,20 +1,29 @@
 <template>
-  <v-card class="d-flex flex-column align-center justify-center mx-auto" width="500" height="350">
-    <h2 class="mb-5">TIL</h2>
-    <signup-form @signup="signup" />
+  <v-card class="mx-auto pt-4" width="800" height="400">
+    <h2 class="mb-10 text-center">TIL</h2>
+    <v-row class="d-flex flex-row justify-center">
+      <signup-form class="mr-10" @signup="signup" />
+
+      <div class="ml-10">
+        <p>その他のアカウント</p>
+        <login-sns-btn-group />
+      </div>
+    </v-row>
   </v-card>
 </template>
 
 <script>
 import SignupForm from '~/components/organisms/form/SignupForm'
+import LoginSnsBtnGroup from '~components/organisms/btnGroup/LoginSnsBtnGroup'
 
 export default {
   components: {
-    SignupForm
+    SignupForm,
+    LoginSnsBtnGroup
   },
 
   methods: {
-    signup(userInfo) {
+    signup() {
       this.$emit('signup', userInfo)
     }
   }
@@ -22,5 +31,8 @@ export default {
 </script>
 
 <style>
-
+  .row {
+    width: 100%;
+    height: 100%;
+  }
 </style>
