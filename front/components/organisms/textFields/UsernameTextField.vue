@@ -1,6 +1,6 @@
 <template>
   <!-- validationの処理もここにしたい -->
-  <v-text-field v-model="valueModel" />
+  <v-text-field v-model="valueModel" label="ユーザーID" outlined dense />
 </template>
 
 <script>
@@ -26,5 +26,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .v-text-field {
+    width: 400px;
+  }
 </style>
