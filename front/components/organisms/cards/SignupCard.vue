@@ -1,10 +1,10 @@
 <template>
-  <v-card class="mx-auto pt-4" width="800" height="400">
+  <v-card class="mx-auto pt-4" max-width="800" height="400">
     <h2 class="mb-10 text-center">TIL</h2>
-    <v-row class="d-flex flex-row justify-center">
-      <signup-form class="mr-10" @signup="signup" />
+    <v-row justify="center">
+      <signup-form class="mr-1 mr-mb-6 mr-lg-10" @signup="signup" />
 
-      <div class="ml-10">
+      <div class="mr-1 mr-mb-6 mr-lg-10">
         <p>その他のアカウント</p>
         <login-sns-btn-group />
       </div>
