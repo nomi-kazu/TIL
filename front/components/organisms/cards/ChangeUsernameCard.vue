@@ -17,5 +17,7 @@ export default {
 </script>
 
 <style scoped>
-
+.v-card {
+  position: relative;
+}
 </style>
