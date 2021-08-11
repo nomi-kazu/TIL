@@ -1,5 +1,5 @@
 <template>
-  <v-card class="d-flex justify-center flex-column align-center mx-auto" width="500" height="300">
+  <v-card class="d-flex justify-center flex-column align-center mx-auto username-card" width="500" height="300">
     <p class="mb-5">ユーザーIDを入力してください</p>
     <p class="mb-5">※半角英数字とアンダーバー(_)のみ使用可能です。</p>
     <change-username-form @submit="onSubmit" />
@@ -22,8 +22,16 @@ export default {
 }
 </script>
 
-<style scoped>
-.v-card {
+<style>
+.username-card {
   position: relative;
+}
+
+.next-btn {
+  color: white;
+  background-color: #FDCB6E;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 </style>
