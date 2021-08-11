@@ -40,6 +40,6 @@ export default {
 
 <style scoped>
   .v-text-field {
-    width: 400px;
+    max-width: 400px;
   }
 </style>

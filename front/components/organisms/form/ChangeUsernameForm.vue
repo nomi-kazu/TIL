@@ -3,7 +3,7 @@
     <username-text-field />
 
     <!-- orange-btnを使う、propsにfabを追加 -->
-    <v-btn :value="userName" @click="submit" @input="setUserName" width="30" height="30" fab outlined>→</v-btn>
+    <v-btn :value="userName" @click="onSubmit" @input="setUserName" width="30" height="30" fab outlined>→</v-btn>
   </v-form>
 </template>
 
@@ -24,7 +24,7 @@ export default {
       this.userName = newVal
     },
 
-    submit() {
+    onSubmit() {
       this.$emit('submit', this.userName)
     }
   }

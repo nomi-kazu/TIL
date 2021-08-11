@@ -1,6 +1,6 @@
 <template>
   <div>
-    <signin-enterusername-template @submit="submit" />
+    <signin-enterusername-template @submit="updateUsername" />
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   },
 
   methods: {
-    async submit(userName) {
+    async updateUsername(userName) {
       try {
         console.log("submit")
         // await this.$axios.put(`/api/v1/auth`, {
