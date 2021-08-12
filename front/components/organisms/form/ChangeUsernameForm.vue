@@ -1,6 +1,9 @@
 <template>
   <v-form>
     <username-text-field />
+
+    <!-- orange-btnを使う、propsにfabを追加 -->
+    <v-btn class="next-btn" :value="userName" @click="onSubmit" @input="setUserName" width="30" height="30" fab outlined>→</v-btn>
   </v-form>
 </template>
 
@@ -10,10 +13,23 @@ import UsernameTextField from '~/components/organisms/textFields/UsernameTextFie
 export default {
   components: {
     UsernameTextField
+  },
+
+  data: () => ({
+    userName: ""
+  }),
+
+  methods: {
+    setUserName(newVal) {
+      this.userName = newVal
+    },
+
+    onSubmit() {
+      this.$emit('submit', this.userName)
+    }
   }
 }
 </script>
 
 <style scoped>
-
 </style>

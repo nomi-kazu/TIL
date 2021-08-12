@@ -14,7 +14,7 @@
 
 <script>
 import SignupForm from '~/components/organisms/form/SignupForm'
-import LoginSnsBtnGroup from '~components/organisms/btnGroup/LoginSnsBtnGroup'
+import LoginSnsBtnGroup from '~/components/organisms/btnGroup/LoginSnsBtnGroup'
 
 export default {
   components: {

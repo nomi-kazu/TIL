@@ -1,6 +1,11 @@
 <template>
-  <!-- validationの処理もここにしたい -->
-  <v-text-field v-model="valueModel" label="ユーザーID" outlined dense />
+  <v-text-field
+    v-model="valueModel"
+    label="ユーザーID"
+    outlined
+    dense
+    :rules="[rules.required]"
+  />
 </template>
 
 <script>
@@ -8,9 +13,17 @@ export default {
   props: {
     value: {
       type: String,
-      default: undefined
-    }
+      default: undefined,
+    },
   },
+
+  data: () => ({
+    rules: {
+      required: (value) => {
+        return !!value || "入力してください"
+      },
+    },
+  }),
 
   computed: {
     valueModel: {
@@ -19,14 +32,14 @@ export default {
       },
       set(newVal) {
         return this.$emit('input', newVal)
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>
 
 <style scoped>
   .v-text-field {
-    width: 400px;
+    max-width: 400px;
   }
 </style>
