@@ -2,11 +2,11 @@
   <div>
     <p>ファイル名：{{ fileID }}</p>
 
-    <s-both-template v-if="isBoth" v-model="markdown" />
+    <s-both-template v-if="isBoth" v-model="markdown" :fileid="fileID" />
 
-    <s-edit-template v-if="isEdit" v-model="markdown" />
+    <s-edit-template v-if="isEdit" v-model="markdown" :fileid="fileID" />
 
-    <s-view-template v-if="isView" :md="markdown" />
+    <s-view-template v-if="isView" :md="markdown" :fileid="fileID" />
   </div>
 </template>
 
@@ -92,7 +92,7 @@ export default {
     defaultStatus() {
       return DEFAULT_STATUS
     },
-    
+
     fileID() {
       return this.$route.params.fileID
     },

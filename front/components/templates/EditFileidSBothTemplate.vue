@@ -1,6 +1,8 @@
 <template>
   <two-column-container justify="center" :leftCols="6" :rightCols="6">
     <template #left>
+      <select-md-status-btn-group :fileid="fileid" :value="status" />
+
       <edit-markdown v-model="md" />
     </template>
 
@@ -16,16 +18,35 @@ const TwoColumnContainer = () => import('~/components/molecules/containers/TwoCo
 const ViewFileCard = () => import('~/components/organisms/cards/ViewFileCard')
 const EditMarkdown = () => import('~/components/organisms/markdown/EditMarkdown')
 const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
+const SelectMdStatusBtnGroup = () => import('~/components/organisms/btnGroup/SelectMdStatusBtnGroup')
 
 export default {
   components: {
     TwoColumnContainer,
     ViewFileCard,
     EditMarkdown,
-    BlueBtn
+    BlueBtn,
+    SelectMdStatusBtnGroup
   },
 
   props: {
+    fileid: {
+      type: String,
+      required: true
+    },
+
+    value: {
+      type: String,
+      default: undefined
+    },
+
+    status: {
+      type: String,
+      default: undefined
+    }
+  },
+
+  computed: {
     md: {
       get() {
         return this.value
@@ -39,6 +60,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

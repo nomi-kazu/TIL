@@ -1,5 +1,7 @@
 <template>
   <one-column-container>
+    <select-md-status-btn-group :fileid="fileid" :value="status" />
+
     <edit-markdown v-model="md" />
   </one-column-container>
 </template>
@@ -7,15 +9,27 @@
 <script>
 const EditMarkdown = () => import('~/components/organisms/markdown/EditMarkdown')
 const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
+const SelectMdStatusBtnGroup = () => import('~/components/organisms/btnGroup/SelectMdStatusBtnGroup')
 
 export default {
   components: {
     EditMarkdown,
-    OneColumnContainer
+    OneColumnContainer,
+    SelectMdStatusBtnGroup
   },
 
   props: {
+    fileid: {
+      type: String,
+      required: true
+    },
+
     value: {
+      type: String,
+      default: undefined
+    },
+
+    status: {
       type: String,
       default: undefined
     }
@@ -31,10 +45,10 @@ export default {
         return this.$emit('input', newVal)
       }
     }
-  },
+  }
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
