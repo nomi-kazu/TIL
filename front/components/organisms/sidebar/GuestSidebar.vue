@@ -8,7 +8,7 @@
 
 <script>
 import { getDatas, importComponents, getComponentName } from '~/utils/services/sidebarService'
-const NAME = "login"
+const NAME = "guest"
 
 export default {
   components: importComponents(NAME),

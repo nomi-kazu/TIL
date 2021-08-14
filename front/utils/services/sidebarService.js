@@ -41,7 +41,7 @@ export const importComponents = (name) => {
   return uniqComponentNames(d).reduce(
     (obj, component) => ({
       ...obj,
-      [component]: () => import(`~/components/organisms/list${component}`),
+      [component]: () => import(`~/components/organisms/list/${component}`),
     }), {}
   )
 }
