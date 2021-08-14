@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- fileの内容を表示 -->
     <div id="mb_view" v-html="html" />
   </div>
 </template>

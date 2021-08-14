@@ -1,7 +1,5 @@
 <template>
   <div>
-    <p>ファイル名：{{ fileID }}</p>
-
     <s-both-template v-if="isBoth" v-model="markdown" :fileid="fileID" />
 
     <s-edit-template v-if="isEdit" v-model="markdown" :fileid="fileID" />
