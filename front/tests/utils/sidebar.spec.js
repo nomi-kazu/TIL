@@ -1,23 +1,25 @@
-import * as sidebarService from '~/utils/services/sidebarService'
+import SidebarService from '~/src/domain/services/sidebarService'
 import sidebar from '~/assets/json/Sidebar.json'
-import * as sidebarModel from '~/utils/models/sidebarModel'
+import * as sidebarModel from '~/src/infra/sidebarJsonInfra'
 
 describe('utils/sidebar', () => {
 
   describe('getDatas', () => {
     it('jsonからデータを取得できる(guest)', () => {
-      expect(sidebarService.getDatas("guest")).toBeDefined()
-      expect(sidebarService.getDatas("guest")).toHaveLength(sidebar.data.guest.length)
+      const sidebarService = new SidebarService("guest")
+      expect(sidebarService.datas).toBeDefined()
+      expect(sidebarService.datas).toHaveLength(sidebar.data.guest.length)
     })
 
     it('jsonからデータを取得できる(login)', () => {
-      expect(sidebarService.getDatas("login")).toBeDefined()
-      expect(sidebarService.getDatas("login")).toHaveLength(sidebar.data.login.length)
+      const sidebarService = new SidebarService("login")
+      expect(sidebarService.datas).toBeDefined()
+      expect(sidebarService.datas).toHaveLength(sidebar.data.login.length)
     })
   })
 
   describe('importComponent', () => {
-    jest.mock('~/utils/models/sidebarModel')
+    jest.mock('~/src/infra/sidebarJsonInfra')
 
     it('正しくObjectを取得できるか1', () => {
       jest.spyOn(sidebarModel, 'getSidebarJson').mockImplementation(() => {
@@ -37,7 +39,8 @@ describe('utils/sidebar', () => {
         }
       })
 
-      const received = sidebarService.importComponents('guest')
+      const sidebarService = new SidebarService("guest")
+      const received = sidebarService.importComponents
       expect(received).toBeDefined()
       expect(received).toBeInstanceOf(Object)
       expect(received).toHaveProperty('BaseSidebarListItem')
@@ -62,7 +65,8 @@ describe('utils/sidebar', () => {
         }
       })
 
-      const received = sidebarService.importComponents('guest')
+      const sidebarService = new SidebarService("guest")
+      const received = sidebarService.importComponents
       expect(received).toBeDefined()
       expect(received).toBeInstanceOf(Object)
       expect(received).toHaveProperty('BaseSidebarListItem')
