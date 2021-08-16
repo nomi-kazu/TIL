@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <the-header @click="onDrawer()" />
 
-    <the-sidebar :drewer="drawer" />
+    <the-sidebar :drawer="drawer" />
 
     <v-card class="overflow-hidden header box-shadow-none">
       <v-sheet

@@ -1,21 +1,25 @@
 <template>
-  <v-list-item-group>
-    <component v-for="(data, key) in datas" :is="getComponentName(data)" :key="key" :data="data" />
-  </v-list-item-group>
+  <v-list>
+    <v-list-item-group color="primary">
+      <component v-for="(data, key) in datas" :is="getComponentName(data)" :key="key" :data="data" />
+    </v-list-item-group>
+  </v-list>
 </template>
 
 <script>
-import { getDatas, importComponents, getComponentName } from '~/utils/services/sidebarService'
+import SidebarService from '~/src/domain/services/sidebarService'
 const NAME = 'login'
 
+const SidebarService = new SidebarService(NAME)
+
 export default {
-  components: importComponents(NAME),
+  components: Sidebar.importComponents,
 
   computed: {
-    datas: () => getDatas(NAME),
+    datas: () => Sidebar.datas,
 
     getComponentName() {
-      return (data) => getComponentName(data)
+      return (data) => Sidebar.ComponentName(data)
     }
   },
 }

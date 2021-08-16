@@ -1,37 +1,42 @@
 {
   "data": {
     "guest": ["home", "login", "register"],
-    "login": ["home", "settings", "username", "logout"]
+    "login": ["home", "settings", "username", "md-debug", "logout"]
   },
   "items": {
-    "home": { "name": "Home", "to": "/about", "icon": "mdi-home"},
+    "home": { "name": "Home", "to": "/", "icon": "mdi-home" },
     "login": {
       "name": "ログイン",
-      "to": "/signin",
+      "to": "/user/login",
       "icon": "mdi-account-arrow-right",
       "btn": true
     },
     "logout": {
       "name": "ログアウト",
-      "to": "mdi-account-cancel-outline",
+      "icon": "mdi-account-cancel-outline",
       "event": "logout",
       "btn": true
     },
     "register": {
       "name": "新規登録",
-      "to": "/signup",
       "icon": "mdi-account-plus",
+      "to": "/user/sign_up",
       "btn": true
     },
     "settings": {
       "name": "設定",
-      "to": "/settings/profile",
-      "icon": "mdi-cog"
+      "icon": "mdi-cog",
+      "to": "/settings/profile"
     },
     "username": {
       "name": "投稿する",
-      "to": "mdi-pencil",
+      "icon": "mdi-pencil",
       "event": "username"
+    },
+    "md-debug": {
+      "name": "マークダウン",
+      "icon": "mdi-pencil",
+      "to": "/edit/md"
     }
   }
 }

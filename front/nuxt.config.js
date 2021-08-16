@@ -51,12 +51,17 @@ export default {
   modules: [
     "@nuxtjs/axios",
     "@nuxtjs/auth",
+    "@nuxtjs/markdownit",
     ["nuxt-sass-resources-loader", ["~/assets/sass/variables.scss",]],
   ],
   axios: {
     baseURL: process.env.BASE_URL || "http://localhost:3000"
   },
   
+  markdownit: {
+    injected: true
+  },
+
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
