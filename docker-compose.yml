@@ -8,7 +8,7 @@ services:
       PGTZ: UTC
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     volumes:
-      - ./back/tmp/db:/var/lib/postgresql/data
+      - ./back/tmp/db:/var/lib/postgresql/data:cached
 
   back:
     build:
@@ -20,7 +20,7 @@ services:
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
       FRONT_DOMAIN: "localhost:$FRONT_PORT"   
     volumes:
-      - ./back:/$WORKDIR
+      - ./back:/$WORKDIR:cached
     depends_on:
       - db
     ports:
@@ -35,7 +35,7 @@ services:
         BACK_URL: "http://localhost:$BACK_PORT"
     command: yarn run dev
     volumes:
-      - ./front:/$WORKDIR
+      - ./front:/$WORKDIR:cached
     ports:
       - "$FRONT_PORT:$CONTAINER_PORT"
     depends_on:
