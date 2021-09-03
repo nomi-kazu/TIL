@@ -1,3 +1,14 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  namespace :api do
+    namespace :v1 do
+      resource :passwords, only: [:update]
+      resources :users, except: [:edit] do
+        get :current_user, action: :login_user, on: :collection
+      end
+      # ログイン・ログアウト処理
+      resources :user_token, only: [:create] do
+        delete :destroy, on: :collection
+      end
+    end
+  end
 end
