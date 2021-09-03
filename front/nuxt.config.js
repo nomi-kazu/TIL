@@ -2,9 +2,7 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   ssr: false,
-  /*
-  ** Headers of the page
-  */
+  
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
@@ -17,35 +15,62 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  /*
-  ** Customize the progress-bar color
-  */
+
   loading: { color: '#fff' },
-  /*
-  ** Global CSS
-  */
+  
   css: [
+    { src: '~/node_modules/highlight.js/styles/hopscotch.css', lang: 'css' },
+    '~/assets/sass/main.scss'
   ],
-  /*
-  ** Plugins to load before mounting the App
-  */
+  
   plugins: [
   ],
-  /*
-  ** Nuxt.js dev-modules
-  */
+
+  components: true,
+ 
   buildModules: [
     '@nuxtjs/vuetify',
+    '@nuxtjs/eslint-module',
   ],
-  /*
-  ** Nuxt.js modules
-  */
+  
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/markdownit',
+    '@nuxt-i18n',
   ],
-  /*
-  ** vuetify module configuration
-  ** https://github.com/nuxt-community/vuetify-module
-  */
+  
+  markdownit: {
+    injected: true,
+    breaks: true,
+    html: true,
+    linkify: true,
+    typography: true,
+    langPrefix: '',
+    use: [
+      'markdown-it-mark',
+      'markdown-it-ins'
+    ],
+    highlight: (str, lang) => {
+      const hljs = require('highlight.js');
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return '<pre class="hljs"><code>' +
+                  hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+                  '</code></pre>';
+        } catch (__) {}
+      }
+      // 言語設定がない場合、プレーンテキストとして表示する
+      return '<pre class="hljs"><code>' +  hljs.highlight('plaintext', str, true).value + '</code></pre>';
+    }
+  },
+
+  axios: {
+    baseURL: process.env.BACK_URL || "http://localhost:3000",
+    credentials: true
+  },
+
+  router: {},
+
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
@@ -58,19 +83,23 @@ export default {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3
+          success: colors.green.accent3,
+          limeColor: colors.lime.accent2,
+          cyanLight5: colors.cyan.lighten5,
+          greyLight4: colors.grey.lighten4
         }
       }
     }
   },
-  /*
-  ** Build configuration
-  */
+
+  publicRuntimeConfig: {
+    appName: process.env.APP_NAME,
+    cryptoKey: process.env.CRYPTO_KEY
+  },
+  
   build: {
-    /*
-    ** You can extend webpack config here
-    */
-    extend (config, ctx) {
-    }
+    transpile: [
+      'vee-validate/dist/rules'
+    ]
   }
 }
