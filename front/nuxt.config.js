@@ -1,8 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
-  
+
+  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
@@ -16,29 +18,39 @@ export default {
     ]
   },
 
-  loading: { color: '#fff' },
-  
+  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     { src: '~/node_modules/highlight.js/styles/hopscotch.css', lang: 'css' },
     '~/assets/sass/main.scss'
   ],
-  
+
+  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    'plugins/auth',
+    'plugins/axios',
+    'plugins/vee-validate',
+    'plugins/nuxtClientInit'
   ],
 
+  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
- 
+
+  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    '@nuxtjs/eslint-module',
+    // https://go.nuxtjs.dev/eslint
+    '@nuxtjs/eslint-module'
   ],
-  
+
+  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/markdownit',
-    '@nuxt-i18n',
+    'nuxt-i18n'
   ],
-  
+
   markdownit: {
     injected: true,
     breaks: true,
@@ -51,28 +63,29 @@ export default {
       'markdown-it-ins'
     ],
     highlight: (str, lang) => {
-      const hljs = require('highlight.js');
+      const hljs = require('highlight.js')
       if (lang && hljs.getLanguage(lang)) {
         try {
           return '<pre class="hljs"><code>' +
                   hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-                  '</code></pre>';
+                  '</code></pre>'
         } catch (__) {}
       }
       // 言語設定がない場合、プレーンテキストとして表示する
-      return '<pre class="hljs"><code>' +  hljs.highlight('plaintext', str, true).value + '</code></pre>';
+      return '<pre class="hljs"><code>' + hljs.highlight('plaintext', str, true).value + '</code></pre>'
     }
   },
 
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: process.env.BACK_URL || "http://localhost:3000",
+    baseURL: process.env.BACK_URL || 'http://localhost:3000',
     credentials: true
   },
-
   router: {},
 
+  // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    customVariables: ['~/assets/sass/variables.scss'],
     theme: {
       dark: true,
       themes: {
@@ -92,11 +105,30 @@ export default {
     }
   },
 
+  // Doc: https://nuxt-community.github.io/nuxt-i18n/basic-usage.html#nuxt-link
+  i18n: {
+    strategy: 'no_prefix',
+    locales: ['ja', 'en'],
+    defaultLocale: 'ja',
+    // Doc: https://kazupon.github.io/vue-i18n/api/#properties
+    vueI18n: {
+      fallbackLocale: 'ja',
+      // silentTranslationWarn: true,
+      silentFallbackWarn: true,
+      messages: {
+        ja: require('./locales/ja.json'),
+        en: require('./locales/en.json')
+      }
+    }
+  },
+
+  // Doc: https://nuxtjs.org/guide/runtime-config/
   publicRuntimeConfig: {
     appName: process.env.APP_NAME,
     cryptoKey: process.env.CRYPTO_KEY
   },
-  
+
+  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [
       'vee-validate/dist/rules'
