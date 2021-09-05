@@ -9,8 +9,8 @@ class User < ApplicationRecord
 
   # 他テーブルとのアソシエーション
   has_many :posts
-  has_many :tags, through: :user_tag_maps
   has_many :user_tag_maps, dependent: :destroy
+  has_many :tags, through: :user_tag_maps
 
   # カラムのバリデーション
   validates :name, presence: true, uniqueness: true,

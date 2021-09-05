@@ -9,8 +9,8 @@ module Api
       def create
         cookies[token_access_key] = cookie_token
         render json: {
-          exp: auth.payload[:exp]
-          # user: entity.as_json(methods: [:image_url])
+          exp: auth.payload[:exp],
+          user: entity.as_json(include: %i[posts tags], methods: [:image_url])
         }
       end
 
