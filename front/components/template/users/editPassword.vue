@@ -5,7 +5,7 @@
         パスワード変更
       </v-card-title>
       <v-divider />
-      <v-form>
+      <v-form class="pt-5">
         <TextFieldWithValidation
           v-model="current_password"
           label="現在のパスワード"
@@ -91,6 +91,18 @@ export default {
         await this.$axios.$patch('/api/v1/passwords', formData)
           .then(
             (response) => {
+              this.$store.dispatch(
+                'flash/showMessage',
+                {
+                  message: response.message,
+                  color: 'success',
+                  status: true
+                },
+                { root: true }
+              )
+              this.$refs.form.reset()
+            },
+            (error) => {
               this.$store.dispatch(
                 'flash/showMessage',
                 {

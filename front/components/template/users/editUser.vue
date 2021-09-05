@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <ValitationObserver>
+    <ValidationObserver ref="form" v-slot="{ invalid }" immediate>
       <v-card-title>
         基本情報
       </v-card-title>
@@ -46,7 +46,7 @@
           </v-btn>
         </v-card-text>
       </v-form>
-    </ValitationObserver>
+    </ValidationObserver>
   </v-container>
 </template>
 
@@ -66,9 +66,9 @@ export default {
     return {
       loading: false,
       image: null,
-      name: this.$auth.user.email,
+      name: this.$auth.user.name,
       email: this.$auth.user.email,
-      description: this.$auth.user.description,
+      description: this.$auth.user.description
     }
   },
 
@@ -84,7 +84,7 @@ export default {
         formData.append('user[email]', this.email)
         formData.append('user[description]', this.description)
         this.loading = true
-        await this.$axios.$patch(`/api/v1/users/${this.$auth.user.id}`. formData)
+        await this.$axios.$patch(`/api/v1/users/${this.$auth.user.id}`, formData)
           .then(
             (response) => {
               this.$store.dispatch('getCurrentUser', response)

@@ -70,7 +70,7 @@ class Authentication {
   logout () {
     this.$axios.delete('/api/v1/user_token')
     this.removeStorage()
-    this.store.dispatch('gerCurrentUser', null)
+    this.store.dispatch('getCurrentUser', null)
   }
 }
 
