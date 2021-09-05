@@ -1,0 +1,2 @@
+class PostTagMap < ApplicationRecord
+end
