@@ -1,92 +1,100 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center
-  >
-    <v-flex
-      xs12
-      sm8
-      md6
+  <div>
+    <v-img
+      dark
+      src="images/top_img.jpg"
+      gradient="to top right, rgba(201, 214, 255, 0.6), rgba(226, 226, 226, 0.9)"
+      :height="imgHeight"
     >
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
+      <v-row
+        align="center"
+        justify="center"
+        :style="{ height: `${imgHeight}px`}"
+      >
+        <v-col
+          cols="12"
+          class="text-center"
+        >
+          <h1
+            class="display-1 mb-4"
+            :style="{ letterSpacing: '15px' }"
           >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
+            TILを記録しよう
+          </h1>
+          <h3
+            class="subheading"
+            :style="{ letterSpacing: '5px' }"
           >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+            subtitle
+          </h3>
+        </v-col>
+      </v-row>
+    </v-img>
+    <div>
+      <pre class="prettyprint linenums">
+        mounted () {
+          // https://github.com/google/code-prettify/issues/578
+          const prettyPrint = require('code-prettify')
+          this.$nextTick(function () {
+            prettyPrint.prettyPrint()
+          })
+        }
+        mounted () {
+          // https://github.com/google/code-prettify/issues/578
+          const prettyPrint = require('code-prettify')
+          this.$nextTick(function () {
+            prettyPrint.prettyPrint()
+          })
+        }
+      </pre>
+    </div>
+    <div>
+      {{ $auth.user }}
+      <pre class="prettyprint linenums" />
+    </div>
+    <div>
+      <pre class="prettyprint linenums">
+        mounted () {
+          // https://github.com/google/code-prettify/issues/578
+          const prettyPrint = require('code-prettify')
+          this.$nextTick(function () {
+            prettyPrint.prettyPrint()
+          })
+        }
+        mounted () {
+          // https://github.com/google/code-prettify/issues/578
+          const prettyPrint = require('code-prettify')
+          this.$nextTick(function () {
+            prettyPrint.prettyPrint()
+          })
+        }
+      </pre>
+    </div>
+  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
 export default {
-  components: {
-    Logo,
-    VuetifyLogo
+  data () {
+    return {
+      imgHeight: 300
+    }
+  },
+
+  head () {
+    return {
+      script: [
+        { src: 'https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=doxy' }
+      ]
+    }
   }
 }
 </script>
+
+<style>
+  .prettyprint ol.linenums > li {
+    list-style-type: decimal;
+    /* または */
+    list-style-type: decimal-leading-zero;
+  }
+</style>
