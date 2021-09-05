@@ -4,14 +4,17 @@ module Api
       before_action :authenticate_user, only: %i[update destroy]
 
       def login_user
-        render json: current_user.as_json(methods: [:image_url]), status: :ok
+        render json: current_user.as_json(include: %i[tags], methods: [:image_url]), status: :ok
       end
 
       def index; end
 
       def show
-        user = User.find(params[:id])
-        render json: user.as_json(methods: :image_url)
+        user = User.includes({ image_attachment: :blob },
+                             { posts: [{ images_attachments: :blob }, { user: { image_attachment: :blob } }] },
+                             :tags).find(params[:id])
+        render json: user.as_json(include: [:tags, { posts: { methods: :images_data } }],
+                                  methods: :image_url)
       end
 
       def create
@@ -26,9 +29,12 @@ module Api
 
       def update
         user = User.find(params[:id])
+        tag_list = []
+        tag_params[:tags].each { |user_tag| tag_list.push(user_tag) } if tag_params[:tags].present?
 
         if user.update(user_params)
-          render json: user.as_json(methods: [:image_url]), status: :ok
+          user.save_tags(tag_list)
+          render json: user.as_json(include: %i[tags], methods: [:image_url]), status: :ok
         else
           render json: user.errors, status: :unprocessable_entity
         end
@@ -47,6 +53,10 @@ module Api
 
       def user_params
         params.require(:user).permit(:name, :email, :description, :image, :password)
+      end
+
+      def tag_params
+        params.require(:user).permit(tags: [])
       end
     end
   end
