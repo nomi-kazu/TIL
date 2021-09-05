@@ -1,0 +1,2 @@
+class UserTagMap < ApplicationRecord
+end
