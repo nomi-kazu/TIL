@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resource :passwords, only: [:update]
+      resources :posts, except: [:new]
       resources :users, except: [:edit] do
         get :current_user, action: :login_user, on: :collection
       end

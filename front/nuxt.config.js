@@ -29,7 +29,8 @@ export default {
     'plugins/auth',
     'plugins/axios',
     'plugins/vee-validate',
-    'plugins/nuxtClientInit'
+    'plugins/nuxtClientInit',
+    'plugins/vue-mavon-editor'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
