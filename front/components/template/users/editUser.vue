@@ -33,6 +33,12 @@
           :counter="1000"
         />
         <v-divider />
+        <v-card-subtitle>
+          興味のある技術
+        </v-card-subtitle>
+        <InputTags
+          v-model="tags"
+        />
         <v-card-text class="px-0">
           <v-btn
             :disabled="invalid || loading"
@@ -54,12 +60,14 @@
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
 import TextAreaWithValidation from '~/components/atoms/input/TextAreaWithValidation'
 import ImageFileWithValidation from '~/components/atoms/input/ImageFileWithValidation'
+import InputTags from '~/components/atoms/input/InputTags'
 
 export default {
   components: {
     TextFieldWithValidation,
     TextAreaWithValidation,
-    ImageFileWithValidation
+    ImageFileWithValidation,
+    InputTags
   },
 
   data () {
@@ -68,8 +76,15 @@ export default {
       image: null,
       name: this.$auth.user.name,
       email: this.$auth.user.email,
-      description: this.$auth.user.description
+      description: this.$auth.user.description,
+      tags: []
     }
+  },
+
+  mounted () {
+    this.$auth.user.tags.forEach((tag) => {
+      this.tags.push(tag.name)
+    })
   },
 
   methods: {

@@ -75,11 +75,15 @@
     <v-container>
       <v-tabs-items v-model="tabTitle">
         <v-tab-item>
-          <v-card>
+          <v-card class="mx-1 my-10">
             <v-card-title>自己紹介</v-card-title>
             <v-divider />
             <v-card-text>
               <p>{{ user.description }}</p>
+            </v-card-text>
+            <v-card-subtitle>登録したタグ</v-card-subtitle>
+            <v-card-text>
+              {{ user.tags }}
             </v-card-text>
           </v-card>
         </v-tab-item>
