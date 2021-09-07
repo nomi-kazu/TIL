@@ -40,6 +40,17 @@ class User < ApplicationRecord
     end
   end
 
+  # フォロー
+  def follow(other_user)
+    self.relationships.find_or_create_by(follow_id: other_user.id) unless self == other_user
+  end
+
+  # フォロー解除
+  def unfollow(other_user)
+    relationship = self.relationships.find_by(follow_id: other_user.id)
+    relationship&.destroy
+  end
+
   def image_url
     image.attached? ? url_for(image) : nil
   end
