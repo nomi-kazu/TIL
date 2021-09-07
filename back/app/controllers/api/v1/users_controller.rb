@@ -4,7 +4,7 @@ module Api
       before_action :authenticate_user, only: %i[update destroy]
 
       def login_user
-        render json: current_user.as_json(include: %i[tags], methods: [:image_url]), status: :ok
+        render json: current_user.as_json(include: %i[tags followings followers], methods: [:image_url]), status: :ok
       end
 
       def index; end
@@ -13,7 +13,7 @@ module Api
         user = User.includes({ image_attachment: :blob },
                              { posts: [{ images_attachments: :blob }, { user: { image_attachment: :blob } }] },
                              :tags).find(params[:id])
-        render json: user.as_json(include: [:tags, { posts: { methods: :images_data } }],
+        render json: user.as_json(include: [:tags, :followings, :followers, { posts: { methods: :images_data } }],
                                   methods: :image_url)
       end
 
@@ -34,7 +34,7 @@ module Api
 
         if user.update(user_params)
           user.save_tags(tag_list)
-          render json: user.as_json(include: %i[tags], methods: [:image_url]), status: :ok
+          render json: user.as_json(include: %i[tags followings followers], methods: [:image_url]), status: :ok
         else
           render json: user.errors, status: :unprocessable_entity
         end
