@@ -9,6 +9,10 @@ class User < ApplicationRecord
 
   # 他テーブルとのアソシエーション
   has_many :posts
+  has_many :relationships
+  has_many :followings, through: :relationships, source: :follow
+  has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'follow_id'
+  has_many :followers, through: :reverse_of_relationships, source: :user
   has_many :user_tag_maps, dependent: :destroy
   has_many :tags, through: :user_tag_maps
 
@@ -38,6 +42,17 @@ class User < ApplicationRecord
       user_tag = Tag.find_or_create_by(name: new_name)
       self.tags << user_tag
     end
+  end
+
+  # フォロー
+  def follow(other_user)
+    self.relationships.find_or_create_by(follow_id: other_user.id) unless self == other_user
+  end
+
+  # フォロー解除
+  def unfollow(other_user)
+    relationship = self.relationships.find_by(follow_id: other_user.id)
+    relationship&.destroy
   end
 
   def image_url

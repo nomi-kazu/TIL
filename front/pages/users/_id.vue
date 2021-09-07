@@ -17,16 +17,20 @@
                 {{ user.name }}
                 <div v-if="$auth.loggedIn && user.id !== $auth.user.id">
                   <v-btn
+                    v-if="is_followed"
                     class="ml-2"
                     color="info"
                     rounded
+                    @click="unFollowUser"
                   >
                     アンフォロー
                   </v-btn>
                   <v-btn
+                    v-else
                     class="ml-2"
                     color="warning"
                     rounded
+                    @click="followUser"
                   >
                     フォロー
                   </v-btn>
@@ -34,10 +38,10 @@
               </v-list-item>
               <v-list-item>
                 <v-card-subtitle class="pa-0">
-                  フォロー
+                  フォロー  {{ user.followings.length }}
                 </v-card-subtitle>
                 <v-card-subtitle>
-                  フォワー
+                  フォロワー  {{ user.followers.length }}
                 </v-card-subtitle>
               </v-list-item>
             </v-list>
@@ -105,7 +109,8 @@ export default {
         { name: '投稿レビュー' },
         { name: 'お気に入りツール' },
         { name: 'イベント' }
-      ]
+      ],
+      is_followed: false
     }
   },
 
@@ -122,6 +127,76 @@ export default {
 
   computed: {
     ...mapGetters({ user: 'user/user' })
+  },
+
+  created () {
+    if (this.user.followers.find(v => v.id === this.$auth.user.id)) { this.is_followed = true }
+  },
+
+  methods: {
+    async followUser () {
+      const formData = new FormData()
+      formData.append('follow_id', this.user.id)
+      await this.$axios.$post('/api/v1/relationships', formData)
+        .then(
+          (response) => {
+            this.is_followed = true
+            this.$store.commit('user/setUser', response.user, { root: true })
+            this.$store.dispatch(
+              'flash/showMessage',
+              {
+                message: response.message,
+                color: 'success',
+                status: true
+              },
+              { root: true }
+            )
+          },
+          (error) => {
+            this.$store.dispatch(
+              'flash/showMessage',
+              {
+                message: 'フォローできませんでした',
+                color: 'error',
+                status: true
+              },
+              { root: true }
+            )
+            return error
+          }
+        )
+    },
+
+    async unFollowUser () {
+      await this.$axios.$delete(`/api/v1/relationships/${this.user.id}`)
+        .then(
+          (response) => {
+            this.is_followed = false
+            this.$store.commit('user/setUser', response.user, { root: true })
+            this.$store.dispatch(
+              'flash/showMessage',
+              {
+                message: response.message,
+                color: 'success',
+                status: true
+              },
+              { root: true }
+            )
+          },
+          (error) => {
+            this.$store.dispatch(
+              'flash/showMessage',
+              {
+                message: error,
+                color: 'error',
+                status: true
+              },
+              { root: true }
+            )
+            return error
+          }
+        )
+    }
   }
 }
 </script>
