@@ -89,6 +89,17 @@
             <v-card-text>
               {{ user.tags }}
             </v-card-text>
+            <v-card-title>経歴</v-card-title>
+            <v-divider />
+            <v-row justify="center" no-gutters>
+              <v-col>
+                <v-subheader>チャート</v-subheader>
+                <BarChart
+                  :height="200"
+                  :width="200"
+                />
+              </v-col>
+            </v-row>
           </v-card>
         </v-tab-item>
         <v-tab-item>{{ $auth.user }}</v-tab-item>
@@ -99,8 +110,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import BarChart from '~/components/organisms/users/BarChart'
 
 export default {
+  components: {
+    BarChart
+  },
+
   data () {
     return {
       tabTitle: null,
