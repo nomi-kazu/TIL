@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :followers, through: :reverse_of_relationships, source: :user
   has_many :user_tag_maps, dependent: :destroy
   has_many :tags, through: :user_tag_maps
+  has_many :comments
 
   # カラムのバリデーション
   validates :name, presence: true, uniqueness: true,
