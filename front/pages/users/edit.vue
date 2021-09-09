@@ -41,6 +41,8 @@ export default {
     editPassword
   },
 
+  middleware: 'loginAuth',
+
   data () {
     return {
       tab: null

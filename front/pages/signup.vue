@@ -65,6 +65,8 @@ export default {
     formTemplate
   },
 
+  middleware: 'authenticated',
+
   data ({ $route }) {
     return {
       loading: false,

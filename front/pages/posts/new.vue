@@ -66,6 +66,8 @@ export default {
     InputTags
   },
 
+  middleware: 'loginAuth',
+
   data () {
     return {
       title: '',
