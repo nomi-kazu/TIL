@@ -94,11 +94,6 @@ export default {
     post: {
       type: Object,
       default: null
-    },
-
-    comments: {
-      type: Array,
-      default: null
     }
   },
 
@@ -128,6 +123,7 @@ export default {
         await this.$axios.$post('/api/v1/comments', formData)
           .then(
             (response) => {
+              this.$store.commit('comments/addComments', response, { root: true })
               this.content = ''
               this.$refs.form.reset()
             },
