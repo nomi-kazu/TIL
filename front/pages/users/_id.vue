@@ -102,7 +102,7 @@
             </v-row>
           </v-card>
         </v-tab-item>
-        <v-tab-item>{{ $auth.user }}</v-tab-item>
+        <v-tab-item>{{ user.posts }}</v-tab-item>
       </v-tabs-items>
     </v-container>
   </div>

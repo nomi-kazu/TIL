@@ -39,10 +39,6 @@
 
       <v-card-text v-html="$md.render(post.content)" />
 
-      <v-card-text>
-        <CommentArea />
-      </v-card-text>
-
       <v-card-text v-if="post.tags">
         <v-chip-group
           active-class="primary--text"
@@ -62,6 +58,38 @@
       <v-card-text>
         <TwitterBtn :post="post" />
       </v-card-text>
+    </v-card>
+
+    <v-card class="mt-10">
+      <v-card-title>
+        コメント一覧
+      </v-card-title>
+      <v-divider />
+      <v-card-text
+        v-if="$auth.isAuthenticated()"
+      >
+        <CommentArea
+          :post="post"
+        />
+      </v-card-text>
+      <template
+        v-else
+      >
+        <v-card-text class="pb-0">
+          <v-btn
+            to="/signup"
+            color="warning"
+          >
+            会員登録
+          </v-btn>
+        </v-card-text>
+        <v-card-text>
+          <span>すでにアカウントをお持ちですですか？</span>
+          <nuxt-link to="/login">
+            ログインに移動
+          </nuxt-link>
+        </v-card-text>
+      </template>
     </v-card>
   </v-container>
 </template>
