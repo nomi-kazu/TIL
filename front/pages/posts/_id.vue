@@ -38,7 +38,7 @@
               small
             />
             <span class="font-weight-bold">
-              ({{ post.rate }})
+              ( {{ post.rate }} )
             </span>
           </v-card-actions>
 
