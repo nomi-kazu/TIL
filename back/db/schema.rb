@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 2021_09_11_074213) do
   create_table "comments", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
-    t.integer "reply_id"
     t.text "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -56,13 +55,17 @@ ActiveRecord::Schema.define(version: 2021_09_11_074213) do
 
   create_table "events", force: :cascade do |t|
     t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
     t.string "title", limit: 50, null: false
+    t.string "place", null: false
     t.text "content", null: false
+    t.integer "participant_number", null: false
     t.date "scheduled_date", null: false
     t.time "start_time", null: false
     t.time "end_time", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_events_on_post_id"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
@@ -124,6 +127,7 @@ ActiveRecord::Schema.define(version: 2021_09_11_074213) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "events", "posts"
   add_foreign_key "events", "users"
   add_foreign_key "post_tag_maps", "posts"
   add_foreign_key "post_tag_maps", "tags"
