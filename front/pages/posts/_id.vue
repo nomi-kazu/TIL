@@ -27,10 +27,7 @@
             />
           </v-carousel>
 
-          <v-card-text class="text-center">
-            <span class="font-weight-bold">
-              {{ post.rate }}
-            </span>
+          <v-card-actions class="text-center">
             <v-rating
               :value="post.rate"
               color="yellow darken-3"
@@ -40,7 +37,10 @@
               dense
               small
             />
-          </v-card-text>
+            <span class="font-weight-bold">
+              ({{ post.rate }})
+            </span>
+          </v-card-actions>
 
           <v-divider />
 
@@ -71,8 +71,27 @@
       <v-col cols="12">
         <v-card>
           <v-container>
-            {{ post.user.name }}
-            {{ post.user.description }}
+            <v-card-actions>
+              <v-avatar color="black" size="50" class="mr-1">
+                <v-img
+                  v-if="post.user.image_url"
+                  :src="post.user.image_url"
+                />
+                <v-icon
+                  v-else
+                  color="white"
+                  size="50"
+                >
+                  mdi-account-circle
+                </v-icon>
+              </v-avatar>
+              <span class="pl-2">
+                {{ post.user.name }}
+              </span>
+            </v-card-actions>
+            <v-card-text>
+              {{ post.user.description }}
+            </v-card-text>
           </v-container>
         </v-card>
       </v-col>
