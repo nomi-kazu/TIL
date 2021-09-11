@@ -49,6 +49,7 @@
       <login-btn />
     </template>
     <template v-else>
+      <Notification />
       <LoginBar />
     </template>
   </v-app-bar>
@@ -56,6 +57,7 @@
 
 <script>
 import LoginBar from '~/components/molecles/top/LoginBar'
+import Notification from '~/components/molecles/top/Notification'
 import LoginBtn from '~/components/atoms/top/LoginBtn'
 import SignupBtn from '~/components/atoms/top/SignupBtn'
 
@@ -63,7 +65,8 @@ export default {
   components: {
     LoginBar,
     LoginBtn,
-    SignupBtn
+    SignupBtn,
+    Notification
   },
 
   data () {

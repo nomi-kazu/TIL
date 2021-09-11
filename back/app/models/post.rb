@@ -3,11 +3,16 @@ class Post < ApplicationRecord
   has_many_attached :images
   has_many :post_tag_maps, dependent: :destroy
   has_many :tags, through: :post_tag_maps
+  has_many :comments
 
   def images_data
     url_list = []
     images.each { |image| url_list.push({ id: image.blob_id, url: url_for(image) }) } if images.attached?
     url_list
+  end
+
+  def created_date
+    self.created_at&.strftime("%Y/%m/%d")
   end
 
   def save_tags(tags)

@@ -28,6 +28,14 @@
         </v-tab-item>
       </v-tabs-items>
     </v-card>
+    <v-card-text>
+      <v-btn
+        color="secondary"
+        @click="deleteUser"
+      >
+        退会する
+      </v-btn>
+    </v-card-text>
   </v-container>
 </template>
 
@@ -41,9 +49,46 @@ export default {
     editPassword
   },
 
+  middleware: 'loginAuth',
+
   data () {
     return {
       tab: null
+    }
+  },
+
+  methods: {
+    async deleteUser () {
+      if (window.confirm('退会してもよろしいですか？')) {
+        await this.$axios.$delete(`/api/v1/users/${this.$auth.user.id}`)
+          .then(
+            (response) => {
+              this.$auth.logout()
+              this.$store.dispatch(
+                'flash/showMessage',
+                {
+                  message: response.message,
+                  color: 'success',
+                  status: true
+                },
+                { root: true }
+              )
+              this.$router.push('/')
+            },
+            (error) => {
+              this.$store.dispatch(
+                'flash/showMessage',
+                {
+                  message: error,
+                  color: 'error',
+                  status: true
+                },
+                { root: true }
+              )
+              return error
+            }
+          )
+      }
     }
   }
 }

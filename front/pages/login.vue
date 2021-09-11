@@ -61,6 +61,8 @@ export default {
     formTemplate
   },
 
+  middleware: 'authenticated',
+
   data () {
     return {
       loading: false,
