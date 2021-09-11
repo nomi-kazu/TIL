@@ -26,15 +26,14 @@ module Api
         end
       end
 
-      def edit
-        render json: @post
-      end
-
       def update
+        # 投稿した画像の保存
+        params[:images].each { |image| post.images.attach(images) } if params[:images].present?
         if @post.update(post_params)
-          render json: post
+          @post.save_tags(tags_params[:tags])
+          render json: @post
         else
-          render json: post.errors, status: :unprocessable_entity
+          render json: @post.errors, status: :unprocessable_entity
         end
       end
 
