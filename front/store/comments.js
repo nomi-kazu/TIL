@@ -13,5 +13,9 @@ export const mutations = {
 
   addComments (state, comment) {
     state.comments.push(comment)
+  },
+
+  deleteComment (state, commentId) {
+    state.comments = state.comments.filter(comment => comment.id !== commentId)
   }
 }
