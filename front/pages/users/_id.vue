@@ -108,50 +108,12 @@
         <v-tab-item>
           <v-container>
             <template v-if="user.posts.length > 0">
-              <v-card
+              <UserPosts
                 v-for="post in user.posts"
                 :key="post.id"
+                :post="post"
                 class="mb-8"
-              >
-                <nuxt-link
-                  :to="{ path: `/posts/${post.id}`}"
-                  style="color: inherit; text-decoration: none;"
-                >
-                  <v-card-title style="font-size: 15px;">
-                    {{ post.title }}
-                  </v-card-title>
-                  <v-card-actions>
-                    <v-rating
-                      :value="post.rate"
-                      color="yellow darken-3"
-                      backgroud-color="grey darken-1"
-                      readonly
-                      half-increments
-                      dense
-                      small
-                    />
-                    <span class="font-weight-bold pl-1">
-                      ( {{ post.rate }} )
-                    </span>
-                  </v-card-actions>
-                </nuxt-link>
-                <v-card-text v-if="post.tags">
-                  <v-chip-group
-                    active-class="primary--text"
-                    column
-                  >
-                    <v-chip
-                      v-for="tag in post.tags"
-                      :key="tag"
-                      color="info"
-                      outlined
-                      small
-                    >
-                      {{ tag.name }}
-                    </v-chip>
-                  </v-chip-group>
-                </v-card-text>
-              </v-card>
+              />
             </template>
             <template v-else>
               <v-card>
@@ -178,10 +140,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import BarChart from '~/components/organisms/users/BarChart'
+import UserPosts from '~/components/organisms/users/UserPosts'
 
 export default {
   components: {
-    BarChart
+    BarChart,
+    UserPosts
   },
 
   data () {

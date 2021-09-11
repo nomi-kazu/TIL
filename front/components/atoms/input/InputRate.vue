@@ -6,17 +6,19 @@
       :vid="$attrs.vid"
     >
       <div class="text-center">
-        <h3>評価（必須）</h3>
-        <v-rating
-          v-model="inputValue"
-          v-bind="$attrs"
-          color="yellow darken-3"
-          v-on="$listeners"
-          dense
-        />
-        <span class="font-weight-bold">
-          {{ inputValue }}
-        </span>
+        <v-card-actions>
+          <span class="font-weight-bold">
+            {{ inputValue }}
+          </span>
+          <h3>評価（必須）</h3>
+          <v-rating
+            v-model="inputValue"
+            v-bind="$attrs"
+            color="yellow darken-3"
+            v-on="$listeners"
+            dense
+          />
+        </v-card-actions>
       </div>
     </ValidationProvider>
   </v-card-text>
