@@ -14,7 +14,7 @@ module Api
         user = User.includes({ image_attachment: :blob },
                              { posts: [{ images_attachments: :blob }, { user: { image_attachment: :blob } }, :tags] },
                              :tags).find(params[:id])
-        render json: user.as_json(include: [:tags, :followings, :followers, { posts: { include: [:tags], methods: :images_data } }],
+        render json: user.as_json(include: [:tags, :followings, :followers, { posts: { include: [:tags], methods: [:images_data, :created_date] } }],
                                   methods: :image_url)
       end
 

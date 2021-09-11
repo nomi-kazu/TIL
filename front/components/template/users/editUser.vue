@@ -95,6 +95,11 @@ export default {
 
       if (isValid) {
         if (this.image) { formData.append('user[image]', this.image) }
+        if (this.tags) {
+          this.tags.forEach((tag) => {
+            formData.append('user[tags][]', tag)
+          })
+        }
         formData.append('user[name]', this.name)
         formData.append('user[email]', this.email)
         formData.append('user[description]', this.description)
