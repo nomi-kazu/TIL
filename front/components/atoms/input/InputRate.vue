@@ -6,11 +6,11 @@
       :vid="$attrs.vid"
     >
       <div class="text-center">
+        <h3>評価（必須）</h3>
         <v-card-actions>
           <span class="font-weight-bold">
             {{ inputValue }}
           </span>
-          <h3>評価（必須）</h3>
           <v-rating
             v-model="inputValue"
             v-bind="$attrs"

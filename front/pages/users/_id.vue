@@ -4,17 +4,23 @@
       <v-row align="center" justify="center" no-gutters>
         <v-col xs="12" sm="10" md="8" lg="6">
           <v-layout class="py-3 pl-13" align-content-center>
-            <v-avatar v-if="user.image_url" color="white" size="65">
-              <v-img :src="user.image_url" />
-            </v-avatar>
-            <v-avatar v-else color="black" size="65">
-              <v-icon color="white" size="80">
-                mdi-account-circle
-              </v-icon>
-            </v-avatar>
+            <v-card-actions>
+              <v-avatar color="white" size="65">
+                <v-img
+                  v-if="user.image_url"
+                  :src="user.image_url"
+                />
+                <v-icon
+                  v-else
+                  size="80"
+                >
+                  mdi-account-circle
+                </v-icon>
+              </v-avatar>
+              <span class="pl-2">{{ user.name }}</span>
+            </v-card-actions>
             <v-list color="greyLight4">
               <v-list-item class="py-0 form-inline">
-                {{ user.name }}
                 <div v-if="$auth.loggedIn && user.id !== $auth.user.id">
                   <v-btn
                     v-if="is_followed"
