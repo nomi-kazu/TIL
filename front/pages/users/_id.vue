@@ -4,9 +4,9 @@
       <v-row align="center" justify="center" no-gutters>
         <v-col xs="12" sm="10" md="8" lg="6">
           <v-layout class="py-3 pl-13" align-content-center>
-            <v-avarar v-if="user.image_url" color="white" size="65">
+            <v-avatar v-if="user.image_url" color="white" size="65">
               <v-img :src="user.image_url" />
-            </v-avarar>
+            </v-avatar>
             <v-avatar v-else color="black" size="65">
               <v-icon color="white" size="80">
                 mdi-account-circle
