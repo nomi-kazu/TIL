@@ -158,7 +158,7 @@
                 <v-card-text>
                   投稿記事がありません
                 </v-card-text>
-                <div v-if="user.id == $auth.user.id">
+                <div v-if="user.id==$auth.user.id">
                   <v-divider />
                   <v-card-text>
                     <v-btn to="/posts/new">
