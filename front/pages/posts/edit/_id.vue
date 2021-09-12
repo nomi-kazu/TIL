@@ -13,6 +13,7 @@
                   placeholder="記事のタイトル"
                   :counter="50"
                   rules="max:50|required"
+                  outlined
                 />
 
                 <InputRate
@@ -25,6 +26,7 @@
 
                 <InputImages
                   v-model="images"
+                  :value="post.images_data"
                 />
 
                 <InputContent
@@ -85,7 +87,6 @@ export default {
       rate: null,
       isEnter: false,
       loading: false,
-      showImages: [],
       images: [],
       tags: []
     }
@@ -138,11 +139,10 @@ export default {
         await this.$axios.$patch(`/api/v1/posts/${this.post.id}`, formData)
           .then(
             (response) => {
-              console.log(response)
               this.$store.dispatch(
                 'flash/showMessage',
                 {
-                  message: response,
+                  message: response.message,
                   color: 'success',
                   status: true
                 },
@@ -152,7 +152,7 @@ export default {
               this.content = ''
               this.images = []
               this.$refs.form.reset()
-              this.$router.push(`/posts/${response.id}`)
+              this.$router.push(`/posts/${response.post.id}`)
             },
             (error) => {
               this.$store.dispatch(
