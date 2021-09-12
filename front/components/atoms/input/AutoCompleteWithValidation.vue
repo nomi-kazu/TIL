@@ -3,11 +3,12 @@
     v-slot="{ errors }"
     :name="$attrs.label"
     :rules="rules"
-    :vid="$attrs.vid"
+    :vid="$attrs.vie"
   >
-    <v-textarea
+    <v-autocomplete
       v-model="inputValue"
-      :error-messages="errors"
+      :items="participant"
+      :error-message="errors"
       v-bind="$attrs"
       v-on="$listeners"
     />
@@ -23,8 +24,8 @@ export default {
     },
 
     value: {
-      type: null,
-      default: ''
+      type: Number,
+      default: null
     }
   },
 
@@ -36,7 +37,15 @@ export default {
 
       set (value) {
         this.$emit('input', value)
-      } 
+      }
+    },
+
+    participant () {
+      const participants = []
+      for (let i = 1; i <= 50; i++) {
+        participants.push(i)
+      }
+      return participants
     }
   }
 }

@@ -4,6 +4,7 @@ class Post < ApplicationRecord
   has_many :post_tag_maps, dependent: :destroy
   has_many :tags, through: :post_tag_maps
   has_many :comments
+  has_one :event
 
   def images_data
     url_list = []
@@ -12,7 +13,7 @@ class Post < ApplicationRecord
   end
 
   def created_date
-    self.created_at&.strftime("%Y/%m/%d")
+    self.created_at&.strftime('%Y/%m/%d')
   end
 
   def save_tags(tags)

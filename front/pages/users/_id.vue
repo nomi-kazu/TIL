@@ -87,7 +87,6 @@
         <v-tab-item>
           <v-card
             class="mx-1 my-10"
-            color="greyLight4"
           >
             <v-card-title>自己紹介</v-card-title>
             <v-divider />
@@ -182,7 +181,7 @@ export default {
     ...mapGetters({ user: 'user/user' })
   },
 
-  created () {
+  mounted () {
     if (this.user.followers.find(v => v.id === this.$auth.user.id)) { this.is_followed = true }
   },
 
@@ -226,6 +225,7 @@ export default {
           (response) => {
             this.is_followed = false
             this.$store.commit('user/setUser', response.user, { root: true })
+            console.log(response.user)
             this.$store.dispatch(
               'flash/showMessage',
               {

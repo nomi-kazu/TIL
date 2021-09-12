@@ -5,8 +5,9 @@
     :rules="rules"
     :vid="$attrs.vid"
   >
-    <v-textarea
+    <v-text-field
       v-model="inputValue"
+      type="time"
       :error-messages="errors"
       v-bind="$attrs"
       v-on="$listeners"
@@ -36,7 +37,7 @@ export default {
 
       set (value) {
         this.$emit('input', value)
-      } 
+      }
     }
   }
 }
