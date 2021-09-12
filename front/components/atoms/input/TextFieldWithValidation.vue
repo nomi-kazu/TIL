@@ -8,7 +8,6 @@
     <v-text-field
       v-model="inputValue"
       :error-messages="errors"
-      outlined
       v-bind="$attrs"
       v-on="$listeners"
     />

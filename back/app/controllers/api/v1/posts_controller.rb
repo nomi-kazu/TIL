@@ -30,8 +30,8 @@ module Api
         # 投稿した画像の保存
         params[:images].each { |image| post.images.attach(images) } if params[:images].present?
         if @post.update(post_params)
-          @post.save_tags(tags_params[:tags])
-          render json: @post
+          @post.save_tags(tags_params[:tags]) if tags_params[:tags]
+          render json: { post: @post, message: '投稿を編集しました' }
         else
           render json: @post.errors, status: :unprocessable_entity
         end

@@ -1,15 +1,14 @@
 <template>
   <ValidationProvider
-    v-slot="{ errors, valid }"
+    v-slot="{ errors }"
     :name="$attrs.label"
     :rules="rules"
-    :vid="$attrs.label"
+    :vid="$attrs.vid"
   >
-    <v-autocomplete
-      v-model="innerValue"
+    <v-text-field
+      v-model="inputValue"
+      type="time"
       :error-messages="errors"
-      :items="items"
-      :success="valid"
       v-bind="$attrs"
       v-on="$listeners"
     />
@@ -24,32 +23,21 @@ export default {
       default: ''
     },
 
-    items: {
-      type: Array
-    },
-
     value: {
-      type: null
+      type: null,
+      default: ''
     }
   },
 
-  data: () => ({
-    innerValue: ''
-  }),
+  computed: {
+    inputValue: {
+      get () {
+        return this.value
+      },
 
-  watch: {
-    innerValue (newVal) {
-      this.$emit('input', newVal)
-    },
-
-    value (newVal) {
-      this.innerValue = newVal
-    }
-  },
-
-  created () {
-    if (this.value) {
-      this.innerValue = this.value
+      set (value) {
+        this.$emit('input', value)
+      }
     }
   }
 }
