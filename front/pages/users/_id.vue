@@ -4,26 +4,26 @@
       <v-row align="center" justify="center" no-gutters>
         <v-col xs="12" sm="10" md="8" lg="6">
           <v-layout class="py-3 pl-13" align-content-center>
-            <v-card-actions>
-              <v-avatar color="white" size="65">
-                <v-img
-                  v-if="user.image_url"
-                  :src="user.image_url"
-                />
-                <v-icon
-                  v-else
-                  size="80"
-                >
-                  mdi-account-circle
-                </v-icon>
-              </v-avatar>
-              <span class="pl-2">{{ user.name }}</span>
-            </v-card-actions>
             <v-list color="greyLight4">
-              <v-list-item class="py-0 form-inline">
-                <FollowBtnGroup
-                  :user="user"
-                />
+              <v-list-item>
+                <v-card-actions>
+                  <v-avatar color="white" size="65">
+                    <v-img
+                      v-if="user.image_url"
+                      :src="user.image_url"
+                    />
+                    <v-icon
+                      v-else
+                      size="80"
+                    >
+                      mdi-account-circle
+                    </v-icon>
+                  </v-avatar>
+                  <span class="pl-2">{{ user.name }}</span>
+                  <FollowBtnGroup
+                    :user="user"
+                  />
+                </v-card-actions>
               </v-list-item>
               <v-list-item>
                 <v-card-subtitle class="pa-0">
@@ -128,6 +128,11 @@
             </template>
           </v-container>
         </v-tab-item>
+        <v-tab-item>
+          <v-container>
+            <UserEvents />
+          </v-container>
+        </v-tab-item>
       </v-tabs-items>
     </v-container>
   </div>
@@ -138,12 +143,14 @@ import { mapGetters } from 'vuex'
 import BarChart from '~/components/organisms/users/BarChart'
 import UserPosts from '~/components/organisms/users/UserPosts'
 import FollowBtnGroup from '~/components/molecles/users/FollowBtnGroup'
+import UserEvents from '~/components/organisms/users/UserEvents'
 
 export default {
   components: {
     BarChart,
     UserPosts,
-    FollowBtnGroup
+    FollowBtnGroup,
+    UserEvents
   },
 
   data () {

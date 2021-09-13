@@ -5,6 +5,7 @@
       class="ml-2"
       color="info"
       rounded
+      small
       @click="unFollowUser"
     >
       アンフォロー
@@ -14,6 +15,7 @@
       class="ml-2"
       color="warning"
       rounded
+      small
       @click="followUser"
     >
       フォロー
