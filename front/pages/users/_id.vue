@@ -68,39 +68,44 @@
     <v-container>
       <v-tabs-items v-model="tabTitle">
         <v-tab-item>
-          <v-card
-            class="mx-1 my-10"
-          >
-            <v-card-title>自己紹介</v-card-title>
-            <v-divider />
-            <v-card-text>
-              {{ user.description }}
-            </v-card-text>
-            <v-card-subtitle>登録したタグ</v-card-subtitle>
-            <v-card-text>
-              {{ user.tags }}
-            </v-card-text>
-            <v-card-title>経歴</v-card-title>
-            <v-divider />
-            <v-row justify="center" no-gutters>
-              <v-col>
-                <v-subheader>チャート</v-subheader>
-                <BarChart
-                  :height="200"
-                  :width="200"
-                />
-              </v-col>
-            </v-row>
-          </v-card>
+          <v-container style="background-color:#FAFAFA;">
+            <v-card>
+              <v-card-title>自己紹介</v-card-title>
+              <v-divider />
+              <v-card-text>
+                {{ user.description }}
+              </v-card-text>
+              <v-card-subtitle>登録したタグ</v-card-subtitle>
+              <v-card-text>
+                {{ user.tags }}
+              </v-card-text>
+              <v-card-title>経歴</v-card-title>
+              <v-divider />
+              <v-row justify="center" no-gutters>
+                <v-col>
+                  <v-subheader>チャート</v-subheader>
+                  <BarChart
+                    :height="200"
+                    :width="200"
+                  />
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-container>
         </v-tab-item>
         <v-tab-item>
-          <v-container>
+          <v-container style="background-color:#FAFAFA;">
             <template v-if="user.posts.length > 0">
               <UserPosts
                 v-for="post in user.posts"
                 :key="post.id"
                 :post="post"
                 class="mb-8"
+              />
+              <v-pagination
+                v-model="page"
+                :length="6"
+                @input="getNumber"
               />
             </template>
             <template v-else>
@@ -111,7 +116,10 @@
                 <div v-if="user.id==$auth.user.id">
                   <v-divider />
                   <v-card-text>
-                    <v-btn to="/posts/new">
+                    <v-btn
+                      color="warning"
+                      to="/posts/new"
+                    >
                       投稿/レビューを行う
                     </v-btn>
                   </v-card-text>
@@ -146,7 +154,10 @@ export default {
         { name: '投稿レビュー' },
         { name: 'お気に入りツール' },
         { name: 'イベント' }
-      ]
+      ],
+      page: 1,
+      pageSize: 10,
+      posts: []
     }
   },
 
@@ -170,7 +181,9 @@ export default {
   },
 
   methods: {
-
+    getNumber (number) {
+      console.log(number)
+    }
   }
 }
 </script>
