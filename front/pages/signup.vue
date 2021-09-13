@@ -9,12 +9,14 @@
             placeholder="あなたの表示名"
             :counter="15"
             rules="required|max:15"
+            outlined
           />
 
           <TextFieldWithValidation
             v-model="email"
             label="メールアドレス"
             rules="required|email|max:30"
+            outlined
           />
 
           <TextFieldWithValidation
@@ -26,6 +28,7 @@
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"
+            outlined
           />
 
           <v-card-text class="px-0">

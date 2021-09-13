@@ -18,12 +18,14 @@
           label="ユーザー名"
           placeholder="あなたの表示名"
           :counter="15"
+          outlined
         />
 
         <TextFieldWithValidation
           v-model="email"
           rules="required|email|max:30"
           label="メールアドレス"
+          outlined
         />
 
         <TextAreaWithValidation
@@ -31,6 +33,7 @@
           rules="max:1000"
           label="自己紹介"
           :counter="1000"
+          outlined
         />
         <v-divider />
         <v-card-subtitle>
