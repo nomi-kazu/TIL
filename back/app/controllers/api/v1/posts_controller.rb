@@ -15,7 +15,7 @@ module Api
         post = Post.new(post_params)
         post.user = current_user
         # 投稿した画像の保存
-        params[:images].each { |image| @post.images.attach(image) } if params[:images].present?
+        params[:images].each { |image| post.images.attach(image) } if params[:images].present?
 
         if post.save
           post.save_tags(tags_params[:tags]) if tags_params[:tags]
@@ -28,7 +28,7 @@ module Api
 
       def update
         # 投稿した画像の保存
-        params[:images].each { |image| post.images.attach(images) } if params[:images].present?
+        params[:images].each { |image| @post.images.attach(images) } if params[:images].present?
         if @post.update(post_params)
           @post.save_tags(tags_params[:tags]) if tags_params[:tags]
           render json: { post: @post, message: '投稿を編集しました' }

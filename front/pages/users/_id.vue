@@ -95,9 +95,9 @@
         </v-tab-item>
         <v-tab-item>
           <v-container style="background-color:#FAFAFA;">
-            <template v-if="user.posts.length > 0">
+            <template v-if="posts.length > 0">
               <UserPosts
-                v-for="post in user.posts"
+                v-for="post in posts"
                 :key="post.id"
                 :post="post"
                 class="mb-8"
@@ -155,9 +155,7 @@ export default {
         { name: 'お気に入りツール' },
         { name: 'イベント' }
       ],
-      page: 1,
-      pageSize: 10,
-      posts: []
+      pageSize: 10
     }
   },
 
@@ -165,6 +163,8 @@ export default {
     await $axios.get(`/api/v1/users/${params.id}`)
       .then((response) => {
         store.commit('user/setUser', response.data, { root: true })
+        console.log(response.data)
+        store.commit('posts/setPosts', response.data.posts, { root: true })
       })
       .catch((error) => {
         console.log(error)
@@ -173,7 +173,8 @@ export default {
   },
 
   computed: {
-    ...mapGetters({ user: 'user/user' })
+    ...mapGetters({ user: 'user/user' }),
+    ...mapGetters({ posts: 'posts/posts' })
   },
 
   mounted () {
