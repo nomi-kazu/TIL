@@ -26,17 +26,16 @@
           <v-card-text>
             <v-btn
               color="error"
-              @click="deleteFile(index)"
               x-small
+              @click="deleteFile(index)"
             >
               削除
             </v-btn>
           </v-card-text>
         </v-col>
       </template>
-
       <v-col
-        style="min-height:180px;"
+        style="min-height: 180px;"
         @click="clickDropArea"
         @dragenter="dragEnter"
         @dragleave="dragLeave"
@@ -48,7 +47,7 @@
           type="file"
           accept="image/*"
           multiple="multiple"
-          style="display:none"
+          style="display:none;"
           @change="uploadFile($event)"
         >
       </v-col>
@@ -61,7 +60,7 @@ export default {
   props: {
     value: {
       type: Array,
-      default: () => []
+      default: () => {}
     }
   },
 
@@ -109,7 +108,7 @@ export default {
       if (totalImages <= 5) {
         fileImages.forEach((fileImage) => {
           const reader = new FileReader()
-          // readAdDataURLが完了した後実行される処理
+          // readAdDataURLが完了したあと実行される処理
           reader.onload = (e) => {
             this.showImages.push(e.target.result)
           }
@@ -148,10 +147,9 @@ export default {
     min-height: 240.3px;
     font-weight: bold;
     font-size: 1.2em;
-    border: 3px solid gray;
+    border: 3px solid;
   }
-
   .enter {
-    border: 5px dotted rgb(176, 230, 200);
+    border: 5px dotted powderblue;
   }
 </style>
