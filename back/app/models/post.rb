@@ -5,6 +5,8 @@ class Post < ApplicationRecord
   has_many :tags, through: :post_tag_maps
   has_many :comments, dependent: :destroy
   has_one :event, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :liked_users, through: :likes, source: :user
 
   def images_data
     url_list = []
