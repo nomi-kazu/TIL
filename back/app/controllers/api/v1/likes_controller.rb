@@ -9,7 +9,7 @@ module Api
       end
 
       def destroy
-        like = Like.find_by(post_id: pramas[:id], user_id: current_user.id)
+        like = Like.find_by(post_id: params[:id], user_id: current_user.id)
         if like.destroy
           render json: like, status: :ok
         else
@@ -20,7 +20,7 @@ module Api
       private
 
       def like_params
-        pramas.require(:like).permit(:user_id, :post_id)
+        params.require(:like).permit(:user_id, :post_id)
       end
     end
   end

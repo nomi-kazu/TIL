@@ -1,11 +1,13 @@
 export const state = () => ({
   post: {},
-  posts: []
+  posts: [],
+  likedPosts: []
 })
 
 export const getters = {
   post: state => state.post,
-  posts: state => state.posts
+  posts: state => state.posts,
+  likedPosts: state => state.likedPosts
 }
 
 export const mutations = {
@@ -19,5 +21,13 @@ export const mutations = {
 
   deletePost (state, postId) {
     state.posts = state.posts.filter(post => post.id !== postId)
+  },
+
+  setLikedPosts (state, likedPosts) {
+    state.likedPosts = likedPosts
+  },
+
+  deleteLikedPosts (state, likedPostId) {
+    state.likedPosts = state.likedPosts.filter(likedPost => likedPost.id !== likedPostId)
   }
 }
