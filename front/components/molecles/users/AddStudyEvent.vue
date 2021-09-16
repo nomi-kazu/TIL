@@ -192,6 +192,8 @@ export default {
         await this.$axios.$post('/api/v1/events', formData)
           .then(
             (response) => {
+              console.log(response)
+              this.$store.commit('events/addEvent', response, { root: true })
               this.$store.dispatch(
                 'flash/showMessage',
                 {

@@ -7,7 +7,9 @@ module Api
       def index; end
 
       def show
-        render json: @post.as_json(include: [{ user: { include: %i[followings followers], methods: :image_url } }, { comments: { include: { user: { methods: :image_url } }, methods: :created_date } }, :tags],
+        render json: @post.as_json(include: [{ user: { include: %i[followings followers], methods: :image_url } },
+                                             { comments: { include: { user: { methods: :image_url } }, methods: :created_date } },
+                                             :tags, :liked_users],
                                    methods: %i[images_data created_date])
       end
 
@@ -19,8 +21,7 @@ module Api
 
         if post.save
           post.save_tags(tags_params[:tags]) if tags_params[:tags]
-          render json: { post: post.as_json(include: [{ user: { methods: :image_url } }, :tags, :comments], methods: [:images_data]),
-                         message: '投稿を作成しました', status: :created }
+          render json: { post: post, message: '投稿を作成しました', status: :created }
         else
           render json: post.errors, status: :unprocessable_entity
         end

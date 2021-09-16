@@ -25,7 +25,7 @@
             class="subheading"
             :style="{ letterSpacing: '5px' }"
           >
-            subtitle
+            イベント/勉強会
           </h3>
         </v-col>
       </v-row>
