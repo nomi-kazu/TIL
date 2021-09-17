@@ -4,7 +4,7 @@
       <v-col cols="12">
         <v-card>
           <v-card-subtitle>
-            {{ post.created_date }}
+            {{ $moment(post.created_at).format('YYYY/MM/DD HH:MM') }}
             <AddStudyEvent
               class="float-right ma-0"
               :post="post"
