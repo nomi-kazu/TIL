@@ -13,10 +13,10 @@ module Api
       def show
         user = User.includes({ image_attachment: :blob },
                              { posts: [{ images_attachments: :blob }, { user: { image_attachment: :blob } }, :tags] },
-                             :events, :followings, :followers, :tags).find(params[:id])
-        render json: user.as_json(include: [{ posts: { include: [:tags], methods: :images_data } }, { events: { include: { post: { include: [:tags] } } } },
-                                            :tags, :followings, :followers, :liked_posts],
-                                            methods: :image_url)
+                             :liked_posts, :events, :followings, :followers, :tags).find(params[:id])
+        render json: user.as_json(include: [{ posts: { include: [:tags], methods: :images_data } },
+                                            { events: { include: [{ post: { include: [:tags] } }, { user: { methods: :image_url } }, :join_users] } },
+                                            { liked_posts: { include: %i[tags liked_users] } }, :join_events, :tags, :followings, :followers], methods: :image_url)
       end
 
       def create
