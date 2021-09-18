@@ -57,7 +57,7 @@
     <v-pagination
       v-model="page"
       color="info"
-      :length="likedPostsLength"
+      :length="LikedPostsLength"
       @input="pageChange"
     />
   </div>
@@ -91,7 +91,7 @@ export default {
       return this.likedPosts.slice(this.pageSize * (this.page - 1), this.pageSize * (this.page))
     },
 
-    likedPostsLength () {
+    LikedPostsLength () {
       return Math.ceil(this.likedPosts.length / this.pageSize)
     }
   },

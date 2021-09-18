@@ -6,8 +6,8 @@
         :key="event.id"
         cols="12"
         xs="12"
-        sm="6"
-        md="6"
+        sm="4"
+        md="4"
       >
         <v-card class="mb-8">
           <v-img src="/images/no_img.png">
@@ -16,19 +16,14 @@
                 :event="event"
               />
             </v-card-text>
-            <EditStudyEvent
-              :post="event.post"
-              :event="event"
-            />
           </v-img>
           <v-card-title class="text-h5">
             {{ event.title }}
           </v-card-title>
           <v-card-subtitle>
-            <span>開催日: </span>
             {{ $moment(event.scheduled_date).format('YYYY/MM/DD') }}
           </v-card-subtitle>
-          <v-card-text class="py-0">
+          <v-card-text>
             <v-chip-group
               v-if="event.post.tags.length > 0"
               class="w-100"
@@ -47,13 +42,16 @@
             </v-chip-group>
           </v-card-text>
           <v-card-text class="pt-0">
-            <v-icon
+            <v-btn
               class="pt-0"
-              icon
-              @click="deleteEvent(event.id)"
+              color="pink accent-2"
+              @click="cancelEvent(event.id)"
             >
-              mdi-trash-can-outline
-            </v-icon>
+              <v-icon>
+                mdi-trash-can-outline
+              </v-icon>
+              参加をキャンセルする
+            </v-btn>
           </v-card-text>
         </v-card>
       </v-col>
@@ -71,18 +69,16 @@
 
 <script>
 import EventModal from '~/components/molecles/events/EventModal'
-import EditStudyEvent from '~/components/molecles/users/EditStudyEvent'
 
 export default {
   components: {
-    EventModal,
-    EditStudyEvent
+    EventModal
   },
 
   props: {
     events: {
       type: Array,
-      default: () => {}
+      default: () => []
     }
   },
 
@@ -109,9 +105,9 @@ export default {
       this.displayEvents.slice(this.pageSize * (pageNumber - 1), this.pageSize * (pageNumber))
     },
 
-    async deleteEvent (eventId) {
-      if (window.confirm('削除してもよろしいですか？')) {
-        await this.$axios.$delete(`/api/v1/events/${eventId}`)
+    async cancelEvent (eventId) {
+      if (window.confirm('キャンセルしてもよろしいですか？')) {
+        await this.$axios.$delete(`/api/v1/join_events/${eventId}`)
           .then(
             (response) => {
               this.$store.commit('events/deleteEvent', eventId, { root: true })

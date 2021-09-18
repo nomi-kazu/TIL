@@ -3,7 +3,7 @@ module Api
     class JoinEventsController < ApplicationController
       def create
         event = Event.find(join_event_params[:event_id])
-        if event.participant_number < event.join_users.length
+        if event.participant_number > event.join_users.length
           join_event = current_user.join_events.create(event_id: join_event_params[:event_id])
           render json: join_event.as_json(include: [:user]), status: :created
         else

@@ -188,14 +188,14 @@
         <v-tab-item>
           <v-container class="grey lighten-5">
             <template v-if="events.length > 0">
-              <UserEvents
+              <UserJoinedEvents
                 :events="events"
               />
             </template>
             <template v-else>
               <v-card>
                 <v-card-text>
-                  主催イベントはありません
+                  参加イベントはありません
                 </v-card-text>
               </v-card>
             </template>
@@ -213,6 +213,7 @@ import FollowBtnGroup from '~/components/molecles/users/FollowBtnGroup'
 import UserEvents from '~/components/organisms/users/UserEvents'
 import UserLikedPosts from '~/components/organisms/users/UserLikedPosts'
 import UserPosts from '~/components/organisms/users/UserPosts'
+import UserJoinedEvents from '~/components/organisms/users/UserJoinedEvents'
 
 export default {
   components: {
@@ -220,7 +221,8 @@ export default {
     FollowBtnGroup,
     UserEvents,
     UserLikedPosts,
-    UserPosts
+    UserPosts,
+    UserJoinedEvents
   },
 
   data () {

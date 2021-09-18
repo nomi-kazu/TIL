@@ -104,10 +104,10 @@
           >
             <template #icon>
               <v-avatar>
-                <img
+                <v-img
                   v-if="event.user.image_url"
                   :src="event.user.image_url"
-                >
+                />
                 <v-icon
                   v-else
                   size="54"
@@ -125,6 +125,7 @@
         </v-timeline>
       </v-card-text>
       <v-card-text>
+        <h3>{{ `参加人数: ${participants.length}/${event.participant_number}` }}</h3>
         <JoinBtnGroup
           :event="event"
         />
@@ -134,6 +135,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import JoinBtnGroup from '~/components/molecles/events/JoinBtnGroup'
 
 export default {
@@ -152,6 +154,14 @@ export default {
     return {
       dialog: false
     }
+  },
+
+  computed: {
+    ...mapGetters({ participants: 'events/participants' })
+  },
+
+  mounted () {
+    this.$store.commit('events/setParticipants', this.event.join_users, { root: true })
   }
 }
 </script>

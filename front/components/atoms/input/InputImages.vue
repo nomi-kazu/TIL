@@ -121,7 +121,7 @@ export default {
           'flash/showMessage',
           {
             message: '容量オーバー',
-            type: 'warning',
+            color: 'error',
             status: true
           },
           { root: true }
