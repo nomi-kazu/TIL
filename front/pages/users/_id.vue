@@ -186,7 +186,6 @@ export default {
     await $axios.get(`/api/v1/users/${params.id}`)
       .then((response) => {
         store.commit('user/setUser', response.data, { root: true })
-        console.log(response.data.liked_posts)
         store.commit('posts/setPosts', response.data.posts, { root: true })
         store.commit('events/setEvents', response.data.events, { root: true })
       })
