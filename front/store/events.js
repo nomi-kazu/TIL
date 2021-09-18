@@ -21,7 +21,20 @@ export const mutations = {
     state.events.push(event)
   },
 
+  updateEvent (state, eventData) {
+    state.events = state.events.map((event) => {
+      if (event.id === eventData.id) {
+        event = eventData
+      }
+      return event
+    })
+  },
+
   deleteEvent (state, eventId) {
     state.events = state.events.filter(event => event.id !== eventId)
+  },
+
+  deleteEvents (state, postId) {
+    state.events = state.events.filter(event => event.post_id !== postId)
   }
 }

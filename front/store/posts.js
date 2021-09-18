@@ -27,7 +27,7 @@ export const mutations = {
     state.likedPosts = likedPosts
   },
 
-  deleteLikedPosts (state, likedPostId) {
+  deleteLikedPost (state, likedPostId) {
     state.likedPosts = state.likedPosts.filter(likedPost => likedPost.id !== likedPostId)
   }
 }
