@@ -38,7 +38,7 @@ module Api
       def destroy
         if @event.destroy
           render json: { message: 'イベントを削除しました', status: :ok }
-        else 
+        else
           render json: @event.errors, status: :unprocessable_entity
         end
       end
