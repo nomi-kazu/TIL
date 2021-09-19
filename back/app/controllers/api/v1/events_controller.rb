@@ -20,7 +20,7 @@ module Api
 
       def update
         if @event.update(event_params)
-          render json: @event.as_json(include: [{ post: { include: [:tags] } }, { user: { methods: :image_url } }, { join_users: { methods: :image_url } }]), status: :ok
+          render json: @event.as_json(include: [{ post: { include: [:tags] } }, { user: { methods: :image_url } }, { join_users: { methods: :image_url } }], methods: :image_url), status: :ok
         else
           render json: @event.errors, status: :unprocessable_entity
         end
