@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      resources :top, only: [:index]
       resource :passwords, only: [:update]
       resources :relationships, param: 'follow_id', only: %i[create destroy]
       resources :posts, except: [:new]
