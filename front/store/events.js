@@ -2,14 +2,14 @@ export const state = () => ({
   event: {},
   events: [],
   joinedEvents: [],
-  participants: []
+  comingSoonEvents: []
 })
 
 export const getters = {
   event: state => state.event,
   events: state => state.events,
   joinedEvents: state => state.joinedEvents,
-  participants: state => state.participants
+  comingSoonEvents: state => state.comingSoonEvents
 }
 
 export const mutations = {
@@ -25,8 +25,8 @@ export const mutations = {
     state.joinedEvents = joinedEvents
   },
 
-  setParticipants (state, participants) {
-    state.participants = participants
+  setComingSoonEvents (state, comingSoonEvents) {
+    state.comingSoonEvents = comingSoonEvents
   },
 
   addEvent (state, event) {
@@ -60,13 +60,5 @@ export const mutations = {
 
   deleteJoinedEvents (state, event) {
     state.joinedEvents.push(event)
-  },
-
-  addParticipant (state, participant) {
-    state.participants.push(participant)
-  },
-
-  deleteParticipants (state, userId) {
-    state.participants = state.participants.filter(participant => participant.id !== userId)
   }
 }
