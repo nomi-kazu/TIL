@@ -13,15 +13,37 @@
         />
 
         <TextFieldWithValidation
+          v-if="name=='guestuser'"
           v-model="name"
           rules="required|max:15"
           label="ユーザー名"
           placeholder="あなたの表示名"
           :counter="15"
+          disabled
           outlined
         />
 
         <TextFieldWithValidation
+          v-else
+          v-model="name"
+          label="ユーザー名"
+          placeholder="あなたの表示名"
+          :counter="15"
+          rules="max:15|required"
+          outlined
+        />
+
+        <TextFieldWithValidation
+          v-if="email=='guestuser@example.com'"
+          v-model="email"
+          label="メールアドレス"
+          rules="required|email|max:30"
+          disabled
+          outlined
+        />
+
+        <TextFieldWithValidation
+          v-else
           v-model="email"
           rules="required|email|max:30"
           label="メールアドレス"

@@ -16,6 +16,14 @@
                 v-bind="$attrs"
                 color="yellow darken-3"
                 dense
+                v-on="$listeners"
+              />
+              <v-rating
+                v-model="inputValue"
+                v-bind="$attrs"
+                class="d-inline d-sm-none"
+                color="yellow darken-3"
+                dense
                 small
                 v-on="$listeners"
               />
