@@ -33,7 +33,7 @@ export default {
       default: ''
     },
 
-    eventImage: {
+    event_image: {
       type: null,
       default: ''
     }
@@ -54,6 +54,12 @@ export default {
       set (value) {
         this.$emit('input', value)
       }
+    }
+  },
+
+  mounted () {
+    if (this.event_image) {
+      this.eventImageURL = this.event_image
     }
   },
 

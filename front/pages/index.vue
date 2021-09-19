@@ -41,6 +41,7 @@
             </v-card-text>
             <FamousPosts
               :posts="famousPosts"
+              :loading="loading"
             />
           </v-col>
         </v-row>
@@ -55,6 +56,7 @@
             </v-card-text>
             <ComingSoonEvents
               :events="comingSoonEvents"
+              :loading="loading"
             />
           </v-col>
         </v-row>
@@ -76,6 +78,7 @@ export default {
 
   data () {
     return {
+      loading: false,
       model: [],
       imgHeight: 250
     }
@@ -87,6 +90,7 @@ export default {
   },
 
   async mounted () {
+    this.loading = true
     await this.$axios.get('/api/v1/top')
       .then((response) => {
         this.$store.commit('posts/setFamousPosts', response.data.posts, { root: true })
@@ -95,6 +99,13 @@ export default {
       .catch((error) => {
         return error
       })
+    setTimeout(this.stopLoading, 500)
+  },
+
+  methods: {
+    stopLoading () {
+      this.loading = false
+    }
   }
 }
 </script>

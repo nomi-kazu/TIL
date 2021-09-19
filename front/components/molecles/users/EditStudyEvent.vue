@@ -42,6 +42,7 @@
             <v-card-text>
               <InputEventImage
                 v-model="image"
+                :event_image="event.image_url"
               />
             </v-card-text>
             <v-card-text>
