@@ -8,6 +8,34 @@
       <v-col cols="12" class="text-center">
         画像アップロード(5枚まで)
       </v-col>
+
+      <template v-if="images.length > 0">
+        <v-col
+          v-for="image in images"
+          :key="image.id"
+          class="text-center"
+          style="min-width:100px;"
+          cols="2"
+        >
+          <v-sheet>
+            <v-img
+              :src="image.url"
+              :height="100"
+              cols="12"
+            />
+          </v-sheet>
+          <v-card-text>
+            <v-btn
+              color="error"
+              x-small
+              @click="delExistingImage(image.id)"
+            >
+              削除
+            </v-btn>
+          </v-card-text>
+        </v-col>
+      </template>
+
       <template v-if="showImages.length > 0">
         <v-col
           v-for="(showImage, index) in showImages"
@@ -62,12 +90,18 @@ export default {
     value: {
       type: Array,
       default: () => []
+    },
+
+    images_url: {
+      type: Array,
+      default: () => {}
     }
   },
 
   data () {
     return {
       isEnter: false,
+      images: [],
       showImages: []
     }
   },
@@ -85,10 +119,8 @@ export default {
   },
 
   mounted () {
-    if (this.value.length > 0) {
-      this.value.forEach((image) => {
-        this.showImages.push(image.url)
-      })
+    if (this.images_url.length > 0) {
+      this.images_url.forEach(url => this.images.push(url))
     }
   },
 
@@ -137,6 +169,11 @@ export default {
     deleteFile (index) {
       this.showImages.splice(index, 1)
       this.inputValue.splice(index, 1)
+    },
+
+    delExistingImage (id) {
+      this.images = this.images.filter(image => image.id !== id)
+      this.$emit('deleteIds', id)
     }
   }
 }

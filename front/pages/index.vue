@@ -6,53 +6,74 @@
       gradient="to top right, rgba(201, 214, 255, 0.6), rgba(226, 226, 226, 0.9)"
       :height="imgHeight"
     >
-      <v-row
-        align="center"
-        justify="center"
-        :style="{ height: `${imgHeight}px`}"
-      >
-        <v-col
-          cols="12"
-          class="text-center"
+      <v-container>
+        <v-row
+          align="center"
+          justify="center"
+          :style="{ height: `${imgHeight}px`}"
         >
-          <h1
-            class="display-1 mb-4"
-            :style="{ letterSpacing: '15px' }"
+          <v-col
+            cols="12"
+            class="text-center"
           >
-            TILを記録しよう
-          </h1>
-          <h3
-            class="subheading"
-            :style="{ letterSpacing: '5px' }"
-          >
-            イベント/勉強会
-          </h3>
-        </v-col>
-      </v-row>
+            <h1
+              class="display-1 mb-4"
+              :style="{ letterSpacing: '15px' }"
+            >
+              TILを記録しよう
+            </h1>
+            <h3
+              class="subheading"
+              :style="{ letterSpacing: '5px' }"
+            >
+              イベント/勉強会
+            </h3>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-img>
     <div>
       <v-container>
         <v-row>
           <v-col cols="12">
-            <v-card-text class="text-h5">
+            <v-card-text class="text-h6 font-weight-bold">
               注目記事
             </v-card-text>
+            <FamousPosts
+              :posts="famousPosts"
+            />
           </v-col>
         </v-row>
       </v-container>
     </div>
     <div>
       <v-container>
-        <v-card-text class="text-h5 border-bottom">
-          開催間近のイベント
-        </v-card-text>
+        <v-row>
+          <v-col cols="12">
+            <v-card-text class="text-h6">
+              開催間近のイベント
+            </v-card-text>
+            <ComingSoonEvents
+              :events="comingSoonEvents"
+            />
+          </v-col>
+        </v-row>
       </v-container>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import ComingSoonEvents from '~/components/organisms/top/ComingSoonEvents'
+import FamousPosts from '~/components/organisms/top/FamousPosts'
+
 export default {
+  components: {
+    ComingSoonEvents,
+    FamousPosts
+  },
+
   data () {
     return {
       model: [],
@@ -60,13 +81,18 @@ export default {
     }
   },
 
-  async fetch ({ $axios, params, store }) {
-    await $axios.get('/api/v1/top')
+  computed: {
+    ...mapGetters({ famousPosts: 'posts/famousPosts' }),
+    ...mapGetters({ comingSoonEvents: 'events/comingSoonEvents' })
+  },
+
+  async mounted () {
+    await this.$axios.get('/api/v1/top')
       .then((response) => {
-        store.commit('posts/setPosts', response.data, { root: true })
+        this.$store.commit('posts/setFamousPosts', response.data.posts, { root: true })
+        this.$store.commit('events/setComingSoonEvents', response.data.events, { root: true })
       })
       .catch((error) => {
-        console.log(error)
         return error
       })
   }

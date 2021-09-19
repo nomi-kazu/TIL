@@ -6,7 +6,7 @@
       max-width="300"
       @click="changeImage"
     >
-      <div>
+      <div class="p-2 float-right">
         <v-file-input
           id="fileInput"
           v-model="inputValue"
