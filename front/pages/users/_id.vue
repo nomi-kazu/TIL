@@ -38,16 +38,33 @@
 
           <v-divider />
 
-          <v-card-text class="d-inline d-sm-none center-block">
-            <v-btn
-              icon
-              @click="show = !show"
+          <v-tabs
+            v-model="tabTitle"
+            class="d-inline d-sm-none"
+            background-color="brown lighten-5"
+            color="secondary"
+            show-arrows
+            centered
+          >
+            <v-tab
+              v-for="title in titles"
+              :key="title.name"
             >
-              <v-icon>
-                {{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
-              </v-icon>
-            </v-btn>
-          </v-card-text>
+              {{ title.name }}
+            </v-tab>
+          </v-tabs>
+          <div class="d-inline d-sm-none py-0">
+            <div class="text-center">
+              <v-btn
+                icon
+                @click="show = !show"
+              >
+                <v-icon size="30">
+                  {{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
+                </v-icon>
+              </v-btn>
+            </div>
+          </div>
 
           <v-divider />
 

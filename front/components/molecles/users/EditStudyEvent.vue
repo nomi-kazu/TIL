@@ -8,7 +8,7 @@
       <v-btn
         v-bind="attrs"
         color="lime accent-4"
-        class="pull-right"
+        class="white--text"
         small
         fab
         v-on="on"
