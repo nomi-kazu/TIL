@@ -49,7 +49,10 @@
 
           <v-divider />
 
-          <v-card-text v-html="$md.render(post.content)" />
+          <div
+            class="mx-4 mt-5"
+            v-html="$md.render(post.content)"
+          />
 
           <v-card-text
             v-if="post.tags"

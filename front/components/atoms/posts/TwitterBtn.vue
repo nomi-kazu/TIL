@@ -1,5 +1,5 @@
 <template>
-  <v-btn color="primary" :href="twitterUrl">
+  <v-btn color="#26C6DA" :href="twitterUrl">
     <v-icon left>
       mdi-twitter
     </v-icon>
