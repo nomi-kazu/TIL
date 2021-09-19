@@ -1,0 +1,2 @@
+class EventTagMap < ApplicationRecord
+end
