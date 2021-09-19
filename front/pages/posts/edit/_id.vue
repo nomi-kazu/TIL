@@ -84,6 +84,7 @@ export default {
     return {
       title: '',
       content: '',
+      deleteIds: [],
       rate: null,
       isEnter: false,
       loading: false,
@@ -108,6 +109,9 @@ export default {
   },
 
   mounted () {
+    if (this.post.user.id !== this.$auth.user.id) {
+      this.$router.push(`/users/${this.post.user.id}`)
+    }
     this.title = this.post.title
     this.rate = this.post.rate
     this.content = this.post.content
@@ -134,6 +138,11 @@ export default {
         if (this.tags) {
           this.tags.forEach((tag) => {
             formData.append('post[tags][]', tag)
+          })
+        }
+        if (this.deleteIds) {
+          this.deleteIds.forEach((deleteId) => {
+            formData.append('post[delete_ids][]', deleteId)
           })
         }
         await this.$axios.$patch(`/api/v1/posts/${this.post.id}`, formData)
@@ -169,6 +178,10 @@ export default {
           )
         this.loading = false
       }
+    },
+
+    deleteIdList (id) {
+      this.deleteIds.push(id)
     }
   }
 }

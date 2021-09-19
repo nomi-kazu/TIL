@@ -39,6 +39,11 @@
         <v-container>
           <v-form>
             <v-card-text>
+              <InputEventImage
+                v-model="image"
+              />
+            </v-card-text>
+            <v-card-text>
               <TextFieldWithValidation
                 v-model="title"
                 label="イベントタイトル"
@@ -139,19 +144,26 @@
 
 <script>
 import DatePicker from '~/components/atoms/input/DatePicker'
+import InputEventImage from '~/components/atoms/input/InputEventImage'
 import TextAreaWithValidation from '~/components/atoms/input/TextAreaWithValidation'
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
 import AutoCompleteWithValidation from '~/components/atoms/input/AutoCompleteWithValidation'
 
 export default {
   components: {
-    TextAreaWithValidation,
     DatePicker,
+    InputEventImage,
+    TextAreaWithValidation,
     TextFieldWithValidation,
     AutoCompleteWithValidation
   },
 
   props: {
+    user: {
+      type: Object,
+      default: null
+    },
+
     post: {
       type: Object,
       default: null
@@ -160,6 +172,7 @@ export default {
 
   data () {
     return {
+      image: '',
       title: '',
       content: '',
       place: '',
@@ -186,6 +199,7 @@ export default {
         console.log(this.post.id)
         formData.append('event[user_id]', this.$auth.user.id)
         formData.append('event[post_id]', this.post.id)
+        if (this.image) { formData.append('event[image]', this.image) }
         formData.append('event[title]', this.title)
         formData.append('event[participant_number]', this.participant_number)
         formData.append('event[place]', this.place)
@@ -196,7 +210,9 @@ export default {
         await this.$axios.$post('/api/v1/events', formData)
           .then(
             (response) => {
-              this.$store.commit('events/addEvent', response.event, { root: true })
+              if (response.event.user.id === this.user.id) {
+                this.$store.commit('events/addEvent', response.event, { root: true })
+              }
               this.$store.dispatch(
                 'flash/showMessage',
                 {
@@ -206,7 +222,13 @@ export default {
                 },
                 { root: true }
               )
+              this.title = ''
               this.content = ''
+              this.place = ''
+              this.participant_number = null
+              this.scheduled_date = new Date().toLocaleDateString().replace(/\//g, '-')
+              this.start_time = ''
+              this.end_time = ''
               this.$refs.form.reset()
             },
             (error) => {

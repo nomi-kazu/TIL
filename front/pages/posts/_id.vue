@@ -8,6 +8,7 @@
             <AddStudyEvent
               class="float-right ma-0"
               :post="post"
+              :user="$auth.user"
             />
           </v-card-subtitle>
 
@@ -49,7 +50,10 @@
 
           <v-divider />
 
-          <v-card-text v-html="$md.render(post.content)" />
+          <div
+            class="mx-4 mt-5"
+            v-html="$md.render(post.content)"
+          />
 
           <v-card-text
             v-if="post.tags"
@@ -100,9 +104,14 @@
                   mdi-account-circle
                 </v-icon>
               </v-avatar>
-              <span class="pl-2">
-                {{ post.user.name }}
-              </span>
+              <nuxt-link
+                :to="{ path: `/users/${post.user.id}` }"
+                style="color: inherit; text-decoration: none;"
+              >
+                <span class="pl-2">
+                  {{ post.user.name }}
+                </span>
+              </nuxt-link>
               <FollowBtnGroup
                 :user="post.user"
               />

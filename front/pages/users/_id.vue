@@ -40,28 +40,53 @@
 
           <v-tabs
             v-model="tabTitle"
-            class="d-none d-sm-inline"
+            class="d-inline d-sm-none"
             background-color="brown lighten-5"
             color="secondary"
             show-arrows
             centered
           >
-            <v-tab v-for="title in titles" :key="title.name">
+            <v-tab
+              v-for="title in titles"
+              :key="title.name"
+            >
               {{ title.name }}
             </v-tab>
           </v-tabs>
-          <v-tabs
-            v-model="tabTitle"
-            class="d-inline d-sm-none"
-            background-color="brown lighten-5"
-            fixed-tabs
-            color="secondary"
-            vertical
-          >
-            <v-tab v-for="title in titles" :key="title.name">
-              {{ title.name }}
-            </v-tab>
-          </v-tabs>
+          <div class="d-inline d-sm-none py-0">
+            <div class="text-center">
+              <v-btn
+                icon
+                @click="show = !show"
+              >
+                <v-icon size="30">
+                  {{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
+                </v-icon>
+              </v-btn>
+            </div>
+          </div>
+
+          <v-divider />
+
+          <v-expand-transition>
+            <div v-show="show">
+              <v-tabs
+                v-model="tabTitle"
+                class="d-inline d-sm-none"
+                background-color="brown lighten-5"
+                color="secondary"
+                fixed-tabs
+                vertical
+              >
+                <v-tab
+                  v-for="title in titles"
+                  :key="title.name"
+                >
+                  {{ title.name }}
+                </v-tab>
+              </v-tabs>
+            </div>
+          </v-expand-transition>
         </v-col>
       </v-row>
     </v-card>
@@ -128,6 +153,7 @@
               </v-card-text>
               <UserPosts
                 :posts="posts"
+                :loading="loading"
               />
             </template>
             <template v-else>
@@ -156,6 +182,7 @@
             <template v-if="likedPosts.length > 0">
               <UserLikedPosts
                 :likedPosts="likedPosts"
+                :loading="loading"
               />
             </template>
             <template v-else>
@@ -173,6 +200,7 @@
             <template v-if="events.length > 0">
               <UserEvents
                 :events="events"
+                :loading="loading"
               />
             </template>
             <template v-else>
@@ -187,15 +215,17 @@
 
         <v-tab-item>
           <v-container class="grey lighten-5">
-            <template v-if="events.length > 0">
-              <UserEvents
-                :events="events"
+            <template v-if="joinedEvents.length > 0">
+              <UserJoinedEvents
+                :joinedEvents="joinedEvents"
+                :user="user"
+                :loading="loading"
               />
             </template>
             <template v-else>
               <v-card>
                 <v-card-text>
-                  主催イベントはありません
+                  参加予定のイベントはありません
                 </v-card-text>
               </v-card>
             </template>
@@ -213,6 +243,7 @@ import FollowBtnGroup from '~/components/molecles/users/FollowBtnGroup'
 import UserEvents from '~/components/organisms/users/UserEvents'
 import UserLikedPosts from '~/components/organisms/users/UserLikedPosts'
 import UserPosts from '~/components/organisms/users/UserPosts'
+import UserJoinedEvents from '~/components/organisms/users/UserJoinedEvents'
 
 export default {
   components: {
@@ -220,19 +251,22 @@ export default {
     FollowBtnGroup,
     UserEvents,
     UserLikedPosts,
-    UserPosts
+    UserPosts,
+    UserJoinedEvents
   },
 
   data () {
     return {
       tabTitle: null,
+      show: false,
       titles: [
         { name: 'プロフィール詳細' },
         { name: '投稿レビュー' },
         { name: 'お気に入りツール' },
         { name: 'イベント' },
         { name: '参加イベント' }
-      ]
+      ],
+      loading: false
     }
   },
 
@@ -243,6 +277,13 @@ export default {
         store.commit('posts/setPosts', response.data.posts, { root: true })
         store.commit('posts/setLikedPosts', response.data.liked_posts, { root: true })
         store.commit('events/setEvents', response.data.events, { root: true })
+        if (response.data.join_events.length > 0) {
+          const joinedEvents = []
+          response.data.join_events.forEach((joinEvent) => {
+            joinedEvents.push(joinEvent.event)
+          })
+          store.commit('events/setJoinedEvents', joinedEvents, { root: true })
+        }
       })
       .catch((error) => {
         console.log(error)
@@ -254,7 +295,19 @@ export default {
     ...mapGetters({ user: 'user/user' }),
     ...mapGetters({ posts: 'posts/posts' }),
     ...mapGetters({ likedPosts: 'posts/likedPosts' }),
-    ...mapGetters({ events: 'events/events' })
+    ...mapGetters({ events: 'events/events' }),
+    ...mapGetters({ joinedEvents: 'events/joinedEvents' })
+  },
+
+  mounted () {
+    this.loading = true
+    setTimeout(this.stopLoading, 3000)
+  },
+
+  methods: {
+    stopLoading () {
+      this.loading = false
+    }
   }
 }
 </script>

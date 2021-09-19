@@ -7,7 +7,6 @@
     <template #activator="{ on, attrs }">
       <v-btn
         v-bind="attrs"
-        class="m-4 float-right"
         color="warning"
         small
         fab
@@ -25,7 +24,6 @@
         outlined
       >
         <v-btn
-          class="float-right my-0"
           icon
           @click="dialog=false"
         >
@@ -34,10 +32,13 @@
           </v-icon>
         </v-btn>
       </v-banner>
-      <v-img src="/images/no_img.png" />
-      <v-card-subtitle class="text-h4 text-center">
+      <v-card-title>
         {{ event.title }}
-      </v-card-subtitle>
+      </v-card-title>
+      <v-img
+        :src="event.image_url ? event.image_url : '/images/no_img.png'"
+        max-width="300"
+      />
       <v-card-text>
         <v-timeline
           align-top
@@ -47,11 +48,10 @@
             color="lime accent-4"
             icon="mdi-pin"
             fill-dot
-            large
           >
             <div>
               <span>場所</span>
-              <div class="text-h5">
+              <div class="text-h6">
                 {{ event.place }}
               </div>
             </div>
@@ -61,19 +61,21 @@
             color="green accent-1"
             icon="mdi-calendar-month-outline"
             fill-dot
-            large
           >
             <div>
               <span>開催日</span>
-              <div class="text-h5">
+              <div class="text-h6">
                 {{ $moment(event.scheduled_date).format('YYYY/MM//DD') }}
               </div>
             </div>
           </v-timeline-item>
-          <v-timeline-item>
-            <div class="text-h6">
+          <v-timeline-item
+            color="amber darken-2"
+            small
+          >
+            <div>
               <span>開始時間</span>
-              <div>
+              <div class="text-h6">
                 {{ $moment(event.start_time).format('HH : mm') }}
               </div>
             </div>
@@ -89,28 +91,26 @@
 
           <v-timeline-item
             color="amber darken-2"
+            small
           >
             <div>
               <span>終了時間</span>
-              <div>
+              <div class="text-h6">
                 {{ $moment(event.end_time).format('HH : mm') }}
               </div>
             </div>
           </v-timeline-item>
 
-          <v-timeline-item
-            color="white"
-            large
-          >
+          <v-timeline-item color="white" large>
             <template #icon>
               <v-avatar>
-                <img
+                <v-img
                   v-if="event.user.image_url"
                   :src="event.user.image_url"
-                >
+                />
                 <v-icon
                   v-else
-                  size="54"
+                  size="40"
                 >
                   mdi-account-circle
                 </v-icon>
@@ -124,7 +124,7 @@
           </v-timeline-item>
         </v-timeline>
       </v-card-text>
-      <v-card-text>
+      <v-card-text v-if="$auth.loggedIn">
         <JoinBtnGroup
           :event="event"
         />
