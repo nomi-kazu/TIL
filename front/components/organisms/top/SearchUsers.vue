@@ -8,27 +8,35 @@
       prepend-icon="mdi-magnify"
       @keyup="searchUsers"
     />
-    {{ users }}
+    <SearchUsersTemplate
+      v-if="users.length > 0"
+      :users="users"
+      :loading="loading"
+    />
   </v-container>
 </template>
 
 <script>
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
+import SearchUsersTemplate from '~/components/molecles/search/SearchUsersTemplate'
 
 export default {
   components: {
-    TextFieldWithValidation
+    TextFieldWithValidation,
+    SearchUsersTemplate
   },
 
   data () {
     return {
       keyword: '',
-      users: []
+      users: [],
+      loading: null
     }
   },
 
   methods: {
     async searchUsers () {
+      this.loading = true
       await this.$axios.get('/api/v1/search/users', {
         params: {
           keyword: this.keyword
@@ -39,6 +47,7 @@ export default {
       }).catch((error) => {
         return error
       })
+      this.loading = false
     }
   }
 }
