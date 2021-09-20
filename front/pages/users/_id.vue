@@ -7,18 +7,21 @@
             <v-list color="brown lighten-5">
               <v-list-item>
                 <v-card-actions>
-                  <v-avatar color="white" size="65">
+                  <v-avatar
+                    v-if="user.image_url"
+                    color="white"
+                    size="65"
+                  >
                     <v-img
-                      v-if="user.image_url"
                       :src="user.image_url"
                     />
-                    <v-icon
-                      v-else
-                      size="80"
-                    >
-                      mdi-account-circle
-                    </v-icon>
                   </v-avatar>
+                  <v-icon
+                    v-else
+                    size="65"
+                  >
+                    mdi-account-circle
+                  </v-icon>
                   <span class="pl-2">{{ user.name }}</span>
                   <FollowBtnGroup
                     :user="user"
