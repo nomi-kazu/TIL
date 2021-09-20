@@ -116,7 +116,8 @@
                   <v-chip
                     v-for="tag in user.tags"
                     :key="tag.id"
-                    color="success"
+                    color="info"
+                    outlined
                     small
                   >
                     <nuxt-link
