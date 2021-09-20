@@ -4,9 +4,9 @@
       <v-col
         v-for="n in 6"
         :key="n"
-        xs="12"
-        sm="6"
         md="4"
+        sm="6"
+        xs="12"
         cols="12"
       >
         <v-skeleton-loader
@@ -16,36 +16,42 @@
     </v-row>
     <v-row v-else>
       <v-col
-        v-for="event in events"
+        v-for="event in displayEvents"
         :key="event.id"
-        cols="12"
-        xs="12"
-        sm="6"
         md="4"
+        sm="6"
+        xs="12"
+        cols="12"
       >
-        <v-card>
+        <v-card class="mb-8">
           <v-img
             :src="event.image_url ? event.image_url : '/images/no_img.png'"
-            min-height="170"
-            max-height="170"
+            min-height="150"
+            max-height="150"
           >
-            <v-card-text>
-              <div class="float-right">
-                <EventModal
-                  :event="event"
-                  :post="event.post"
-                />
-              </div>
-            </v-card-text>
+            <v-row no-gutters>
+              <v-col cols="12">
+                <div class="float-right mt-2 mr-2">
+                  <EventModal
+                    :event="event"
+                  />
+                </div>
+              </v-col>
+            </v-row>
           </v-img>
-          <v-card-title>
+          <v-card-title class="text-h5">
             {{ event.title }}
           </v-card-title>
-          <v-card-subtitle class="pb-0">
+          <v-card-subtitle>
+            <span>開催日: </span>
             {{ $moment(event.scheduled_date).format('YYYY/MM/DD') }}
           </v-card-subtitle>
+          <v-card-subtitle>
+            <span>開始時刻: </span>
+            {{ $moment(event.start_time).format('HH : mm') }}
+          </v-card-subtitle>
           <v-card-text
-            v-if="event.tags.length > 0"
+            v-if="event.tags.lengtn > 0"
             class="py-0"
           >
             <v-chip-group
@@ -57,7 +63,7 @@
                 v-for="tag in event.tags"
                 :key="tag.id"
                 color="info"
-                outlined
+                class="white--text ml-0"
                 small
               >
                 <nuxt-link
@@ -78,7 +84,9 @@
                 v-if="event.user.image_url"
                 size="25"
               >
-                <v-img :src="event.user.image_url" />
+                <v-img
+                  :src="event.user.image_url"
+                />
               </v-avatar>
               <v-icon v-else>
                 mdi-account-circle
@@ -89,6 +97,14 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-card-text>
+      <v-pagination
+        v-model="page"
+        color="info"
+        :length="EventsLength"
+        @input="pageChange"
+      />
+    </v-card-text>
   </v-container>
 </template>
 
@@ -109,6 +125,30 @@ export default {
     loading: {
       type: Boolean,
       default: null
+    }
+  },
+
+  data () {
+    return {
+      page: 1,
+      length: 0,
+      pageSize: 6
+    }
+  },
+
+  computed: {
+    displayEvents () {
+      return this.events.slice(this.pageSize * (this.page - 1), this.pageSize * (this.page))
+    },
+
+    EventsLength () {
+      return Math.ceil(this.events.length / this.pageSize)
+    }
+  },
+
+  methods: {
+    pageChange (pageNumber) {
+      this.displayEvents.slice(this.pageSize * (pageNumber - 1), this.pageSize * (pageNumber))
     }
   }
 }

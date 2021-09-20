@@ -1,5 +1,5 @@
 <template>
-  <form-template>
+  <FormTemplate>
     <template #form-card-content>
       <ValidationObserver ref="form" v-slot="{ invalid }" immediate>
         <v-form>
@@ -26,9 +26,9 @@
             vid="password"
             rules="required|alpha_dash|min:8|max:72"
             :type="show ? 'text' : 'password'"
+            outlined
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"
-            outlined
           />
 
           <v-card-text class="px-0">
@@ -55,17 +55,17 @@
         </v-form>
       </ValidationObserver>
     </template>
-  </form-template>
+  </FormTemplate>
 </template>
 
 <script>
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import formTemplate from '~/components/template/top/formTemplate'
+import FormTemplate from '~/components/organisms/top/FormTemplate'
 
 export default {
   components: {
     TextFieldWithValidation,
-    formTemplate
+    FormTemplate
   },
 
   middleware: 'authenticated',

@@ -1,5 +1,5 @@
 <template>
-  <form-template>
+  <FormTemplate>
     <template #form-card-content>
       <ValidationObserver ref="form" v-slot="{ invalid }" immediate>
         <v-form>
@@ -49,18 +49,18 @@
         </v-form>
       </ValidationObserver>
     </template>
-  </form-template>
+  </FormTemplate>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import formTemplate from '~/components/template/top/formTemplate'
+import FormTemplate from '~/components/organisms/top/FormTemplate'
 
 export default {
   components: {
     TextFieldWithValidation,
-    formTemplate
+    FormTemplate
   },
 
   middleware: 'authenticated',
