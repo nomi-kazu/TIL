@@ -22,7 +22,7 @@
           <AddStudyEvent
             v-if="$auth.loggedIn"
             :post="post"
-            :user="user"
+            :user="post.user"
           />
         </v-card-text>
         <nuxt-link
@@ -74,10 +74,10 @@
           :to="{ path: `/users/${post.user.id}` }"
           style="color: inherit; text-decoration: none;"
         >
-          <v-card-text class="pt-0">
+          <v-card-text>
             <v-avatar
               v-if="post.user.image_url"
-              size="30"
+              size="20"
             >
               <v-img
                 :src="post.user.image_url"
@@ -85,7 +85,7 @@
             </v-avatar>
             <v-icon
               v-else
-              size="30"
+              size="20"
             >
               mdi-account-circle
             </v-icon>
@@ -106,7 +106,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import AddStudyEvent from '~/components/molecles/users/AddStudyEvent'
 
 export default {
@@ -121,8 +120,8 @@ export default {
     },
 
     loading: {
-      type: Boolean,
-      default: null
+      type: null,
+      default: ''
     }
   },
 
@@ -135,8 +134,6 @@ export default {
   },
 
   computed: {
-    ...mapGetters({ user: 'user/user' }),
-
     displayPosts () {
       return this.posts.slice(this.pageSize * (this.page - 1), this.pageSize * (this.page))
     },

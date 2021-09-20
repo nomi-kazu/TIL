@@ -8,27 +8,35 @@
       prepend-icon="mdi-magnify"
       @keyup="searchPosts"
     />
-    {{ posts }}
+    <SearchPostsTemplate
+      v-if="posts.length > 0"
+      :posts="posts"
+      :loading="loading"
+    />
   </v-container>
 </template>
 
 <script>
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
+import SearchPostsTemplate from '~/components/molecles/search/SearchPostsTemplate'
 
 export default {
   components: {
-    TextFieldWithValidation
+    TextFieldWithValidation,
+    SearchPostsTemplate
   },
 
   data () {
     return {
       keyword: '',
-      posts: []
+      posts: [],
+      loading: null
     }
   },
 
   methods: {
     async searchPosts () {
+      this.loading = true
       await this.$axios.get('/api/v1/search/posts', {
         params: {
           keyword: this.keyword
@@ -39,6 +47,7 @@ export default {
       }).catch((error) => {
         return error
       })
+      this.loading = false
     }
   }
 }
