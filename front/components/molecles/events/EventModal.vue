@@ -70,7 +70,7 @@
             </div>
           </v-timeline-item>
           <v-timeline-item
-            color="amber darken-2"
+            color="purple lighten-4"
             small
           >
             <div>
@@ -90,7 +90,7 @@
           </v-timeline-item>
 
           <v-timeline-item
-            color="amber darken-2"
+            color="purple lighten-4"
             small
           >
             <div>
@@ -117,6 +117,12 @@
               </v-avatar>
             </template>
             <v-card>
+              <v-card-subtitle class="pb-0">
+                <span class="font-weight-bold">
+                  {{ event.user.name }}
+                </span>
+                さんより
+              </v-card-subtitle>
               <v-card-text>
                 {{ event.content }}
               </v-card-text>

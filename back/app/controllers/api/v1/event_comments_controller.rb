@@ -1,6 +1,6 @@
 module Api
   module V1
-    class EventsCommentsController < ApplicationController
+    class EventCommentsController < ApplicationController
       def create
         event_comment = current_user.event_comments.new(event_comment_params)
         if event_comment.save
