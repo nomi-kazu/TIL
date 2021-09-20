@@ -4,10 +4,10 @@
       <v-col
         v-for="n in 6"
         :key="n"
-        cols="12"
-        xs="12"
-        sm="4"
         md="4"
+        sm="6"
+        xs="12"
+        cols="12"
       >
         <v-skeleton-loader
           type="card"
@@ -18,10 +18,10 @@
       <v-col
         v-for="event in displayEvents"
         :key="event.id"
-        cols="12"
-        xs="12"
+        md="4"
         sm="6"
-        md="6"
+        xs="12"
+        cols="12"
       >
         <v-card class="mb-8">
           <v-img
@@ -33,17 +33,6 @@
               <v-col cols="12">
                 <div class="float-right mt-2 mr-2">
                   <EventModal
-                    :event="event"
-                  />
-                </div>
-              </v-col>
-              <v-col
-                v-if="event.user.id==$auth.user.id"
-                cols="12"
-              >
-                <div class="float-right mt-2 mr-2">
-                  <EditStudyEvent
-                    :post="event.post"
                     :event="event"
                   />
                 </div>
@@ -62,7 +51,7 @@
             {{ $moment(event.start_time).format('HH : mm') }}
           </v-card-subtitle>
           <v-card-text
-            v-if="event.tags.length > 0"
+            v-if="event.tags.lengtn > 0"
             class="py-0"
           >
             <v-chip-group
@@ -87,16 +76,18 @@
             </v-chip-group>
           </v-card-text>
           <v-card-text
-            v-if="event.user.id==$auth.user.id"
+            v-if="event.user_id==$auth.user.id"
             class="pt-0"
           >
-            <v-icon
+            <v-btn
               class="pt-0"
               icon
               @click="deleteEvent(event.id)"
             >
-              mdi-trash-can-outline
-            </v-icon>
+              <v-icon>
+                mdi-trash-can-outline
+              </v-icon>
+            </v-btn>
           </v-card-text>
         </v-card>
       </v-col>
@@ -114,12 +105,10 @@
 
 <script>
 import EventModal from '~/components/molecles/events/EventModal'
-import EditStudyEvent from '~/components/molecles/users/EditStudyEvent'
 
 export default {
   components: {
-    EventModal,
-    EditStudyEvent
+    EventModal
   },
 
   props: {
@@ -138,7 +127,7 @@ export default {
     return {
       page: 1,
       length: 0,
-      pageSize: 5
+      pageSize: 6
     }
   },
 
@@ -155,39 +144,6 @@ export default {
   methods: {
     pageChange (pageNumber) {
       this.displayEvents.slice(this.pageSize * (pageNumber - 1), this.pageSize * (pageNumber))
-    },
-
-    async deleteEvent (eventId) {
-      if (window.confirm('削除してもよろしいですか？')) {
-        await this.$axios.$delete(`/api/v1/events/${eventId}`)
-          .then(
-            (response) => {
-              this.$store.commit('events/deleteEvent', eventId, { root: true })
-              this.$store.commit('events/deleteJoinedEvent', eventId, { root: true })
-              this.$store.dispatch(
-                'flash/showMessage',
-                {
-                  message: response.message,
-                  color: 'primary',
-                  status: true
-                },
-                { root: true }
-              )
-            },
-            (error) => {
-              this.$store.dispatch(
-                'flash/showMessage',
-                {
-                  message: error,
-                  color: 'error',
-                  status: true
-                },
-                { root: true }
-              )
-              return error
-            }
-          )
-      }
     }
   }
 }

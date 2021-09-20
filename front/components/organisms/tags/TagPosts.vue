@@ -13,11 +13,11 @@
     </template>
     <template v-else>
       <v-card
-        v-for="post in displayLikedPosts"
+        v-for="post in displayPosts"
         :key="post.id"
         class="mb-8"
       >
-        <v-card-text>
+        <v-card-text class="pb-0">
           {{ $moment(post.created_at).format('YYYY/MM/DD HH:MM') }}
           <AddStudyEvent
             v-if="$auth.loggedIn"
@@ -47,7 +47,7 @@
             </span>
           </v-card-actions>
         </nuxt-link>
-        <v-card-text class="py-0">
+        <v-card-text class="pt-0">
           <v-chip-group
             v-if="post.tags.length > 0"
             class="w-100"
@@ -70,38 +70,30 @@
             </v-chip>
           </v-chip-group>
         </v-card-text>
-        <v-card-text
-          v-if="$auth.loggedIn && $auth.user.id == post.user_id"
-          class="pt-0"
-        >
-          <LikeBtnGroup
-            :post="post"
-          />
-        </v-card-text>
       </v-card>
     </template>
-    <v-pagination
-      v-model="page"
-      color="info"
-      :length="LikedPostsLength"
-      @input="pageChange"
-    />
+    <v-card-text>
+      <v-pagination
+        v-model="page"
+        color="info"
+        :length="PostsLength"
+        @input="pageChange"
+      />
+    </v-card-text>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import LikeBtnGroup from '~/components/molecles/posts/LikeBtnGroup'
 import AddStudyEvent from '~/components/molecles/users/AddStudyEvent'
 
 export default {
   components: {
-    LikeBtnGroup,
     AddStudyEvent
   },
 
   props: {
-    likedPosts: {
+    posts: {
       type: Array,
       default: () => {}
     },
@@ -123,18 +115,18 @@ export default {
   computed: {
     ...mapGetters({ user: 'user/user' }),
 
-    displayLikedPosts () {
-      return this.likedPosts.slice(this.pageSize * (this.page - 1), this.pageSize * (this.page))
+    displayPosts () {
+      return this.posts.slice(this.pageSize * (this.page - 1), this.pageSize * (this.page))
     },
 
-    LikedPostsLength () {
-      return Math.ceil(this.likedPosts.length / this.pageSize)
+    PostsLength () {
+      return Math.ceil(this.posts.length / this.pageSize)
     }
   },
 
   methods: {
     pageChange (pageNumber) {
-      this.displayLikedPosts.slice(this.pageSize * (pageNumber - 1), this.pageSize * (pageNumber))
+      this.displayPosts.slice(this.pageSize * (pageNumber - 1), this.pageSize * (pageNumber))
     }
   }
 }

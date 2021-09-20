@@ -126,6 +126,7 @@
             </v-card-text>
 
             <v-card-text>
+              <v-card-subtitle>タグを入力</v-card-subtitle>
               <InputTags
                 v-model="tags"
               />

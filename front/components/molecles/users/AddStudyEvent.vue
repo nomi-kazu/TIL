@@ -9,6 +9,7 @@
         v-bind="attrs"
         color="warning"
         class="float-right"
+        small
         v-on="on"
       >
         <v-icon left>
@@ -123,6 +124,7 @@
               />
             </v-card-text>
             <v-card-text class="pb-0">
+              <v-card-subtitle>タグを入力</v-card-subtitle>
               <InputTags
                 v-model="tags"
               />
