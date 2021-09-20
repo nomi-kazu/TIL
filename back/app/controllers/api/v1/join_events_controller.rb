@@ -16,7 +16,7 @@ module Api
       def destroy
         join_event = JoinEvent.find_by(event_id: params[:id], user_id: current_user.id)
         if join_event.destroy
-          render json: { message: '参加をキャンセルしました', status: :ok}
+          render json: { message: '参加をキャンセルしました', status: :ok }
         else
           render json: join_event.errors, status: :unprocessable_entity
         end
