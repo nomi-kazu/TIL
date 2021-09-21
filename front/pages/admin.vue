@@ -1,14 +1,68 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col>
+    <v-row justify="center">
+      <v-col
+        class="d-none d-sm-inline"
+        sm="4"
+        md="4"
+        lg="4"
+      >
+        <v-card>
+          <v-tabs
+            v-model="tab"
+            vertical
+            color="secondary"
+          >
+            <v-tab>
+              <v-icon left>
+                mdi-account
+              </v-icon>
+              ユーザー
+            </v-tab>
+            <v-tab>
+              <v-icon left>
+                mdi-notebook
+              </v-icon>
+              投稿
+            </v-tab>
+            <v-tab>
+              <v-icon left>
+                mdi-calendar-clock
+              </v-icon>
+              イベント
+            </v-tab>
+            <v-tab>
+              <v-icon left>
+                mdi-tag
+              </v-icon>
+              タグ
+            </v-tab>
+            <v-tab>
+              <v-icon left>
+                mdi-comment-text
+              </v-icon>
+              記事へのコメント
+            </v-tab>
+            <v-tab>
+              <v-icon left>
+                mdi-comment-multiple-outline
+              </v-icon>
+              イベントのコメント
+            </v-tab>
+          </v-tabs>
+        </v-card>
+      </v-col>
+      <v-col
+        xs="12"
+        sm="8"
+        md="8"
+        lg="8"
+      >
         <v-card>
           <v-tabs
             v-model="tab"
             fixed-tabs
             centered
-            next-icon="mdi-arrow-right-bold-box-outline"
-            prev-icon="mdi-arrow-left-bold-box-outline"
             show-arrows
             color="secondary"
             background-color="brown lighten-5"
@@ -37,22 +91,32 @@
           <v-tabs-items v-model="tab" touchless>
             <v-tab-item>
               <v-container>
-                <SearchUsers />
+                <AllUsers />
               </v-container>
             </v-tab-item>
             <v-tab-item>
               <v-container>
-                <SearchPosts />
+                <AllPosts />
               </v-container>
             </v-tab-item>
             <v-tab-item>
               <v-container>
-                <SearchEvents />
+                <AllEvents />
               </v-container>
             </v-tab-item>
             <v-tab-item>
               <v-container>
-                <SearchTags />
+                <AllTags />
+              </v-container>
+            </v-tab-item>
+            <v-tab-item>
+              <v-container>
+                <AllComments />
+              </v-container>
+            </v-tab-item>
+            <v-tab-item>
+              <v-container>
+                <AllEventComments />
               </v-container>
             </v-tab-item>
           </v-tabs-items>
@@ -63,17 +127,21 @@
 </template>
 
 <script>
-import SearchEvents from '~/components/organisms/top/SearchEvents'
-import SearchPosts from '~/components/organisms/top/SearchPosts'
-import SearchTags from '~/components/organisms/top/SearchTags'
-import SearchUsers from '~/components/organisms/top/SearchUsers'
+import AllEvents from '~/components/organisms/admin/AllEvents'
+import AllPosts from '~/components/organisms/admin/AllPosts'
+import AllTags from '~/components/organisms/admin/AllTags'
+import AllUsers from '~/components/organisms/admin/AllUsers'
+import AllComments from '~/components/organisms/admin/AllComments'
+import AllEventComments from '~/components/organisms/admin/AllEventComments'
 
 export default {
   components: {
-    SearchEvents,
-    SearchPosts,
-    SearchTags,
-    SearchUsers
+    AllEvents,
+    AllPosts,
+    AllTags,
+    AllUsers,
+    AllComments,
+    AllEventComments
   },
 
   middleware: 'loginAuth',
@@ -81,6 +149,12 @@ export default {
   data () {
     return {
       tab: null
+    }
+  },
+
+  mounted () {
+    if (!this.$auth.user.admin) {
+      this.$router.push('/')
     }
   }
 }
