@@ -134,8 +134,9 @@ export default {
       if (window.confirm('削除してもよろしいですか？')) {
         await this.$axios.delete(`/api/v1/users/${userId}`)
           .then((response) => {
-            this.users = response.data
-          }).catch((error) => {
+            this.users = this.users.filter(user => user.id !== userId)
+          })
+          .catch((error) => {
             return error
           })
       }
