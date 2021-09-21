@@ -2,13 +2,13 @@
   <v-container>
     <v-row align="center" justify="center">
       <v-col cols="10">
-        <v-card-title class="px-0">
+        <v-card-title class="px-0 text-h5">
           {{ event.title }}
         </v-card-title>
         <v-card>
           <v-img
             :src="event.image_url ? event.image_url : '/images/no_img.png'"
-            max-height="300"
+            max-height="400"
           />
         </v-card>
       </v-col>
@@ -19,52 +19,61 @@
               [参加者一覧]
             </v-card-subtitle>
           </v-col>
-          <v-row
-            v-if="event.join_users.length > 0"
-            no-gutters
-          >
-            <v-col
-              v-for="user in event.join_users"
-              :key="user.id"
-              cols="1"
-            >
-              <v-tooltip bottom>
-                <template #activator="{ on, attrs }">
-                  <div>
-                    <v-avatar
-                      v-if="user.image_url"
-                      v-bind="attrs"
-                      size="35"
-                      v-on="on"
-                    >
-                      <v-img
-                        :src="user.image_url"
-                      />
-                    </v-avatar>
-                    <v-icon
-                      v-else
-                      v-bind="attrs"
-                      size="40"
-                      v-on="on"
-                    >
-                      mdi-account-circle
-                    </v-icon>
-                  </div>
-                </template>
-                <span>{{ user.name }}</span>
-              </v-tooltip>
-            </v-col>
-          </v-row>
-          <v-row v-else>
-            <v-col cols="12">
-              <v-card-text>
-                参加者はいません
-              </v-card-text>
-            </v-col>
-          </v-row>
           <v-col cols="12">
-            <v-card-text class="px-0">
-              {{ event.join_users.length }} 人
+            <v-card>
+              <v-row
+                v-if="event.join_users.length > 0"
+                class="py-2 pl-2"
+                no-gutters
+              >
+                <v-col
+                  v-for="user in event.join_users"
+                  :key="user.id"
+                  style="max-width: 40px;"
+                >
+                  <v-tooltip bottom>
+                    <template #activator="{ on, attrs }">
+                      <nuxt-link
+                        :to="{ path: `/users/${user.id}` }"
+                        style="color: inherit; text-decoration: none;"
+                      >
+                        <v-avatar
+                          v-if="user.image_url"
+                          v-bind="attrs"
+                          size="32"
+                          style="margin-top: 3px; margin-left: 5px;"
+                          v-on="on"
+                        >
+                          <v-img
+                            :src="user.image_url"
+                          />
+                        </v-avatar>
+                        <v-icon
+                          v-else
+                          v-bind="attrs"
+                          size="40"
+                          v-on="on"
+                        >
+                          mdi-account-circle
+                        </v-icon>
+                      </nuxt-link>
+                    </template>
+                    <span>{{ user.name }}</span>
+                  </v-tooltip>
+                </v-col>
+              </v-row>
+              <v-row v-else>
+                <v-col cols="12">
+                  <v-card-text>
+                    参加者はいません
+                  </v-card-text>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-col>
+          <v-col cols="12">
+            <v-card-text class="px-0 font-weight-bold">
+              {{ event.join_users.length }} / {{ event.participant_number }}人
             </v-card-text>
           </v-col>
         </v-row>
@@ -86,12 +95,18 @@
             まだメッセージがありません。まずは簡単な自己紹介をしてみましょう！
           </v-card-text>
         </v-card>
-        <v-card-text class="px-0">
+        <v-card-text
+          v-if="event.user.id!==$auth.user.id"
+          class="px-0"
+        >
           <v-btn
             class="white--text"
             color="pink lighten-2"
             @click="cancelEvent(event)"
           >
+            <v-icon left>
+              mdi-account-cancel-outline
+            </v-icon>
             参加をキャンセル
           </v-btn>
         </v-card-text>
@@ -111,6 +126,8 @@ export default {
     EventComment
   },
 
+  middleware: 'loginAuth',
+
   async fetch ({ $axios, params, store }) {
     await $axios.get(`/api/v1/events/${params.id}`)
       .then((response) => {
@@ -126,6 +143,12 @@ export default {
   computed: {
     ...mapGetters({ event: 'events/event' }),
     ...mapGetters({ eventComments: 'comments/eventComments' })
+  },
+
+  mounted () {
+    if (this.event.user.id !== this.$auth.user.id && !this.event.join_users.find(v => v.id === this.$auth.user.id)) {
+      this.$router.push(`/users/${this.$auth.user.id}`)
+    }
   },
 
   methods: {

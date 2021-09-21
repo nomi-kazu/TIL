@@ -7,8 +7,6 @@
             v-model="tab"
             fixed-tabs
             centered
-            next-icon="mdi-arrow-right-bold-box-outline"
-            prev-icon="mdi-arrow-left-bold-box-outline"
             show-arrow
             color="secondary"
             background-color="brown lighten-5"
