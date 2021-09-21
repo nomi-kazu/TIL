@@ -47,17 +47,21 @@
           {{ user.name }}
         </nuxt-link>
       </v-col>
-      <v-col cols="8">
+      <v-col cols="10">
         <v-card-text class="px-0">
           {{ user.description }}
         </v-card-text>
       </v-col>
-      <v-col cols="4">
-        <FollowBtnGroup
-          v-if="user.id != $auth.user.id"
-          :user="user"
-          class="float-right"
-        />
+      <v-col cols="2">
+        <v-btn
+          color="error"
+          small
+          rounded
+          right
+          @click="deleteUser(user.id)"
+        >
+          削除
+        </v-btn>
       </v-col>
     </v-row>
     <v-card-text>
@@ -73,12 +77,10 @@
 
 <script>
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import FollowBtnGroup from '~/components/molecles/users/FollowBtnGroup'
 
 export default {
   components: {
-    TextFieldWithValidation,
-    FollowBtnGroup
+    TextFieldWithValidation
   },
 
   data () {
@@ -126,6 +128,17 @@ export default {
         return error
       })
       this.loading = false
+    },
+
+    async deleteUser (userId) {
+      if (window.confirm('削除してもよろしいですか？')) {
+        await this.$axios.delete(`/api/v1/users/${userId}`)
+          .then((response) => {
+            this.users = response.data
+          }).catch((error) => {
+            return error
+          })
+      }
     },
 
     pageChange (pageNumber) {
