@@ -139,16 +139,13 @@
               </v-card-title>
               <v-divider />
               <v-row justify="center" no-gutters>
-                <v-col>
-                  <v-subheader>チャート</v-subheader>
+                <v-col class="my-4">
+                  <v-subheader>タグ</v-subheader>
                   <BarChart
-                    :tags="tagNameList"
+                    :tags="user.tag_ranking"
                     :height="200"
                     :width="200"
                   />
-                </v-col>
-                <v-col>
-                  {{ posts.liked_users }}
                 </v-col>
               </v-row>
             </v-card>
@@ -317,7 +314,6 @@ export default {
   mounted () {
     this.loading = true
     setTimeout(this.stopLoading, 3000)
-    console.log(this.user.tag_ranking)
   },
 
   methods: {

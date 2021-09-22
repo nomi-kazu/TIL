@@ -94,7 +94,7 @@ export default {
 
     images_url: {
       type: Array,
-      default: () => {}
+      default: () => []
     }
   },
 
