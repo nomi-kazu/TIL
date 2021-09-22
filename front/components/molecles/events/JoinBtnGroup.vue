@@ -1,14 +1,15 @@
 <template>
   <div>
-    <h3>{{ `参加人数: ${event.join_users.length}/${event.participant_number}` }}</h3>
+    <h3>{{ `参加人数: ${join_users_count}/${event.participant_number}` }}</h3>
     <v-btn
+      v-if="event.user.id == $auth.user.id || is_joined"
       :to="{ path: `/events/${event.id}` }"
       color="deep-purple white--text"
     >
       参加者ルーム
     </v-btn>
     <v-btn
-      v-if="event.user.id!=$auth.user.id && !is_joined"
+      v-else-if="event.user.id!=$auth.user.id && !is_joined"
       @click="joinEvent(event.id)"
     >
       <v-icon>
@@ -26,8 +27,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   props: {
     event: {
@@ -36,10 +35,16 @@ export default {
     }
   },
 
-  computed: {
-    ...mapGetters({ joinedEvents: 'events/joinedEvents' }),
-    is_joined () {
-      return this.event.join_users.find(v => v.id === this.$auth.user.id)
+  data () {
+    return {
+      is_joined: false,
+      join_users_count: this.event.join_users.length
+    }
+  },
+
+  mounted () {
+    if (this.event.join_users.find(v => v.id === this.$auth.user.id)) {
+      this.is_joined = true
     }
   },
 
@@ -51,7 +56,7 @@ export default {
         .then(
           (response) => {
             this.is_joined = true
-            this.$store.commit('events/updateEvent', response.event, { root: true })
+            this.join_users_count++
           },
           (error) => {
             return error

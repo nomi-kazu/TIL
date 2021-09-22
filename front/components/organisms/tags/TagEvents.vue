@@ -46,7 +46,7 @@
             <span>開催日: </span>
             {{ $moment(event.scheduled_date).format('YYYY/MM/DD') }}
           </v-card-subtitle>
-          <v-card-subtitle>
+          <v-card-subtitle class="pt-0">
             <span>開始時刻: </span>
             {{ $moment(event.start_time).format('HH : mm') }}
           </v-card-subtitle>
@@ -64,6 +64,7 @@
                 :key="tag.id"
                 color="info"
                 class="white--text ml-0"
+                outlined
                 small
               >
                 <nuxt-link

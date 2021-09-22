@@ -101,7 +101,7 @@ export default {
   },
 
   props: {
-    likedPosts: {
+    posts: {
       type: Array,
       default: () => {}
     },
@@ -124,11 +124,11 @@ export default {
     ...mapGetters({ user: 'user/user' }),
 
     displayLikedPosts () {
-      return this.likedPosts.slice(this.pageSize * (this.page - 1), this.pageSize * (this.page))
+      return this.posts.slice(this.pageSize * (this.page - 1), this.pageSize * (this.page))
     },
 
     LikedPostsLength () {
-      return Math.ceil(this.likedPosts.length / this.pageSize)
+      return Math.ceil(this.posts.length / this.pageSize)
     }
   },
 

@@ -41,7 +41,13 @@ Style/RedundantSelf:
   Enabled: false
 
 Metrics/AbcSize:
-  Max: 27
+  Max: 40
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+CyclomaticComplexity:
+  Max: 10
 
 # Offense count: 3
 # Configuration parameters: CountComments, CountAsOne, ExcludedMethods, IgnoredMethods.

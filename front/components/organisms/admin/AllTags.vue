@@ -29,7 +29,7 @@
           </v-card-text>
         </nuxt-link>
       </v-col>
-      <v-col cols="7">
+      <v-col cols="10">
         <v-row no-gutters>
           <v-col cols="12">
             <span class="font-weight-bold pr-2">
@@ -50,6 +50,16 @@
             {{ tag.events.length }}
           </v-col>
         </v-row>
+      </v-col>
+      <v-col cols="2">
+        <v-btn
+          icon
+          @click="deleteTag(tag.id)"
+        >
+          <v-icon>
+            mdi-trash-can-outline
+          </v-icon>
+        </v-btn>
       </v-col>
     </v-row>
     <v-card-text>
@@ -117,6 +127,18 @@ export default {
         return error
       })
       this.loading = false
+    },
+
+    async deleteTag (tagId) {
+      if (window.confirm('削除してもよろしいですか？')) {
+        await this.$axios.delete(`/api/v1/tags/${tagId}/delete_tag`)
+          .then((response) => {
+            this.tags = this.tags.filter(tag => tag.id !== tagId)
+          })
+          .catch((error) => {
+            return error
+          })
+      }
     },
 
     pageChange (pageNumber) {
