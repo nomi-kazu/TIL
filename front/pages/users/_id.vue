@@ -43,7 +43,7 @@
 
           <v-tabs
             v-model="tabTitle"
-            class="d-inline d-sm-none"
+            class="d-none d-sm-inline"
             background-color="brown lighten-5"
             color="secondary"
             show-arrows
@@ -135,21 +135,33 @@
                 登録したタグはありません
               </v-card-text>
               <v-card-title>
-                あなたの嗜好
+                ユーザーのトレンド
               </v-card-title>
               <v-divider />
-              <v-row justify="center" no-gutters>
-                <v-col>
-                  <v-subheader>チャート</v-subheader>
-                  <BarChart
-                    :height="200"
-                    :width="200"
-                  />
-                </v-col>
-                <v-col>
-                  {{ posts.liked_users }}
-                </v-col>
-              </v-row>
+              <template v-if="user.tag_ranking.length > 0">
+                <v-row justify="center" no-gutters>
+                  <v-col>
+                    <v-subheader>タグ</v-subheader>
+                    <BarChart
+                      class="my-4 mx-2"
+                      :tags="user.tag_ranking"
+                      :height="200"
+                      :width="200"
+                    />
+                  </v-col>
+                </v-row>
+              </template>
+              <template v-else>
+                <v-row justify="center" no-gutters>
+                  <v-col class="my-4 mx-2">
+                    <v-card>
+                      <v-card-text>
+                        タグをつけた投稿
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </template>
             </v-card>
           </v-container>
         </v-tab-item>
@@ -279,7 +291,8 @@ export default {
         { name: 'イベント' },
         { name: '参加イベント' }
       ],
-      loading: false
+      loading: false,
+      tagNameList: []
     }
   },
 
