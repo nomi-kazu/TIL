@@ -135,7 +135,7 @@
                 登録したタグはありません
               </v-card-text>
               <v-card-title>
-                あなたの嗜好
+                ユーザーのトレンド
               </v-card-title>
               <v-divider />
               <template v-if="user.tag_ranking.length > 0">

@@ -13,9 +13,9 @@
           vid="current_password"
           rules="required|alpha_dash|min:8|max:72"
           :type="show1 ? 'text' : 'password'"
+          outlined
           :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="show1 = !show1"
-          outlined
         />
 
         <TextFieldWithValidation
@@ -26,9 +26,9 @@
           vid="password"
           rules="required|alpha_dash|min:8|max:72"
           :type="show2 ? 'text' : 'password'"
+          outlined
           :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="show2 = !show2"
-          outlined
         />
 
         <TextFieldWithValidation
@@ -39,13 +39,25 @@
           vid="password_confirmation"
           rules="required|alpha_dash|min:8|max:72|confirmed:password"
           :type="show3 ? 'text' : 'password'"
+          outlined
           :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="show3 = !show3"
-          outlined
         />
 
         <v-card-text>
           <v-btn
+            v-if="$auth.user.name=='guestuser'"
+            disabled
+            block
+            color="warning"
+            class="white--text"
+            @click="updatePassword"
+          >
+            ゲストユーザーなので変更できません
+          </v-btn>
+
+          <v-btn
+            v-else
             :disabled="invalid || loading"
             :loading="loading"
             block
@@ -68,6 +80,8 @@ export default {
   components: {
     TextFieldWithValidation
   },
+
+  middleware: 'loginAuth',
 
   data () {
     return {

@@ -16,9 +16,9 @@
             vid="password"
             rules="required|alpha_dash|min:8|max:72"
             :type="show ? 'text' : 'password'"
+            outlined
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"
-            outlined
           />
 
           <v-card-text class="px-0">
