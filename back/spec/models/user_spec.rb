@@ -5,11 +5,11 @@ RSpec.describe User, type: :model do
   let(:user2) { create(:user) }
 
   context 'ユーザー登録時' do
-    it 'name/email/password/password_confirmationが設定済みで成功' do
+    it '各項目が設定済みで成功' do
       expect(user).to be_valid
     end
 
-    it 'name/email/password/password_confirmationが未設定で失敗' do
+    it '各項目が未設定で失敗' do
       user.name = ''
       user.email = ''
       user.password = ''
@@ -17,11 +17,11 @@ RSpec.describe User, type: :model do
       expect(user).to_not be_valid
     end
 
-    it 'name/email/password/password_confirmationが一意(ユニーク)で成功' do
+    it '各項目が一意(ユニーク)で成功' do
       expect(user2).to be_valid
     end
 
-    it 'name/email/password/password_confirmationが一意(ユニーク)でない場合失敗' do
+    it '各項目が一意(ユニーク)でない場合失敗' do
       user2.name = user.name
       user2.email = user.email
       user2.password = user.password
