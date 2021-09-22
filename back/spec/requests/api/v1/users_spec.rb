@@ -1,24 +1,34 @@
-
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::UserTokens', type: :request do
-  describe 'POST /create' do
+RSpec.describe 'Api::V1::Users', type: :request do
+  describe 'GET /show' do
     let(:user) { create(:user) }
 
-    it 'ログインできること' do
-      params = { auth: { email: user.email, password: user.password } }
-      post '/api/v1/user_token', params: params
-      expect(response).to have_http_status(:success)
+    it 'ユーザーの情報を取得' do
+      get api_v1_user_path(user.id)
+      json = JSON.parse(response.body)
+      # responseの可否判定
+      expect(json['name']).to eq(user.name)
+      expect(json['email']).to eq(user.email)
     end
   end
 
-  describe 'POST /destroy' do
-    let(:user) { create(:user) }
+  describe 'PUT /update' do
+    let!(:user) { create(:user) }
+    let!(:params) { { auth: { email: user.email, password: user.password } } }
+    let!(:update) { { user: { name: 'testuser1', email: 'testuser1@example.com', description: 'よろしくお願いします' } } }
 
-    it 'ログアウトできること' do
-      params = { auth: { email: user.email, password: user.password } }
+    before do
       post '/api/v1/user_token', params: params
-      expect(response).to have_http_status(:success)
+      put "/api/v1/users/#{user.id}", params: update
+    end
+
+    it 'ユーザーの情報を更新' do
+      json = JSON.parse(response.body)
+      # responseの可否判定
+      expect(json['name']).to eq(update[:user][:name])
+      expect(json['email']).to eq(update[:user][:email])
+      expect(json['description']).to eq(update[:user][:description])
     end
   end
 end
