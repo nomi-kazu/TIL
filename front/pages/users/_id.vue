@@ -142,6 +142,7 @@
                 <v-col>
                   <v-subheader>チャート</v-subheader>
                   <BarChart
+                    :tags="tagNameList"
                     :height="200"
                     :width="200"
                   />
@@ -279,7 +280,8 @@ export default {
         { name: 'イベント' },
         { name: '参加イベント' }
       ],
-      loading: false
+      loading: false,
+      tagNameList: []
     }
   },
 
