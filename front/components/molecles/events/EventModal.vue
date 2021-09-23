@@ -45,7 +45,7 @@
           dense
         >
           <v-timeline-item
-            color="light-green lighten-1"
+            color="light-green lighten-4"
             icon="mdi-card-text-outline"
             fill-dot
           >
@@ -86,6 +86,9 @@
             fill-dot
           >
             <div>
+              <v-icon>
+                mdi-map-marker-outline
+              </v-icon>
               <span>場所</span>
               <div class="text-h6">
                 {{ event.place }}
@@ -99,6 +102,9 @@
             fill-dot
           >
             <div>
+              <v-icon>
+                mdi-calendar
+              </v-icon>
               <span>開催日</span>
               <div class="text-h6">
                 {{ $moment(event.scheduled_date).format('YYYY/MM//DD') }}
@@ -110,6 +116,9 @@
             small
           >
             <div>
+              <v-icon>
+                mdi-clock-time-three-outline
+              </v-icon>
               <span>開始時間</span>
               <div class="text-h6">
                 {{ $moment(event.start_time).format('HH : mm') }}
@@ -122,6 +131,9 @@
             small
           >
             <div>
+              <v-icon>
+                mdi-clock-time-three
+              </v-icon>
               <span>終了時間</span>
               <div class="text-h6">
                 {{ $moment(event.end_time).format('HH : mm') }}
