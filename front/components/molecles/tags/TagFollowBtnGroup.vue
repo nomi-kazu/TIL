@@ -50,6 +50,7 @@ export default {
     async followTag () {
       const formData = new FormData()
       formData.append('id', this.tag.id)
+      formData.append('user_id', this.$auth.user.id)
       await this.$axios.$post('/api/v1/tags', formData)
         .then(
           (response) => {
