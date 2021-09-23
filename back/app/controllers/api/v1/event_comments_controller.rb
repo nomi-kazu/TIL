@@ -1,8 +1,10 @@
 module Api
   module V1
     class EventCommentsController < ApplicationController
+      before_action :set_user, only: [:create]
+
       def create
-        event_comment = current_user.event_comments.new(event_comment_params)
+        event_comment = @user.event_comments.new(event_comment_params)
         if event_comment.save
           render json: event_comment.as_json(include: [{ user: { methods: :image_url } }]), status: :created
         else
@@ -16,6 +18,10 @@ module Api
       end
 
       private
+
+      def set_user
+        @user = User.find(event_comment_params[:user_id])
+      end
 
       def event_comment_params
         params.require(:event_comment).permit(:user_id, :event_id, :content)

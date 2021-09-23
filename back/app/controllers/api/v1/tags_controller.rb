@@ -12,12 +12,12 @@ module Api
       end
 
       def create
-        @tag.user_tag_maps.create(user_id: current_user.id)
+        @tag.user_tag_maps.create(user_id: @user.id)
         render json: @tag.as_json(include: %i[users posts events]), status: :created
       end
 
       def destroy
-        user_tag_map = UserTagMap.find_by(user_id: current_user.id, tag_id: @tag.id)
+        user_tag_map = UserTagMap.find_by(user_id: @user.id, tag_id: @tag.id)
         if user_tag_map.destroy
           render json: @tag.as_json(include: %i[users posts events]), status: :ok
         else
@@ -38,6 +38,7 @@ module Api
 
       def set_tags
         @tag = Tag.find(params[:id])
+        @user = User.find(params[:user_id])
       end
     end
   end
