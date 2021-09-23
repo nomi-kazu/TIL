@@ -54,7 +54,8 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/markdownit',
-    'nuxt-i18n'
+    'nuxt-i18n',
+    'nuxt-client-init-module'
   ],
 
   markdownit: {
