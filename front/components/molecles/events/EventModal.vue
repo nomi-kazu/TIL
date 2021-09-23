@@ -45,7 +45,7 @@
           dense
         >
           <v-timeline-item
-            color="lime accent-4"
+            color="light-green lighten-1"
             icon="mdi-card-text-outline"
             fill-dot
           >

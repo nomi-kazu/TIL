@@ -8,6 +8,9 @@
       small
       @click="unFollowUser"
     >
+      <v-icon left>
+        mdi-minus
+      </v-icon>
       アンフォロー
     </v-btn>
     <v-btn
@@ -18,6 +21,9 @@
       small
       @click="followUser"
     >
+      <v-icon left>
+        mdi-plus
+      </v-icon>
       フォロー
     </v-btn>
   </div>
@@ -62,7 +68,7 @@ export default {
               'flash/showMessage',
               {
                 message: response.message,
-                color: 'info',
+                color: 'warning',
                 status: true
               },
               { root: true }
@@ -93,7 +99,7 @@ export default {
               'flash/showMessage',
               {
                 message: response.message,
-                color: 'warning',
+                color: 'info',
                 status: true
               },
               { root: true }
