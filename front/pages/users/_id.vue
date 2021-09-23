@@ -309,13 +309,11 @@ export default {
         store.commit('posts/setPosts', response.data.posts, { root: true })
         store.commit('posts/setLikedPosts', response.data.liked_posts, { root: true })
         store.commit('events/setEvents', response.data.events, { root: true })
-        if (response.data.join_events.length > 0) {
-          const joinedEvents = []
-          response.data.join_events.forEach((joinEvent) => {
-            joinedEvents.push(joinEvent.event)
-          })
-          store.commit('events/setJoinedEvents', joinedEvents, { root: true })
-        }
+        const joinedEvents = []
+        response.data.event_joins.forEach((eventJoin) => {
+          joinedEvents.push(eventJoin)
+        })
+        store.commit('events/setJoinedEvents', joinedEvents, { root: true })
       })
       .catch((error) => {
         console.log(error)

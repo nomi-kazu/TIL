@@ -92,8 +92,6 @@ export default {
         formData.append('user[name]', this.name)
         formData.append('user[email]', this.email)
         formData.append('user[password]', this.password)
-        authData.append('auth[email]', this.email)
-        authData.append('auth[password]', this.password)
 
         await this.$axios.$post('/api/v1/users', formData)
           .then(
@@ -107,6 +105,8 @@ export default {
                 },
                 { root: true }
               )
+              authData.append('auth[email]', this.email)
+              authData.append('auth[password]', this.password)
               this.$axios.$post('/api/v1/user_token', authData)
                 .then(
                   (response) => {
@@ -136,7 +136,6 @@ export default {
       this.loading = false
     },
     formReset () {
-      this.params = { user: { name: '', email: '', password: '' } }
       this.$refs.form.reset()
     }
   }

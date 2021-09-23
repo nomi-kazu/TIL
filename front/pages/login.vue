@@ -89,7 +89,6 @@ export default {
       const isValid = this.$refs.form.validate()
       const formData = new FormData()
       this.loading = true
-
       formData.append('auth[email]', this.email)
       formData.append('auth[password]', this.password)
 

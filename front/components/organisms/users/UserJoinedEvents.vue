@@ -39,13 +39,20 @@
               </v-col>
             </v-row>
           </v-img>
-          <v-card-title class="text-h5">
+          <v-card-title class="text-h6">
             {{ joinedEvent.title }}
           </v-card-title>
-          <v-card-subtitle>
+          <v-card-subtitle class="pt-2">
+            <v-icon>
+              mdi-calendar
+            </v-icon>
+            <span>開催日: </span>
             {{ $moment(joinedEvent.scheduled_date).format('YYYY/MM/DD') }}
           </v-card-subtitle>
           <v-card-subtitle class="pt-0">
+            <v-icon>
+              mdi-alarm-check
+            </v-icon>
             <span>開始時刻: </span>
             {{ $moment(joinedEvent.start_time).format('HH : mm') }}
           </v-card-subtitle>
@@ -153,7 +160,7 @@ export default {
 
     async cancelEvent (joinedEventId) {
       if (window.confirm('キャンセルしてもよろしいですか？')) {
-        await this.$axios.$delete(`/api/v1/join_events/${joinedEventId}`)
+        await this.$axios.$delete(`/api/v1/join_events/${joinedEventId}`, { data: { user_id: this.$auth.user.id } })
           .then(
             (response) => {
               this.$store.commit('events/deleteJoinedEvent', joinedEventId, { root: true })

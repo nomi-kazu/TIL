@@ -47,7 +47,7 @@
             </span>
           </v-card-actions>
         </nuxt-link>
-        <v-card-text class="py-0">
+        <v-card-text class="pt-0">
           <v-chip-group
             v-if="post.tags.length > 0"
             class="w-100"
@@ -147,7 +147,7 @@ export default {
   methods: {
     async deletePost (postId) {
       if (window.confirm('投稿を削除してもよろしいですか？(※関連する勉強会も削除されます)')) {
-        await this.$axios.$delete(`/api/v1/posts/${postId}`)
+        await this.$axios.$delete(`/api/v1/posts/${postId}`, { data: { user_id: this.$auth.user.id } })
           .then(
             (response) => {
               this.$store.commit('posts/deletePost', postId, { root: true })

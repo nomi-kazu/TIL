@@ -9,6 +9,12 @@
       参加者ルーム
     </v-btn>
     <v-btn
+      v-else-if="event.participant_number > 0 && event.participant_number<=event.join_users.length"
+      disabled
+    >
+      上限人数に達しました
+    </v-btn>
+    <v-btn
       v-else-if="event.user.id!=$auth.user.id && !is_joined"
       color="purple lighten-3 white--text"
       @click="joinEvent(event.id)"
@@ -17,12 +23,6 @@
         mdi-account-arrow-right
       </v-icon>
       参加する
-    </v-btn>
-    <v-btn
-      v-else-if="event.participant_number > 0 && event.participant_number==event.join_users.length"
-      disabled
-    >
-      上限人数に達しました
     </v-btn>
   </div>
 </template>
@@ -52,6 +52,7 @@ export default {
   methods: {
     async joinEvent (eventId) {
       const formData = new FormData()
+      formData.append('join_event[user_id]', this.$auth.user.id)
       formData.append('join_event[event_id]', eventId)
       await this.$axios.$post('/api/v1/join_events', formData)
         .then(

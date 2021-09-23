@@ -56,6 +56,7 @@ export default {
   methods: {
     async followUser () {
       const formData = new FormData()
+      formData.append('user_id', this.$auth.user.id)
       formData.append('follow_id', this.user.id)
       await this.$axios.$post('/api/v1/relationships', formData)
         .then(
@@ -90,11 +91,13 @@ export default {
     },
 
     async unFollowUser () {
-      await this.$axios.$delete(`/api/v1/relationships/${this.user.id}`)
+      await this.$axios.$delete(`/api/v1/relationships/${this.user.id}`, { data: { user_id: this.$auth.user.id } })
         .then(
           (response) => {
             this.is_followed = false
-            this.$store.commit('user/setFollowers', response.user.followers, { root: true })
+            if (Number(this.$route.params.id) === response.user.id) {
+              this.$store.commit('user/setFollowers', response.user.followers, { root: true })
+            }
             this.$store.dispatch(
               'flash/showMessage',
               {
