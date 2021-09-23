@@ -162,7 +162,7 @@ export default {
                 'flash/showMessage',
                 {
                   message: response.message,
-                  color: 'primary',
+                  color: 'pink lighten-2',
                   status: true
                 },
                 { root: true }

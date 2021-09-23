@@ -62,7 +62,7 @@ export default {
               'flash/showMessage',
               {
                 message: response.message,
-                color: 'success',
+                color: 'info',
                 status: true
               },
               { root: true }
@@ -93,7 +93,7 @@ export default {
               'flash/showMessage',
               {
                 message: response.message,
-                color: 'success',
+                color: 'warning',
                 status: true
               },
               { root: true }

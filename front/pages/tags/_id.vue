@@ -127,7 +127,6 @@ export default {
         store.commit('tags/setEvents', response.data.events, { root: true })
       })
       .catch((error) => {
-        console.log(error)
         return error
       })
   },
