@@ -115,11 +115,6 @@ export default {
     posts: {
       type: Array,
       default: () => {}
-    },
-
-    loading: {
-      type: Boolean,
-      default: null
     }
   },
 
@@ -127,7 +122,8 @@ export default {
     return {
       page: 1,
       length: 0,
-      pageSize: 5
+      pageSize: 5,
+      loading: false
     }
   },
 
@@ -141,6 +137,11 @@ export default {
     PostsLength () {
       return Math.ceil(this.posts.length / this.pageSize)
     }
+  },
+
+  mounted () {
+    this.loading = true
+    setTimeout(this.stopLoading, 500)
   },
 
   methods: {
@@ -180,6 +181,10 @@ export default {
 
     pageChange (pageNumber) {
       this.displayPosts.slice(this.pageSize * (pageNumber - 1), this.pageSize * (pageNumber))
+    },
+
+    stopLoading () {
+      this.loading = false
     }
   }
 }
