@@ -25,15 +25,20 @@
                   <span class="pl-2">{{ user.name }}</span>
                   <FollowBtnGroup
                     :user="user"
+                    :followers="followers"
                   />
                 </v-card-actions>
               </v-list-item>
               <v-list-item>
-                <v-card-subtitle class="pa-0">
-                  フォロー  {{ user.followings.length }}
+                <v-card-subtitle>
+                  <FollowingsModal
+                    :followings="followings"
+                  />
                 </v-card-subtitle>
                 <v-card-subtitle>
-                  フォロワー  {{ user.followers.length }}
+                  <FollowersModal
+                    :followers="followers"
+                  />
                 </v-card-subtitle>
               </v-list-item>
             </v-list>
@@ -178,7 +183,6 @@
               </v-card-text>
               <UserPosts
                 :posts="posts"
-                :loading="loading"
               />
             </template>
             <template v-else>
@@ -207,7 +211,6 @@
             <template v-if="likedPosts.length > 0">
               <UserLikedPosts
                 :posts="likedPosts"
-                :loading="loading"
               />
             </template>
             <template v-else>
@@ -225,7 +228,6 @@
             <template v-if="events.length > 0">
               <UserEvents
                 :events="events"
-                :loading="loading"
               />
             </template>
             <template v-else>
@@ -244,7 +246,6 @@
               <UserJoinedEvents
                 :events="joinedEvents"
                 :user="user"
-                :loading="loading"
               />
             </template>
             <template v-else>
@@ -265,6 +266,8 @@
 import { mapGetters } from 'vuex'
 import BarChart from '~/components/organisms/users/BarChart'
 import FollowBtnGroup from '~/components/molecles/users/FollowBtnGroup'
+import FollowersModal from '~/components/organisms/users/FollowersModal'
+import FollowingsModal from '~/components/organisms/users/FollowingsModal'
 import UserEvents from '~/components/organisms/users/UserEvents'
 import UserLikedPosts from '~/components/organisms/users/UserLikedPosts'
 import UserPosts from '~/components/organisms/users/UserPosts'
@@ -274,6 +277,8 @@ export default {
   components: {
     BarChart,
     FollowBtnGroup,
+    FollowersModal,
+    FollowingsModal,
     UserEvents,
     UserLikedPosts,
     UserPosts,
@@ -287,11 +292,10 @@ export default {
       titles: [
         { name: 'プロフィール詳細' },
         { name: '投稿レビュー' },
-        { name: 'お気に入りツール' },
+        { name: 'お気に入りレビュー' },
         { name: 'イベント' },
         { name: '参加イベント' }
       ],
-      loading: false,
       tagNameList: []
     }
   },
@@ -300,6 +304,8 @@ export default {
     await $axios.get(`/api/v1/users/${params.id}`)
       .then((response) => {
         store.commit('user/setUser', response.data, { root: true })
+        store.commit('user/setFollowings', response.data.followings, { root: true })
+        store.commit('user/setFollowers', response.data.followers, { root: true })
         store.commit('posts/setPosts', response.data.posts, { root: true })
         store.commit('posts/setLikedPosts', response.data.liked_posts, { root: true })
         store.commit('events/setEvents', response.data.events, { root: true })
@@ -319,21 +325,12 @@ export default {
 
   computed: {
     ...mapGetters({ user: 'user/user' }),
+    ...mapGetters({ followings: 'user/followings' }),
+    ...mapGetters({ followers: 'user/followers' }),
     ...mapGetters({ posts: 'posts/posts' }),
     ...mapGetters({ likedPosts: 'posts/likedPosts' }),
     ...mapGetters({ events: 'events/events' }),
     ...mapGetters({ joinedEvents: 'events/joinedEvents' })
-  },
-
-  mounted () {
-    this.loading = true
-    setTimeout(this.stopLoading, 3000)
-  },
-
-  methods: {
-    stopLoading () {
-      this.loading = false
-    }
   }
 }
 </script>

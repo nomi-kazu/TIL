@@ -127,11 +127,6 @@ export default {
     events: {
       type: Array,
       default: () => {}
-    },
-
-    loading: {
-      type: Boolean,
-      default: null
     }
   },
 
@@ -139,7 +134,8 @@ export default {
     return {
       page: 1,
       length: 0,
-      pageSize: 5
+      pageSize: 6,
+      loading: false
     }
   },
 
@@ -151,6 +147,11 @@ export default {
     EventsLength () {
       return Math.ceil(this.events.length / this.pageSize)
     }
+  },
+
+  mounted () {
+    this.loading = true
+    setTimeout(this.stopLoading, 500)
   },
 
   methods: {
@@ -189,6 +190,10 @@ export default {
             }
           )
       }
+    },
+
+    stopLoading () {
+      this.loading = false
     }
   }
 }
