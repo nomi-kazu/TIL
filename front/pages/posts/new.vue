@@ -15,14 +15,6 @@
                 outlined
               />
 
-              <InputRate
-                v-model="rate"
-                rules="required|min_value:0.5"
-                half-increments
-                hover
-                large
-              />
-
               <InputImages
                 v-model="images"
               />
@@ -61,7 +53,6 @@
 <script>
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
 import InputImages from '~/components/atoms/input/InputImages'
-import InputRate from '~/components/atoms/input/InputRate'
 import InputContent from '~/components/atoms/input/InputContent'
 import InputTags from '~/components/atoms/input/InputTags'
 
@@ -69,7 +60,6 @@ export default {
   components: {
     TextFieldWithValidation,
     InputImages,
-    InputRate,
     InputContent,
     InputTags
   },
@@ -80,7 +70,6 @@ export default {
     return {
       title: '',
       content: '',
-      rate: 0,
       isEnter: false,
       loading: false,
       showImages: [],
@@ -98,7 +87,6 @@ export default {
       if (isValid) {
         formData.append('post[user_id]', this.$auth.user.id)
         formData.append('post[title]', this.title)
-        formData.append('post[rate]', this.rate)
         formData.append('post[content]', this.content)
         if (this.images) {
           this.images.forEach((image) => {

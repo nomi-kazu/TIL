@@ -34,20 +34,6 @@
             <v-card-title>
               {{ post.title }}
             </v-card-title>
-            <v-card-actions class="ml-2">
-              <v-rating
-                :value="post.rate"
-                color="yellow darken-3"
-                background-color="grey darken-1"
-                readonly
-                half-increments
-                dense
-                small
-              />
-              <span class="rate pl-1">
-                ({{ post.rate }})
-              </span>
-            </v-card-actions>
           </nuxt-link>
           <v-card-text
             v-if="post.tags.length > 0"

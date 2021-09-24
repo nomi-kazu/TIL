@@ -62,20 +62,6 @@
                   <v-card-title class="pb-0" style="font-size: 15px;">
                     {{ event.post.title }}
                   </v-card-title>
-                  <v-card-actions class="ml-2">
-                    <v-rating
-                      :value="event.post.rate"
-                      color="yellow darken-3"
-                      background-color="grey darken-1"
-                      readonly
-                      half-increments
-                      dense
-                      small
-                    />
-                    <span class="rate pl-1">
-                      ( {{ event.post.rate }} )
-                    </span>
-                  </v-card-actions>
                 </v-card>
               </nuxt-link>
             </v-card-text>

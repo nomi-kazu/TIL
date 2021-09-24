@@ -74,7 +74,6 @@ ActiveRecord::Schema.define(version: 2021_09_19_083412) do
 
   create_table "events", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "post_id", null: false
     t.string "title", limit: 50, null: false
     t.string "place", null: false
     t.text "content", null: false
@@ -84,7 +83,6 @@ ActiveRecord::Schema.define(version: 2021_09_19_083412) do
     t.time "end_time", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_id"], name: "index_events_on_post_id"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
@@ -120,7 +118,6 @@ ActiveRecord::Schema.define(version: 2021_09_19_083412) do
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title", limit: 50, null: false
-    t.float "rate", null: false
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -170,7 +167,6 @@ ActiveRecord::Schema.define(version: 2021_09_19_083412) do
   add_foreign_key "event_comments", "users"
   add_foreign_key "event_tag_maps", "events"
   add_foreign_key "event_tag_maps", "tags"
-  add_foreign_key "events", "posts"
   add_foreign_key "events", "users"
   add_foreign_key "join_events", "events"
   add_foreign_key "join_events", "users"

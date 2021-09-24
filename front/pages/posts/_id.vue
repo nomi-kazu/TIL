@@ -32,22 +32,6 @@
             />
           </v-carousel>
 
-          <v-card-text class="pb-0">
-            <v-card-actions class="text-center">
-              <v-rating
-                :value="post.rate"
-                color="yellow darken-3"
-                background-color="darken-1"
-                readonly
-                half-increments
-                dense
-              />
-              <span class="font-weight-bold">
-                ( {{ post.rate }} )
-              </span>
-            </v-card-actions>
-          </v-card-text>
-
           <v-divider />
 
           <div

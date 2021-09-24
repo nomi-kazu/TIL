@@ -11,18 +11,7 @@ RSpec.describe Post, type: :model do
 
     it '各項目が未入力で失敗' do
       post.title = ''
-      post.rate = ''
       post.content = ''
-      expect(post).to_not be_valid
-    end
-
-    it 'rateの値が0より上で成功' do
-      post.rate = 0.5
-      expect(post).to be_valid
-    end
-
-    it 'rateの値が0で失敗' do
-      post.rate = 0
       expect(post).to_not be_valid
     end
   end
