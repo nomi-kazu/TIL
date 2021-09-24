@@ -36,7 +36,7 @@ export default {
 
       set (value) {
         this.$emit('input', value)
-      } 
+      }
     }
   }
 }
