@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::Events', type: :request do
   describe 'GET /show' do
     let!(:user) { create(:user) }
-    let!(:post) { create(:post, user: user) }
-    let!(:event) { create(:event, user: user, post: post) }
+    let!(:event) { create(:event, user: user) }
 
     it 'イベントの詳細が表示されること' do
       get "/api/v1/events/#{event.id}"
@@ -22,8 +21,7 @@ RSpec.describe 'Api::V1::Events', type: :request do
     end
 
     it 'イベントの情報を更新できること' do
-      post = create(:post, user: user)
-      event = create(:event, user: user, post: post)
+      event = create(:event, user: user)
       update = { event: { title: 'testpost', participant_number: 10, content: 'testcontent', place: 'testplace' } }
       put "/api/v1/events/#{event.id}", params: update
       json = JSON.parse(response.body)
@@ -45,8 +43,7 @@ RSpec.describe 'Api::V1::Events', type: :request do
     end
 
     it 'イベントが削除されること' do
-      post = create(:post, user: user)
-      event = create(:event, user: user, post: post)
+      event = create(:event, user: user)
       delete "/api/v1/events/#{event.id}"
       expect(response).to have_http_status(:success)
     end

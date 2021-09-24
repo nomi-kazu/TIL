@@ -170,11 +170,6 @@ export default {
   },
 
   props: {
-    post: {
-      type: Object,
-      default: null
-    },
-
     event: {
       type: Object,
       default: null
@@ -223,7 +218,6 @@ export default {
       this.loading = true
       if (isValid) {
         formData.append('event[user_id]', this.$auth.user.id)
-        formData.append('event[post_id]', this.post.id)
         if (this.image) { formData.append('event[image]', this.image) }
         formData.append('event[title]', this.title)
         formData.append('event[participant_number]', this.participant_number)

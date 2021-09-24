@@ -7,7 +7,6 @@
             {{ $moment(post.created_at).format('YYYY/MM/DD HH:MM') }}
             <AddStudyEvent
               class="float-right ma-0"
-              :post="post"
               :user="$auth.user"
             />
           </v-card-subtitle>

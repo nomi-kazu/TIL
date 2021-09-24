@@ -45,28 +45,6 @@
           dense
         >
           <v-timeline-item
-            color="light-green lighten-4"
-            icon="mdi-card-text-outline"
-            fill-dot
-          >
-            <span>関連記事</span>
-            <v-card-text class="shadow px-0">
-              <nuxt-link
-                :to="{ path: `/posts/${event.post.id}` }"
-                style="color: inherit; text-decoration: none;"
-              >
-                <v-card>
-                  <v-card-text class="pb-0">
-                    {{ $moment(event.post.created_at).format('YYYY/MM/DD HH:MM') }}
-                  </v-card-text>
-                  <v-card-title class="pb-0" style="font-size: 15px;">
-                    {{ event.post.title }}
-                  </v-card-title>
-                </v-card>
-              </nuxt-link>
-            </v-card-text>
-          </v-timeline-item>
-          <v-timeline-item
             color="lime accent-4"
             icon="mdi-pin"
             fill-dot

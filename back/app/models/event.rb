@@ -1,6 +1,5 @@
 class Event < ApplicationRecord
   belongs_to :user
-  belongs_to :post
   has_one_attached :image
   has_many :event_tag_maps, dependent: :destroy
   has_many :tags, through: :event_tag_maps

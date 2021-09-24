@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe EventComment, type: :model do
   let(:user) { create(:user) }
-  let(:post) { create(:post, user: user) }
-  let(:event) { create(:event, user: user, post: post) }
+  let(:event) { create(:event, user: user) }
   let(:event_comment) { create(:event_comment, user: user, event: event) }
 
   context '掲示板のコメント作成時' do
