@@ -155,7 +155,7 @@
                   to="/signup"
                   color="warning"
                 >
-                  会員登録
+                  新規登録
                 </v-btn>
               </v-card-text>
               <v-card-text>
