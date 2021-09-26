@@ -25,13 +25,12 @@ RSpec.describe 'Api::V1::Posts', type: :request do
 
     it '投稿の情報を更新できること' do
       post = create(:post)
-      update = { post: { title: 'testpost', rate: 3.5, content: 'testcontent' } }
+      update = { post: { title: 'testpost', content: 'testcontent' } }
       put "/api/v1/posts/#{post.id}", params: update
       json = JSON.parse(response.body)
       # responseの可否判定
       expect(response).to have_http_status(:success)
       expect(json['post']['title']).to eq(update[:post][:title])
-      expect(json['post']['rate']).to eq(update[:post][:rate])
       expect(json['post']['content']).to eq(update[:post][:content])
     end
   end

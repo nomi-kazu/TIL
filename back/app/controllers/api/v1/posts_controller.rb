@@ -64,7 +64,7 @@ module Api
       end
 
       def post_params
-        params.require(:post).permit(:user_id, :title, :content, :rate, images: [])
+        params.require(:post).permit(:user_id, :title, :content, images: [])
       end
 
       def ids_params

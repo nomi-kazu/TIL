@@ -33,7 +33,6 @@
               <div class="float-right">
                 <EventModal
                   :event="event"
-                  :post="event.post"
                 />
               </div>
             </v-card-text>

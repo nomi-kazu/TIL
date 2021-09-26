@@ -32,20 +32,6 @@
           <v-card-title class="pb-0" style="font-size: 15px;">
             {{ post.title }}
           </v-card-title>
-          <v-card-actions class="ml-2">
-            <v-rating
-              :value="post.rate"
-              color="yellow darken-3"
-              backgroud-color="grey darken-1"
-              readonly
-              half-increments
-              dense
-              small
-            />
-            <span class="rate pl-1">
-              ( {{ post.rate }} )
-            </span>
-          </v-card-actions>
         </nuxt-link>
         <v-card-text class="pt-0">
           <v-chip-group
@@ -146,13 +132,12 @@ export default {
 
   methods: {
     async deletePost (postId) {
-      if (window.confirm('投稿を削除してもよろしいですか？(※関連する勉強会も削除されます)')) {
+      if (window.confirm('投稿を削除してもよろしいですか？')) {
         await this.$axios.$delete(`/api/v1/posts/${postId}`, { data: { user_id: this.$auth.user.id } })
           .then(
             (response) => {
               this.$store.commit('posts/deletePost', postId, { root: true })
               this.$store.commit('posts/deleteLikedPost', postId, { root: true })
-              this.$store.commit('events/deleteEvents', postId, { root: true })
               this.$store.dispatch(
                 'flash/showMessage',
                 {
@@ -189,9 +174,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.rate {
-  font-size: 12px;
-}
-</style>

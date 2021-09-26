@@ -21,11 +21,11 @@ module Api
 
       def events
         events = if params[:keyword].nil?
-                   Event.includes({ image_attachment: :blob }, { user: { image_attachment: :blob } }, :post, :tags, :join_users).all
+                   Event.includes({ image_attachment: :blob }, { user: { image_attachment: :blob } }, :tags, :join_users).all
                  else
-                   Event.includes({ image_attachment: :blob }, { user: { image_attachment: :blob } }, :post, :tags, :join_users).where('title Like ? OR content Like ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+                   Event.includes({ image_attachment: :blob }, { user: { image_attachment: :blob } }, :tags, :join_users).where('title Like ? OR content Like ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
                  end
-        render json: events.as_json(include: [{ user: { methods: :image_url } }, :post, :tags, :join_users], methods: :image_url)
+        render json: events.as_json(include: [{ user: { methods: :image_url } }, :tags, :join_users], methods: :image_url)
       end
 
       def tags

@@ -4,14 +4,14 @@
       absolute
       dark
       padless
-      color="black"
+      color="amber lighten-2"
       :height="height"
     >
       <v-col
         cols="12"
         class="py-0"
       >
-        <div class="text-center text-body-2">
+        <div class="text-center text-body-2 text--secondary">
           &copy;{{ copyRightYear }}
           <strong>{{ appName }}</strong>
         </div>
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  data({ $config: { appName } }) {
+  data ({ $config: { appName } }) {
     return {
       appName,
       height: 40

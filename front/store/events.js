@@ -55,10 +55,6 @@ export const mutations = {
     state.events = state.events.filter(event => event.id !== eventId)
   },
 
-  deleteEvents (state, postId) {
-    state.events = state.events.filter(event => event.post_id !== postId)
-  },
-
   addJoinedEvent (state, event) {
     state.joinedEvents.push(event)
   },

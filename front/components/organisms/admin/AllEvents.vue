@@ -48,7 +48,6 @@
               >
                 <div class="float-right mt-2 mr-2">
                   <EditStudyEvent
-                    :post="event.post"
                     :event="event"
                   />
                 </div>
