@@ -4,15 +4,15 @@ module Api
       before_action :set_user, only: [:create]
 
       def create
-        like = @user.likes.create(post_id: like_params[:post_id])
+        like = @user.likes.create(like_params)
         if like.save
           like.notice_post_like(like.user_id, like.post_id)
-          render json: like.as_json(include: [:post]), status: :created
+          render json: like.as_json(include: %i[post user]), status: :created
         end
       end
 
       def destroy
-        like = Like.find_by(post_id: params[:id], user_id: @user.id)
+        like = Like.find_by(post_id: params[:id], user_id: params[:user_id])
         if like.destroy
           render json: like, status: :ok
         else

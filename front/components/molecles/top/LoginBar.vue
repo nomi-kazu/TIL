@@ -85,7 +85,7 @@
         </v-list-item-title>
       </v-list-item>
 
-      <v-list-item :to="{ path: '/notifications' }">
+      <v-list-item :to="{ path: '/notices' }">
         <v-list-item-icon class="mr-2">
           <v-icon size="22">
             mdi-bell-outline

@@ -5,7 +5,7 @@ module Api
         user = User.find(params[:user_id])
         notices = user.passive_notices.all
         notices.where(checked: false).each do |notice|
-          notice.update_attributes(checked: true)
+          notice.update_attribute(checked: true)
         end
         render json: notices
       end
@@ -21,7 +21,7 @@ module Api
         notices = user.passive_notices.where(checked: false)
         render json: notices.as_json(include: [{ action_user: { methods: :image_url } }, :received_user, :post])
         notices.each do |notice|
-          notice.update_attributes(checked: true)
+          notice.update_attribute(checked: true)
         end
       end
     end
