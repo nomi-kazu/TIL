@@ -5,7 +5,10 @@ module Api
 
       def create
         like = @user.likes.create(post_id: like_params[:post_id])
-        render json: like.as_json(include: [:post]), status: :created
+        if like.save
+          like.notice_post_like(like.user_id, like.post_id)
+          render json: like.as_json(include: [:post]), status: :created
+        end
       end
 
       def destroy
