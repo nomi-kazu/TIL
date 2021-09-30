@@ -108,6 +108,19 @@ export default {
                   n.noticeLink = `/posts/${n.post.id}`
                   n.noticeTime = this.$moment(n.created_at).format('YYYY年MM月DD日 HH時mm分')
                   break
+                case ('event_comment'):
+                  console.log(n.event)
+                  n.noticeActionUser = `${n.action_user.name}さんが`
+                  n.noticeAction = 'あなたが作成したイベントにコメントしました'
+                  n.noticeLink = `/events/${n.event.id}`
+                  n.noticeTime = this.$moment(n.created_at).format('YYYY年MM月DD日 HH時mm分')
+                  break
+                case ('event_comments'):
+                  n.noticeActionUser = `${n.action_user.name}さんが`
+                  n.noticeAction = 'イベントにコメントしました'
+                  n.noticeLink = `/events/${n.event.id}`
+                  n.noticeTime = this.$moment(n.created_at).format('YYYY年MM月DD日 HH時mm分')
+                  break
               }
             })
             this.notices = response
