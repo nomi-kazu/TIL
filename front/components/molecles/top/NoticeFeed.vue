@@ -36,7 +36,7 @@
               <v-col>
                 <v-avatar size="25">
                   <v-img
-                    v-if="notice.action_user.image_url.length > 0"
+                    v-if="notice.action_user.image_url !== null"
                     :src="notice.action_user.image_url"
                   />
                   <v-icon v-else>
