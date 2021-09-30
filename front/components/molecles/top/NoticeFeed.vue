@@ -43,7 +43,7 @@
                     mdi-account-circle
                   </v-icon>
                 </v-avatar>
-                <span>{{ notice.action_user.name }}さんが</span>
+                <span>{{ notice.noticeActionUser }}</span>
                 <span>{{ notice.noticeAction }}</span>
               </v-col>
             </v-row>
@@ -91,9 +91,23 @@ export default {
             response.forEach((n) => {
               switch (n.action) {
                 case ('like'):
+                  n.noticeActionUser = `${n.action_user.name}さんが`
+                  n.noticeAction = 'あなたの投稿にいいねしました'
                   n.noticeLink = `/posts/${n.post.id}`
                   n.noticeTime = this.$moment(n.created_at).format('YYYY年MM月DD日 HH時mm分')
-                  n.noticeAction = 'あなたの投稿にいいねしました'
+                  break
+                case ('post_comment'):
+                  n.noticeActionUser = `${n.action_user.name}さんが`
+                  n.noticeAction = 'あなたの投稿にコメントしました'
+                  n.noticeLink = `/posts/${n.post.id}`
+                  n.noticeTime = this.$moment(n.created_at).format('YYYY年MM月DD日 HH時mm分')
+                  break
+                case ('post_comments'):
+                  n.noticeActionUser = `${n.action_user.name}さんが`
+                  n.noticeAction = '投稿にコメントしました'
+                  n.noticeLink = `/posts/${n.post.id}`
+                  n.noticeTime = this.$moment(n.created_at).format('YYYY年MM月DD日 HH時mm分')
+                  break
               }
             })
             this.notices = response
