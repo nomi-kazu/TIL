@@ -6,6 +6,7 @@ module Api
       def create
         following = @user.follow(@follow_user)
         if following.save
+          @user.notice_follow(@user.id, @follow_user.id)
           render json: { user: @follow_user.as_json(include: [{ followings: { include: %i[followings followers], methods: :image_url } }, { followers: { include: %i[followings followers], methods: :image_url } }]), message: 'ユーザーをフォローしました', status: :created }
         else
           render json: { user: @follow_user.errors, message: 'ユーザーのフォローに失敗しました', status: :unprocessable_entity }

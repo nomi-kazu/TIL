@@ -82,6 +82,17 @@ class User < ApplicationRecord
     tags_data.first(5)
   end
 
+  def notice_follow(action_user_id, received_user_id)
+    action_user = User.find(action_user_id)
+    received_user = User.find(received_user_id)
+    follow_notice = action_user.active_notices.new(
+      action_user_id: action_user.id,
+      received_user_id: received_user.id,
+      action: 'follow'
+    )
+    follow_notice.save
+  end
+
   private
 
   # emailの小文字化

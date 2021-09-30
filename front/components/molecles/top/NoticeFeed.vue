@@ -121,6 +121,12 @@ export default {
                   n.noticeLink = `/events/${n.event.id}`
                   n.noticeTime = this.$moment(n.created_at).format('YYYY年MM月DD日 HH時mm分')
                   break
+                case ('follow'):
+                  n.noticeActionUser = `${n.action_user.name}さんが`
+                  n.noticeAction = 'あなたをフォローしました'
+                  n.noticeLink = `/users/${n.action_user.id}`
+                  n.noticeTime = this.$moment(n.created_at).format('YYYY年MM月DD日 HH時mm分')
+                  break
               }
             })
             this.notices = response
