@@ -3880,6 +3880,11 @@ cyclist@^1.0.1:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
 
+d3@3.5.17:
+  version "3.5.17"
+  resolved "https://registry.yarnpkg.com/d3/-/d3-3.5.17.tgz#bc46748004378b21a360c9fc7cf5231790762fb8"
+  integrity sha1-vEZ0gAQ3iyGjYMn8fPUjF5B2L7g=
+
 data-urls@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/data-urls/-/data-urls-2.0.0.tgz#156485a72963a970f5d5821aaf642bef2bf2db9b"
@@ -7228,7 +7233,7 @@ moment-timezone@^0.5.28:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.10.2, moment@^2.25.3:
+"moment@>= 2.9.0", moment@^2.10.2, moment@^2.18.1, moment@^2.25.3:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
@@ -10576,6 +10581,16 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
+vue-chart-heatmap@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/vue-chart-heatmap/-/vue-chart-heatmap-1.2.5.tgz#7567d228f4c073b327906407b1719c97a5f5c241"
+  integrity sha512-4YeN3bARafWqBZb6VSjW47fzZ7da1HN3gSnMNynqklu9YtB29B8SOLZ10cY2bRwRnRA4jIHrlPPPfhxaRSteeA==
+  dependencies:
+    d3 "3.5.17"
+    lodash "^4.17.4"
+    moment "^2.18.1"
+    vue "^2.3.3"
+
 vue-chartjs@3.4.2:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/vue-chartjs/-/vue-chartjs-3.4.2.tgz#0323e6a99a10a68f38d426899c3994f48596fd23"
@@ -10689,10 +10704,20 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.12:
+vue@^2.3.3, vue@^2.6.12:
   version "2.6.14"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
   integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
+
+vuejs-heatmap@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/vuejs-heatmap/-/vuejs-heatmap-1.1.7.tgz#fe60c85ee099affda8b954dc42cec9e3b9e9f549"
+  integrity sha512-JBMwiW0LPOjMPyY5esUwNPPLq0sh+wpKt/AUfTfdTIJxVm0ylk+ITk6lz36pMOX4FUnsK3KfnBYURhMEhw32vw==
+  dependencies:
+    d3 "3.5.17"
+    lodash "^4.17.4"
+    moment "^2.18.1"
+    vue "^2.3.3"
 
 vuetify-loader@^1.7.2:
   version "1.7.3"
