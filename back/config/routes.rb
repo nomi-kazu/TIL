@@ -28,6 +28,9 @@ Rails.application.routes.draw do
         get :events, on: :collection
         get :tags,   on: :collection
       end
+      resources :notices, only: [:index]
+      get '/notices/unchecked', to: 'notices#unchecked'
+      get '/notices/checked', to: 'notices#checked'
       # ログイン/ログアウト処理
       resources :user_token, only: [:create] do
         delete :destroy, on: :collection

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_19_083412) do
+ActiveRecord::Schema.define(version: 2021_09_29_103125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,19 @@ ActiveRecord::Schema.define(version: 2021_09_19_083412) do
     t.index ["post_id"], name: "index_likes_on_post_id"
     t.index ["user_id", "post_id"], name: "index_likes_on_user_id_and_post_id", unique: true
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "notices", force: :cascade do |t|
+    t.integer "action_user_id", null: false
+    t.integer "received_user_id", null: false
+    t.integer "post_id"
+    t.integer "comment_id"
+    t.integer "event_id"
+    t.integer "event_comment_id"
+    t.string "action", default: "", null: false
+    t.boolean "checked", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "post_tag_maps", force: :cascade do |t|

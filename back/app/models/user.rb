@@ -21,6 +21,8 @@ class User < ApplicationRecord
   has_many :liked_posts, through: :likes, source: :post
   has_many :join_events, dependent: :destroy
   has_many :event_joins, through: :join_events, source: :event
+  has_many :active_notices, class_name: 'Notice', foreign_key: 'action_user_id', dependent: :destroy
+  has_many :passive_notices, class_name: 'Notice', foreign_key: 'received_user_id', dependent: :destroy
 
   # カラムのバリデーション
   validates :name, presence: true, uniqueness: true,
@@ -78,6 +80,17 @@ class User < ApplicationRecord
     tags_data = tags.group_by(&:itself).map { |key, value| { name: key.name, counter: value.count } }
     tags_data = tags_data.sort { |a, b| b[:counter] <=> a[:counter] }
     tags_data.first(5)
+  end
+
+  def notice_follow(action_user_id, received_user_id)
+    action_user = User.find(action_user_id)
+    received_user = User.find(received_user_id)
+    follow_notice = action_user.active_notices.new(
+      action_user_id: action_user.id,
+      received_user_id: received_user.id,
+      action: 'follow'
+    )
+    follow_notice.save
   end
 
   private

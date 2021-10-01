@@ -6,6 +6,7 @@ class Event < ApplicationRecord
   has_many :join_events, dependent: :destroy
   has_many :join_users, through: :join_events, source: :user
   has_many :event_comments, dependent: :destroy
+  has_many :notices, dependent: :destroy
 
   # カラムのバリデーション
   validates :title, presence: true, length: { maximum: 50, allow_blank: true }

@@ -1,19 +1,19 @@
 <template>
   <div>
     <!-- ログインしたユーザーに見せるもの -->
-    <Notification />
+    <NoticeFeed />
     <LoginBar />
   </div>
 </template>
 
 <script>
 import LoginBar from '~/components/molecles/top/LoginBar'
-import Notification from '~/components/molecles/top/Notification'
+import NoticeFeed from '~/components/molecles/top/NoticeFeed'
 
 export default {
   components: {
     LoginBar,
-    Notification
+    NoticeFeed
   }
 }
 </script>
