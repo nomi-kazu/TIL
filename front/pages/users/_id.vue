@@ -155,6 +155,15 @@
                     />
                   </v-col>
                 </v-row>
+                <v-row justify="center">
+                  <v-col>
+                    <Heatmap
+                      class="my-4 mx-2"
+                      :height="200"
+                      :width="200"
+                    />
+                  </v-col>
+                </v-row>
               </template>
               <template v-else>
                 <v-row justify="center" no-gutters>
@@ -265,6 +274,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import BarChart from '~/components/organisms/users/BarChart'
+import Heatmap from '~/components/molecles/Heatmap'
 import FollowBtnGroup from '~/components/molecles/users/FollowBtnGroup'
 import FollowersModal from '~/components/organisms/users/FollowersModal'
 import FollowingsModal from '~/components/organisms/users/FollowingsModal'
@@ -276,6 +286,7 @@ import UserJoinedEvents from '~/components/organisms/users/UserJoinedEvents'
 export default {
   components: {
     BarChart,
+    Heatmap,
     FollowBtnGroup,
     FollowersModal,
     FollowingsModal,
@@ -316,7 +327,6 @@ export default {
         store.commit('events/setJoinedEvents', joinedEvents, { root: true })
       })
       .catch((error) => {
-        console.log(error)
         return error
       })
   },
