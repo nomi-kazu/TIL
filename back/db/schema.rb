@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_01_142934) do
+ActiveRecord::Schema.define(version: 2021_10_02_055524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,17 @@ ActiveRecord::Schema.define(version: 2021_10_01_142934) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "experience_records", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "posts_id"
+    t.integer "obtained_exp", null: false
+    t.float "bonus_multiplier", default: 1.0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["posts_id"], name: "index_experience_records_on_posts_id"
+    t.index ["user_id"], name: "index_experience_records_on_user_id"
   end
 
   create_table "join_events", force: :cascade do |t|
@@ -191,6 +202,8 @@ ActiveRecord::Schema.define(version: 2021_10_01_142934) do
   add_foreign_key "event_tag_maps", "events"
   add_foreign_key "event_tag_maps", "tags"
   add_foreign_key "events", "users"
+  add_foreign_key "experience_records", "posts", column: "posts_id"
+  add_foreign_key "experience_records", "users"
   add_foreign_key "join_events", "events"
   add_foreign_key "join_events", "users"
   add_foreign_key "likes", "posts"
