@@ -19,7 +19,8 @@ module Api
 
         if post.save
           post.save_tags(tags_params[:tags]) if tags_params[:tags]
-          render json: { post: post, message: '投稿を作成しました', status: :created }
+          experience_record = ExperienceRecorder.new(@user).record(post)
+          render json: { post: post, experience_record: experience_record, message: '投稿を作成しました', status: :created }
         else
           render json: post.errors, status: :unprocessable_entity
         end

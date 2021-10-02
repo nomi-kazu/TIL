@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :event_joins, through: :join_events, source: :event
   has_many :active_notices, class_name: 'Notice', foreign_key: 'action_user_id', dependent: :destroy
   has_many :passive_notices, class_name: 'Notice', foreign_key: 'received_user_id', dependent: :destroy
+  has_many :experience_records, dependent: :destroy
 
   # カラムのバリデーション
   validates :name, presence: true, uniqueness: true,
