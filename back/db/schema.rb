@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(version: 2021_10_03_102319) do
   create_table "required_exps", force: :cascade do |t|
     t.integer "level", null: false
     t.integer "required_exp", null: false, comment: "次のレベルまでに必要な経験値"
+    t.integer "lifelong_exp", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["level"], name: "index_required_exps_on_level", unique: true

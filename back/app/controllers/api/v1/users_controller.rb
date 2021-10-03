@@ -3,6 +3,7 @@ module Api
     class UsersController < ApplicationController
       def show
         @user = User.join_exp.find(params[:id])
+        @required_exp = RequiredExp.find_by(level: @user.level + 1)
         @user = User.includes({ image_attachment: :blob },
                              { posts: [{ images_attachments: :blob }, { user: { image_attachment: :blob } }, :tags] },
                              { liked_posts: [{ user: { image_attachment: :blob } }, :tags] }, { events: [{ user: { image_attachment: :blob } }, { join_users: { image_attachment: :blob } }, :tags] },
@@ -13,7 +14,8 @@ module Api
                                             { liked_posts: { include: [{ user: { methods: :image_url } }, :tags, :liked_users] } },
                                             { event_joins: { include: [{ user: { methods: :image_url } }, { join_users: { methods: :image_url } }, :tags], methods: :image_url } },
                                             { followings: { include: %i[followings followers], methods: :image_url } },
-                                            { followers: { include: %i[followings followers], methods: :image_url } }, :tags], methods: %i[image_url tag_ranking])
+                                            { followers: { include: %i[followings followers], methods: :image_url } }, :tags], methods: %i[image_url tag_ranking]),
+                                            { required_exp: @required_exp }
       end
 
       def create

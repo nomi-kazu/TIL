@@ -26,7 +26,7 @@ class User < ApplicationRecord
   has_many :experience_records, dependent: :destroy
   has_one :experience, dependent: :destroy
 
-  scope :join_exp, -> { joins(:experience).select('users.*, experiences.*') }
+  scope :join_exp, -> { joins(:experience).select('users.*, experiences.experience_to_next, experiences.lifelong_exp, experiences.level') }
 
   # カラムのバリデーション
   validates :name, presence: true, uniqueness: true,
