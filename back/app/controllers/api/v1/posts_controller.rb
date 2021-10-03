@@ -19,7 +19,7 @@ module Api
 
         if post.save
           post.save_tags(tags_params[:tags]) if tags_params[:tags]
-          experience_record = ExperienceRecorder.new(@user).record(post)
+          experience_record = ExperienceRecorder.new(post.user).record(post)
           render json: { post: post, experience_record: experience_record, message: '投稿を作成しました', status: :created }
         else
           render json: post.errors, status: :unprocessable_entity
@@ -65,7 +65,7 @@ module Api
       end
 
       def post_params
-        params.require(:post).permit(:user_id, :title, :content, :study_time, :study_date, images: [])
+        params.require(:post).permit(:user_id, :title, :content, :study_time, images: [])
       end
 
       def ids_params

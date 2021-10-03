@@ -25,7 +25,7 @@ export default {
     },
 
     value: {
-      type: Number,
+      type: null,
       default: null
     },
 

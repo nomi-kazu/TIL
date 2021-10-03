@@ -82,8 +82,8 @@ export default {
 
   data () {
     return {
-      hour: 0,
-      minute: 0,
+      hour: '',
+      minute: '',
       title: '',
       content: '',
       isEnter: false,
@@ -119,7 +119,7 @@ export default {
       this.loading = true
 
       if (isValid) {
-        formData.append('post[stydy_time]', this.timeProcess)
+        formData.append('post[study_time]', this.timeProcess)
         formData.append('post[user_id]', this.$auth.user.id)
         formData.append('post[title]', this.title)
         formData.append('post[content]', this.content)

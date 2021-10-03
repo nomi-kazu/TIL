@@ -144,7 +144,6 @@ ActiveRecord::Schema.define(version: 2021_10_02_055524) do
     t.string "title", limit: 50, null: false
     t.text "content", null: false
     t.time "study_time", null: false
-    t.datetime "study_date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
