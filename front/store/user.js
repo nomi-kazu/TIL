@@ -1,13 +1,15 @@
 export const state = () => ({
   user: {},
   followings: [],
-  followers: []
+  followers: [],
+  level: 1
 })
 
 export const getters = {
   user: state => state.user,
   followings: state => state.followings,
-  followers: state => state.followers
+  followers: state => state.followers,
+  level: state => state.level
 }
 
 export const mutations = {
@@ -21,5 +23,9 @@ export const mutations = {
 
   setFollowers (state, followers) {
     state.followers = followers
+  },
+
+  setLevel (state, level) {
+    state.level = level
   }
 }

@@ -41,6 +41,11 @@
                   />
                 </v-card-subtitle>
               </v-list-item>
+              <v-list-item>
+                <h1>{{ user.level }}</h1>
+                <h1>{{ user.lifelong_exp }}</h1>
+                <h1>{{ progressNumeretor }}/{{ requiredExp.required_exp }}</h1>
+              </v-list-item>
             </v-list>
           </v-layout>
 
@@ -143,7 +148,7 @@
                 ユーザーのトレンド
               </v-card-title>
               <v-divider />
-              <template v-if="user.tag_ranking.length > 0">
+              <template v-if="user.tag_ranking && user.tag_ranking.length > 0">
                 <v-row justify="center" no-gutters>
                   <v-col>
                     <v-subheader>タグ</v-subheader>
@@ -181,7 +186,7 @@
         </v-tab-item>
         <v-tab-item>
           <v-container class="grey lighten-5">
-            <template v-if="posts.length > 0">
+            <template v-if="posts && posts.length > 0">
               <v-card-text v-if="$auth.user.id == user.id">
                 <v-btn
                   color="primary"
@@ -217,7 +222,7 @@
 
         <v-tab-item>
           <v-container class="grey lighten-5">
-            <template v-if="likedPosts.length > 0">
+            <template v-if="likedPosts && likedPosts.length > 0">
               <UserLikedPosts
                 :posts="likedPosts"
               />
@@ -234,7 +239,7 @@
 
         <v-tab-item>
           <v-container class="grey lighten-5">
-            <template v-if="events.length > 0">
+            <template v-if="events && events.length > 0">
               <UserEvents
                 :events="events"
               />
@@ -251,7 +256,7 @@
 
         <v-tab-item>
           <v-container class="grey lighten-5">
-            <template v-if="joinedEvents.length > 0">
+            <template v-if="joinedEvents && joinedEvents.length > 0">
               <UserJoinedEvents
                 :events="joinedEvents"
                 :user="user"
@@ -332,13 +337,25 @@ export default {
   },
 
   computed: {
+    progressProportion () {
+      const proportion = 100 - this.user.experience_to_next / this.requiredExp.required_exp * 100
+      if (proportion === 100) {
+        return 0
+      } else {
+        return proportion
+      }
+    },
+    progressNumeretor () {
+      return this.requiredExp.required_exp - this.user.experience_to_next
+    },
     ...mapGetters({ user: 'user/user' }),
     ...mapGetters({ followings: 'user/followings' }),
     ...mapGetters({ followers: 'user/followers' }),
     ...mapGetters({ posts: 'posts/posts' }),
     ...mapGetters({ likedPosts: 'posts/likedPosts' }),
     ...mapGetters({ events: 'events/events' }),
-    ...mapGetters({ joinedEvents: 'events/joinedEvents' })
+    ...mapGetters({ joinedEvents: 'events/joinedEvents' }),
+    ...mapGetters({ requiredExp: 'experience/requiredExp' })
   }
 }
 </script>
