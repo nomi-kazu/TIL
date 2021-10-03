@@ -88,12 +88,12 @@ ActiveRecord::Schema.define(version: 2021_10_02_055524) do
 
   create_table "experience_records", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "posts_id"
+    t.bigint "post_id"
     t.integer "obtained_exp", null: false
     t.float "bonus_multiplier", default: 1.0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["posts_id"], name: "index_experience_records_on_posts_id"
+    t.index ["post_id"], name: "index_experience_records_on_post_id"
     t.index ["user_id"], name: "index_experience_records_on_user_id"
   end
 
@@ -201,7 +201,7 @@ ActiveRecord::Schema.define(version: 2021_10_02_055524) do
   add_foreign_key "event_tag_maps", "events"
   add_foreign_key "event_tag_maps", "tags"
   add_foreign_key "events", "users"
-  add_foreign_key "experience_records", "posts", column: "posts_id"
+  add_foreign_key "experience_records", "posts"
   add_foreign_key "experience_records", "users"
   add_foreign_key "join_events", "events"
   add_foreign_key "join_events", "users"

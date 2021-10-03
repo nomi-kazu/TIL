@@ -12,6 +12,10 @@
           </v-card-subtitle>
 
           <v-card-title>
+            {{ studyTime }}
+          </v-card-title>
+
+          <v-card-title>
             {{ post.title }}
           </v-card-title>
 
@@ -206,7 +210,12 @@ export default {
     ...mapGetters({
       post: 'posts/post',
       comments: 'comments/comments'
-    })
+    }),
+
+    studyTime () {
+      const time = new Date(this.time_report.study_time)
+      return time.getUTCHours() + '時間' + time.getUTCMinutes() + '分'
+    }
   }
 }
 </script>

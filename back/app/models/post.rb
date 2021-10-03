@@ -12,6 +12,7 @@ class Post < ApplicationRecord
   # カラムのバリデーション
   validates :title, presence: true, length: { maximum: 50, allow_blank: true }
   validates :content, presence: true
+  validates :study_time, presence: true
 
   def images_data
     url_list = []
