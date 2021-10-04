@@ -84,6 +84,7 @@ export default {
     return {
       hour: '',
       minute: '',
+      study_time: '',
       title: '',
       content: '',
       isEnter: false,
@@ -136,9 +137,8 @@ export default {
         await this.$axios.$post('/api/v1/posts', formData)
           .then(
             (response) => {
-              this.$store.commit('experience/setExperienceRecord', response.data.experience_record, { root: true })
-              this.$store.commit('experience/setExperience', response.data.experience, { root: true })
-              this.$store.commit('experience/setRequiredExp', response.data.required_exp, { root: true })
+              this.$store.commit('experience/setExperience', response.experience, { root: true })
+              this.$store.commit('experience/setRequiredExp', response.required_exp, { root: true })
               this.$store.dispatch(
                 'flash/showMessage',
                 {

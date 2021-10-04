@@ -213,7 +213,7 @@ export default {
     }),
 
     studyTime () {
-      const time = new Date(this.time_report.study_time)
+      const time = new Date(this.post.study_time)
       return time.getUTCHours() + '時間' + time.getUTCMinutes() + '分'
     }
   }

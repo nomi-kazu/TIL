@@ -21,6 +21,7 @@ module Api
         user = User.new(user_params)
 
         if user.save && user.create_experience!
+          user = User.join_exp.find(user.id)
           render json: user, methods: [:image_url], status: :created
         else
           render json: user.errors, status: :unprocessable_entity
