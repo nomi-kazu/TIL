@@ -7,7 +7,7 @@ module Api
                              { liked_posts: [{ user: { image_attachment: :blob } }, :tags] }, { events: [{ user: { image_attachment: :blob } }, { join_users: { image_attachment: :blob } }, :tags] },
                              { event_joins: [{ user: { image_attachment: :blob } }, { join_users: { image_attachment: :blob } }, :tags] },
                              { followings: { image_attachment: :blob } }, { followers: { image_attachment: :blob } }, :tags).find(params[:id])
-        required_exp = RequiredExp.find_by(level: @user.level)
+        required_exp = RequiredExp.find_by(level: @user.level)                 
         render json: { user: @user.as_json(include: [{ posts: { include: [:tags], methods: :images_data } },
                                             { events: { include: [{ user: { methods: :image_url } }, { join_users: { methods: :image_url } }, :tags], methods: :image_url } },
                                             { liked_posts: { include: [{ user: { methods: :image_url } }, :tags, :liked_users] } },

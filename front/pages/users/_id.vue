@@ -44,6 +44,7 @@
               <v-list-item>
                 <h1>{{ user.level }}</h1>
                 <h1>{{ user.lifelong_exp }}</h1>
+                <v-progress-linear height="10px" :value="progressProportion" />
                 <h1>{{ progressNumeretor }}/{{ requiredExp.required_exp }}</h1>
               </v-list-item>
             </v-list>
@@ -312,7 +313,8 @@ export default {
         { name: 'イベント' },
         { name: '参加イベント' }
       ],
-      tagNameList: []
+      tagNameList: [],
+      requiredExp: {}
     }
   },
 
@@ -325,6 +327,7 @@ export default {
         store.commit('posts/setPosts', response.data.posts, { root: true })
         store.commit('posts/setLikedPosts', response.data.liked_posts, { root: true })
         store.commit('events/setEvents', response.data.events, { root: true })
+        store.commit('experience/setRequiredExp', response.data.required_exp, { root: true })
         const joinedEvents = []
         response.data.event_joins.forEach((eventJoin) => {
           joinedEvents.push(eventJoin)
@@ -355,7 +358,7 @@ export default {
     ...mapGetters({ likedPosts: 'posts/likedPosts' }),
     ...mapGetters({ events: 'events/events' }),
     ...mapGetters({ joinedEvents: 'events/joinedEvents' }),
-    ...mapGetters({ requiredExp: 'experience/requiredExp' })
+    ...mapGetters({ experience: 'experience/experience' })
   }
 }
 </script>
