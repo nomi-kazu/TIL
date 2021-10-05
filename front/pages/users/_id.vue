@@ -342,7 +342,6 @@ export default {
         store.commit('posts/setPosts', response.data.user.posts, { root: true })
         store.commit('posts/setLikedPosts', response.data.user.liked_posts, { root: true })
         store.commit('events/setEvents', response.data.user.events, { root: true })
-        store.commit('experience/setRequiredExp', response.data.required_exp, { root: true })
         const joinedEvents = []
         response.data.user.event_joins.forEach((eventJoin) => {
           joinedEvents.push(eventJoin)
@@ -364,7 +363,6 @@ export default {
       }
     },
     progressNumeretor () {
-      console.log(this.requiredExp.required_exp)
       return this.requiredExp.required_exp - this.user.experience_to_next
     },
     ...mapGetters({ user: 'user/user' }),

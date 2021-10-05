@@ -26,6 +26,6 @@ export const mutations = {
   },
 
   setLevel (state, level) {
-    state.level = level
+    state.user.level = level
   }
 }
