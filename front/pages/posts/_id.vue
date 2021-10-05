@@ -20,7 +20,7 @@
           </v-card-title>
 
           <v-carousel
-            v-if="post.images_data.length > 0"
+            v-if="post.images_data && post.images_data.length > 0"
             :continuous="false"
             :cycle="cycle"
             :show-arrows="false"
@@ -124,7 +124,7 @@
       <v-container>
         <v-row justify="center">
           <v-col
-            v-if="comments.length > 0"
+            v-if="comments && comments.length > 0"
             cols="12"
             sm="12"
             lg="10"

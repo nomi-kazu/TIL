@@ -11,11 +11,9 @@ export const getters = {
 export const mutations = {
   setExperience (state, experience) {
     state.experience = experience
-    state.experience = {}
   },
 
   setRequiredExp (state, requiredExp) {
     state.requiredExp = requiredExp
-    state.requiredExp = {}
   }
 }

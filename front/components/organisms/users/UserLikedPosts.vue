@@ -35,7 +35,7 @@
         </nuxt-link>
         <v-card-text class="py-0">
           <v-chip-group
-            v-if="post.tags.length > 0"
+            v-if="post.tags && post.tags.length > 0"
             class="w-100"
             active-class="primary--text"
             column

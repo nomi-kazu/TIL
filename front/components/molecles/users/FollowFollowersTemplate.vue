@@ -14,7 +14,7 @@
         </v-col>
       </v-row>
     </template>
-    <template v-else-if="displayUsers.length > 0">
+    <template v-else-if="displayUsers && displayUsers.length > 0">
       <v-row
         v-for="user in displayUsers"
         :key="user.id"

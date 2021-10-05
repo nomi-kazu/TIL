@@ -9,7 +9,7 @@
       @keyup="searchPosts"
     />
     <SearchPostsTemplate
-      v-if="posts.length > 0"
+      v-if="posts && posts.length > 0"
       :posts="posts"
       :loading="loading"
     />

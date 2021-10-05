@@ -22,7 +22,7 @@
           <v-col cols="12">
             <v-card>
               <v-row
-                v-if="event.join_users.length > 0"
+                v-if="event.join_users && event.join_users.length > 0"
                 class="py-2 pl-2"
                 no-gutters
               >

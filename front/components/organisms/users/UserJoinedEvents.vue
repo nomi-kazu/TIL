@@ -57,7 +57,7 @@
             {{ $moment(joinedEvent.start_time).format('HH : mm') }}
           </v-card-subtitle>
           <v-card-text
-            v-if="joinedEvent.tags.length > 0"
+            v-if="joinedEvent.tags && joinedEvent.tags.length > 0"
             class="py-0"
           >
             <v-chip-group

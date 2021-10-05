@@ -9,7 +9,7 @@
       @keyup="searchEvents"
     />
     <SearchEventsTemplate
-      v-if="events.length > 0"
+      v-if="events && events.length > 0"
       :events="events"
       :loading="loading"
     />

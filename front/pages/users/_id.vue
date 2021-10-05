@@ -42,10 +42,26 @@
                 </v-card-subtitle>
               </v-list-item>
               <v-list-item>
-                <h1>{{ user.level }}</h1>
-                <h1>{{ user.lifelong_exp }}</h1>
-                <v-progress-linear height="10px" :value="progressProportion" />
-                <h1>{{ progressNumeretor }}/{{ requiredExp.required_exp }}</h1>
+                <v-col cols="3">
+                  <v-row justify="center">
+                    <h1>lv.{{ user.level }}</h1>
+                  </v-row>
+                </v-col>
+                <v-col cols="3">
+                  <v-row justify="center" class="ml-2">
+                    <h1>{{ user.lifelong_exp }}</h1>
+                  </v-row>
+                </v-col>
+                <v-col cols="3">
+                  <v-row justify="center" class="ml-2">
+                    <v-progress-linear height="10px" :value="progressProportion" />
+                  </v-row>
+                </v-col>
+                <v-col cols="3">
+                  <v-row justify="center" class="ml-2">
+                    <h1>{{ progressNumeretor }}/{{ requiredExp.required_exp }}</h1>
+                  </v-row>
+                </v-col>
               </v-list-item>
             </v-list>
           </v-layout>
@@ -313,23 +329,22 @@ export default {
         { name: 'イベント' },
         { name: '参加イベント' }
       ],
-      tagNameList: [],
-      requiredExp: {}
+      tagNameList: []
     }
   },
 
   async fetch ({ $axios, params, store }) {
     await $axios.get(`/api/v1/users/${params.id}`)
       .then((response) => {
-        store.commit('user/setUser', response.data, { root: true })
-        store.commit('user/setFollowings', response.data.followings, { root: true })
-        store.commit('user/setFollowers', response.data.followers, { root: true })
-        store.commit('posts/setPosts', response.data.posts, { root: true })
-        store.commit('posts/setLikedPosts', response.data.liked_posts, { root: true })
-        store.commit('events/setEvents', response.data.events, { root: true })
+        store.commit('user/setUser', response.data.user, { root: true })
+        store.commit('user/setFollowings', response.data.user.followings, { root: true })
+        store.commit('user/setFollowers', response.data.user.followers, { root: true })
+        store.commit('posts/setPosts', response.data.user.posts, { root: true })
+        store.commit('posts/setLikedPosts', response.data.user.liked_posts, { root: true })
+        store.commit('events/setEvents', response.data.user.events, { root: true })
         store.commit('experience/setRequiredExp', response.data.required_exp, { root: true })
         const joinedEvents = []
-        response.data.event_joins.forEach((eventJoin) => {
+        response.data.user.event_joins.forEach((eventJoin) => {
           joinedEvents.push(eventJoin)
         })
         store.commit('events/setJoinedEvents', joinedEvents, { root: true })
@@ -349,6 +364,7 @@ export default {
       }
     },
     progressNumeretor () {
+      console.log(this.requiredExp.required_exp)
       return this.requiredExp.required_exp - this.user.experience_to_next
     },
     ...mapGetters({ user: 'user/user' }),
@@ -358,7 +374,8 @@ export default {
     ...mapGetters({ likedPosts: 'posts/likedPosts' }),
     ...mapGetters({ events: 'events/events' }),
     ...mapGetters({ joinedEvents: 'events/joinedEvents' }),
-    ...mapGetters({ experience: 'experience/experience' })
+    ...mapGetters({ experience: 'experience/experience' }),
+    ...mapGetters({ requiredExp: 'experience/requiredExp' })
   }
 }
 </script>

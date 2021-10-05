@@ -60,7 +60,7 @@
           <v-tabs-items v-model="tab" touchless>
             <v-tab-item>
               <v-container>
-                <template v-if="posts.length > 0">
+                <template v-if="posts && posts.length > 0">
                   <TagPosts
                     :posts="posts"
                     :loading="loading"
@@ -77,7 +77,7 @@
             </v-tab-item>
             <v-tab-item>
               <v-container>
-                <template v-if="events.length > 0">
+                <template v-if="events && events.length > 0">
                   <TagEvents
                     :events="events"
                     :loading="loading"
