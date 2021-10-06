@@ -17,6 +17,12 @@ export default {
   components: {
     VuejsHeatmap
   },
+  props: {
+    posts: {
+      type: Array,
+      required: true
+    }
+  },
   data () {
     return {
       tooltipUnit: 'EXP',
@@ -28,24 +34,33 @@ export default {
         Less: 'Less',
         More: 'More'
       },
-      colorRange: ['#F5F5F5', '#AED581', '#9CCC65', '#7CB342', '#689F38', '#33691E', '#215715'], // 0, 1, 30, 60, 150, 300, 300以上の時の色です。
-      max: 300,
-      /* eslint-disable */
-      entries: [
-        {
-          'counting': 350,
-          'created_at': '2020-06-21'
-        },
-        {
-          'counting': 1,
-          'created_at': '2020-06-22'
-        },
-        {
-        'counting': 60,
-        'created_at': '2020-06-23'
+      colorRange: ['#F5F5F5', '#AED581', '#9CCC65', '#7CB342', '#689F38', '#33691E', '#215715'], // 0, 1, 30, 60, 150, 300, 300以上のEXPの時の色です。
+      max: 300
+    }
+  },
+  computed: {
+    entries () {
+      const entries = this.posts.map((value) => {
+        return {
+          counting: value.obtained_exp,
+          created_at: value.created_at.split('T')[0]
         }
-      ]
-      /* eslint-disable */
+      })
+      const group = entries.reduce((result, current) => {
+        const element = result.find((pre) => {
+          return pre.created_at === current.created_at
+        })
+        if (element) {
+          element.counting += current.counting
+        } else {
+          result.push({
+            counting: current.counting,
+            created_at: current.created_at
+          })
+        }
+        return result
+      }, [])
+      return group
     }
   }
 }

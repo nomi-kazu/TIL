@@ -183,6 +183,7 @@
                       class="my-4 mx-2"
                       :height="200"
                       :width="200"
+                      :posts="posts"
                     />
                   </v-col>
                 </v-row>
