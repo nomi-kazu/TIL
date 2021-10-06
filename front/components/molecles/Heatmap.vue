@@ -39,6 +39,7 @@ export default {
     }
   },
   computed: {
+    // postsを日付ごとにグループ化して返す
     entries () {
       const entries = this.posts.map((value) => {
         return {

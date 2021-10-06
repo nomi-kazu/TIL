@@ -19,6 +19,10 @@
             {{ post.title }}
           </v-card-title>
 
+          <v-card-title>
+            {{ post.obtained_exp }}
+          </v-card-title>
+
           <v-carousel
             v-if="post.images_data && post.images_data.length > 0"
             :continuous="false"

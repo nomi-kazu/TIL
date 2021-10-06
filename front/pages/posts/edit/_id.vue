@@ -7,6 +7,20 @@
             <v-form ref="form">
               <v-container>
                 <v-card-title>記事の詳細</v-card-title>
+                <AutoCompleteWithValidation
+                  rules="validTime:@分"
+                  v-model="hour"
+                  label="時"
+                  :items="hours"
+                />
+
+                <AutoCompleteWithValidation
+                  rules="max_value:60|validTime:@時"
+                  v-model="minute"
+                  label="分"
+                  :items="minutes"
+                />
+
                 <TextFieldWithValidation
                   v-model="title"
                   label="タイトル"
@@ -55,6 +69,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import AutoCompleteWithValidation from '~/components/molecles/input/AutoCompleteWithValidation'
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
 import InputImages from '~/components/atoms/input/InputImages'
 import InputContent from '~/components/atoms/input/InputContent'
@@ -62,6 +77,7 @@ import InputTags from '~/components/atoms/input/InputTags'
 
 export default {
   components: {
+    AutoCompleteWithValidation,
     TextFieldWithValidation,
     InputImages,
     InputContent,
@@ -72,6 +88,9 @@ export default {
 
   data () {
     return {
+      hour: '',
+      minute: '',
+      study_time: '',
       title: '',
       content: '',
       deleteIds: [],
@@ -88,19 +107,35 @@ export default {
         store.commit('posts/setPost', response.data, { root: true })
       })
       .catch((error) => {
-        console.log(error)
         return error
       })
   },
 
   computed: {
-    ...mapGetters({ post: 'posts/post' })
+    ...mapGetters({ post: 'posts/post' }),
+
+    timeProcess () {
+      return this.hour + ':' + this.minute
+    },
+
+    hours () {
+      const hours = []
+      for (let i = 0; i < 24; i++) { hours.push(i.toString()) }
+      return hours
+    },
+
+    minutes () {
+      const minutes = []
+      for (let i = 0; i < 60; i++) { minutes.push(i.toString()) }
+      return minutes
+    }
   },
 
   mounted () {
     if (this.post.user.id !== this.$auth.user.id) {
       this.$router.push(`/users/${this.post.user.id}`)
     }
+    this.study_time = this.post.study_time
     this.title = this.post.title
     this.content = this.post.content
     this.post.tags.forEach((tag) => {
@@ -115,6 +150,7 @@ export default {
       this.loading = true
 
       if (isValid) {
+        formData.append('post[study_time]', this.timeProcess)
         formData.append('post[title]', this.title)
         formData.append('post[content]', this.content)
         if (this.images) {
@@ -135,6 +171,8 @@ export default {
         await this.$axios.$patch(`/api/v1/posts/${this.post.id}`, formData)
           .then(
             (response) => {
+              this.$store.commit('experience/setExperience', response.experience, { root: true })
+              this.$store.commit('experience/setRequiredExp', response.required_exp, { root: true })
               this.$store.dispatch(
                 'flash/showMessage',
                 {
@@ -144,6 +182,7 @@ export default {
                 },
                 { root: true }
               )
+              this.study_time = ''
               this.title = ''
               this.content = ''
               this.images = []
