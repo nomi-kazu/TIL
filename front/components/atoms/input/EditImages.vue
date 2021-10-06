@@ -8,7 +8,7 @@
       <v-col cols="12" class="text-center">
         画像アップロード(5枚まで)
       </v-col>
-      <template v-if="showImages.length > 0">
+      <template v-if="showImages && showImages.length > 0">
         <v-col
           v-for="(showImage, index) in showImages"
           :key="index"

@@ -7,10 +7,12 @@ class Post < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
   has_many :notices, dependent: :destroy
+  has_one :experience_record, dependent: :destroy
 
   # カラムのバリデーション
   validates :title, presence: true, length: { maximum: 50, allow_blank: true }
   validates :content, presence: true
+  validates :study_time, presence: true
 
   def images_data
     url_list = []

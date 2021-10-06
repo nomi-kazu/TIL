@@ -41,6 +41,28 @@
                   />
                 </v-card-subtitle>
               </v-list-item>
+              <v-list-item>
+                <v-col cols="3">
+                  <v-row justify="center">
+                    <h1>lv.{{ user.level }}</h1>
+                  </v-row>
+                </v-col>
+                <v-col cols="3">
+                  <v-row justify="center" class="ml-2">
+                    <h1>{{ user.lifelong_exp }}</h1>
+                  </v-row>
+                </v-col>
+                <v-col cols="3">
+                  <v-row justify="center" class="ml-2">
+                    <v-progress-linear height="10px" :value="progressProportion" />
+                  </v-row>
+                </v-col>
+                <v-col cols="3">
+                  <v-row justify="center" class="ml-2">
+                    <h1>{{ progressNumeretor }}/{{ requiredExp.required_exp }}</h1>
+                  </v-row>
+                </v-col>
+              </v-list-item>
             </v-list>
           </v-layout>
 
@@ -143,7 +165,7 @@
                 ユーザーのトレンド
               </v-card-title>
               <v-divider />
-              <template v-if="user.tag_ranking.length > 0">
+              <template v-if="user.tag_ranking && user.tag_ranking.length > 0">
                 <v-row justify="center" no-gutters>
                   <v-col>
                     <v-subheader>タグ</v-subheader>
@@ -161,6 +183,7 @@
                       class="my-4 mx-2"
                       :height="200"
                       :width="200"
+                      :posts="posts"
                     />
                   </v-col>
                 </v-row>
@@ -181,7 +204,7 @@
         </v-tab-item>
         <v-tab-item>
           <v-container class="grey lighten-5">
-            <template v-if="posts.length > 0">
+            <template v-if="posts && posts.length > 0">
               <v-card-text v-if="$auth.user.id == user.id">
                 <v-btn
                   color="primary"
@@ -217,7 +240,7 @@
 
         <v-tab-item>
           <v-container class="grey lighten-5">
-            <template v-if="likedPosts.length > 0">
+            <template v-if="likedPosts && likedPosts.length > 0">
               <UserLikedPosts
                 :posts="likedPosts"
               />
@@ -234,7 +257,7 @@
 
         <v-tab-item>
           <v-container class="grey lighten-5">
-            <template v-if="events.length > 0">
+            <template v-if="events && events.length > 0">
               <UserEvents
                 :events="events"
               />
@@ -251,7 +274,7 @@
 
         <v-tab-item>
           <v-container class="grey lighten-5">
-            <template v-if="joinedEvents.length > 0">
+            <template v-if="joinedEvents && joinedEvents.length > 0">
               <UserJoinedEvents
                 :events="joinedEvents"
                 :user="user"
@@ -314,14 +337,14 @@ export default {
   async fetch ({ $axios, params, store }) {
     await $axios.get(`/api/v1/users/${params.id}`)
       .then((response) => {
-        store.commit('user/setUser', response.data, { root: true })
-        store.commit('user/setFollowings', response.data.followings, { root: true })
-        store.commit('user/setFollowers', response.data.followers, { root: true })
-        store.commit('posts/setPosts', response.data.posts, { root: true })
-        store.commit('posts/setLikedPosts', response.data.liked_posts, { root: true })
-        store.commit('events/setEvents', response.data.events, { root: true })
+        store.commit('user/setUser', response.data.user, { root: true })
+        store.commit('user/setFollowings', response.data.user.followings, { root: true })
+        store.commit('user/setFollowers', response.data.user.followers, { root: true })
+        store.commit('posts/setPosts', response.data.user.posts, { root: true })
+        store.commit('posts/setLikedPosts', response.data.user.liked_posts, { root: true })
+        store.commit('events/setEvents', response.data.user.events, { root: true })
         const joinedEvents = []
-        response.data.event_joins.forEach((eventJoin) => {
+        response.data.user.event_joins.forEach((eventJoin) => {
           joinedEvents.push(eventJoin)
         })
         store.commit('events/setJoinedEvents', joinedEvents, { root: true })
@@ -332,13 +355,26 @@ export default {
   },
 
   computed: {
+    progressProportion () {
+      const proportion = 100 - this.user.experience_to_next / this.requiredExp.required_exp * 100
+      if (proportion === 100) {
+        return 0
+      } else {
+        return proportion
+      }
+    },
+    progressNumeretor () {
+      return this.requiredExp.required_exp - this.user.experience_to_next
+    },
     ...mapGetters({ user: 'user/user' }),
     ...mapGetters({ followings: 'user/followings' }),
     ...mapGetters({ followers: 'user/followers' }),
     ...mapGetters({ posts: 'posts/posts' }),
     ...mapGetters({ likedPosts: 'posts/likedPosts' }),
     ...mapGetters({ events: 'events/events' }),
-    ...mapGetters({ joinedEvents: 'events/joinedEvents' })
+    ...mapGetters({ joinedEvents: 'events/joinedEvents' }),
+    ...mapGetters({ experience: 'experience/experience' }),
+    ...mapGetters({ requiredExp: 'experience/requiredExp' })
   }
 }
 </script>

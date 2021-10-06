@@ -17,11 +17,16 @@ module Api
         # 投稿した画像の保存
         params[:images].each { |image| post.images.attach(image) } if params[:images].present?
 
-        if post.save
-          post.save_tags(tags_params[:tags]) if tags_params[:tags]
-          render json: { post: post, message: '投稿を作成しました', status: :created }
-        else
-          render json: post.errors, status: :unprocessable_entity
+        ActiveRecord::Base.transaction do
+          if post.save
+            post.save_tags(tags_params[:tags]) if tags_params[:tags]
+            experience_record = ExperienceRecorder.new(post.user).record(post)
+            experience = Experience.find_by(user_id: post.user.id)
+            required_exp = RequiredExp.find_by(level: experience.level)
+            render json: { post: post, experience_record: experience_record, experience: experience, required_exp: required_exp, message: '投稿を作成しました' }, status: :created
+          else
+            render json: post.errors, status: :unprocessable_entity
+          end
         end
       end
 
@@ -64,7 +69,7 @@ module Api
       end
 
       def post_params
-        params.require(:post).permit(:user_id, :title, :content, images: [])
+        params.require(:post).permit(:user_id, :title, :content, :study_time, images: [])
       end
 
       def ids_params

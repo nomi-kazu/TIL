@@ -6,6 +6,18 @@
           <ValidationObserver ref="form" v-slot="{ invalid }" immediate>
             <v-form ref="form">
               <v-card-title>記事の詳細</v-card-title>
+                <AutoCompleteWithValidation
+                  rules="validTime:@分"
+                  v-model="hour"
+                  label="時"
+                  :items="hours"
+                />
+                <AutoCompleteWithValidation
+                  rules="max_value:60|validTime:@時"
+                  v-model="minute"
+                  label="分"
+                  :items="minutes"
+                />
               <TextFieldWithValidation
                 v-model="title"
                 laber="タイトル"
@@ -51,6 +63,7 @@
 </template>
 
 <script>
+import AutoCompleteWithValidation from '~/components/molecles/input/AutoCompleteWithValidation'
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
 import InputImages from '~/components/atoms/input/InputImages'
 import InputContent from '~/components/atoms/input/InputContent'
@@ -58,6 +71,7 @@ import InputTags from '~/components/atoms/input/InputTags'
 
 export default {
   components: {
+    AutoCompleteWithValidation,
     TextFieldWithValidation,
     InputImages,
     InputContent,
@@ -68,6 +82,9 @@ export default {
 
   data () {
     return {
+      hour: '',
+      minute: '',
+      study_time: '',
       title: '',
       content: '',
       isEnter: false,
@@ -78,6 +95,24 @@ export default {
     }
   },
 
+  computed: {
+    timeProcess () {
+      return this.hour + ':' + this.minute
+    },
+
+    hours () {
+      const hours = []
+      for (let i = 0; i < 24; i++) { hours.push(i.toString()) }
+      return hours
+    },
+
+    minutes () {
+      const minutes = []
+      for (let i = 0; i < 60; i++) { minutes.push(i.toString()) }
+      return minutes
+    }
+  },
+
   methods: {
     async createPost () {
       const isValid = await this.$refs.form.validate()
@@ -85,6 +120,7 @@ export default {
       this.loading = true
 
       if (isValid) {
+        formData.append('post[study_time]', this.timeProcess)
         formData.append('post[user_id]', this.$auth.user.id)
         formData.append('post[title]', this.title)
         formData.append('post[content]', this.content)
@@ -101,6 +137,8 @@ export default {
         await this.$axios.$post('/api/v1/posts', formData)
           .then(
             (response) => {
+              this.$store.commit('experience/setExperience', response.experience, { root: true })
+              this.$store.commit('experience/setRequiredExp', response.required_exp, { root: true })
               this.$store.dispatch(
                 'flash/showMessage',
                 {
@@ -110,6 +148,7 @@ export default {
                 },
                 { root: true }
               )
+              this.study_time = ''
               this.title = ''
               this.content = ''
               this.images = []

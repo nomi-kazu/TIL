@@ -9,7 +9,7 @@
       @keyup="searchTags"
     />
     <SearchTagsTemplate
-      v-if="tags.length > 0"
+      v-if="tags && tags.length > 0"
       :tags="tags"
       :loading="loading"
     />

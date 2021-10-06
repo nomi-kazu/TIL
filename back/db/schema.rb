@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_29_103125) do
+ActiveRecord::Schema.define(version: 2021_10_03_102319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,27 @@ ActiveRecord::Schema.define(version: 2021_09_29_103125) do
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
+  create_table "experience_records", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "post_id"
+    t.integer "obtained_exp", null: false
+    t.float "bonus_multiplier", default: 1.0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_experience_records_on_post_id"
+    t.index ["user_id"], name: "index_experience_records_on_user_id"
+  end
+
+  create_table "experiences", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "level", default: 1, null: false
+    t.integer "lifelong_exp", default: 0, null: false
+    t.integer "experience_to_next", default: 50, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_experiences_on_user_id"
+  end
+
   create_table "join_events", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "event_id", null: false
@@ -131,7 +152,8 @@ ActiveRecord::Schema.define(version: 2021_09_29_103125) do
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title", limit: 50, null: false
-    t.text "content"
+    t.text "content", null: false
+    t.time "study_time", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
@@ -145,6 +167,15 @@ ActiveRecord::Schema.define(version: 2021_09_29_103125) do
     t.index ["follow_id"], name: "index_relationships_on_follow_id"
     t.index ["user_id", "follow_id"], name: "index_relationships_on_user_id_and_follow_id", unique: true
     t.index ["user_id"], name: "index_relationships_on_user_id"
+  end
+
+  create_table "required_exps", force: :cascade do |t|
+    t.integer "level", null: false
+    t.integer "required_exp", null: false, comment: "次のレベルまでに必要な経験値"
+    t.integer "lifelong_exp", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["level"], name: "index_required_exps_on_level", unique: true
   end
 
   create_table "tags", force: :cascade do |t|
@@ -181,6 +212,9 @@ ActiveRecord::Schema.define(version: 2021_09_29_103125) do
   add_foreign_key "event_tag_maps", "events"
   add_foreign_key "event_tag_maps", "tags"
   add_foreign_key "events", "users"
+  add_foreign_key "experience_records", "posts"
+  add_foreign_key "experience_records", "users"
+  add_foreign_key "experiences", "users"
   add_foreign_key "join_events", "events"
   add_foreign_key "join_events", "users"
   add_foreign_key "likes", "posts"

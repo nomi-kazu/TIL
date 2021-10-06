@@ -9,7 +9,7 @@
       @keyup="searchUsers"
     />
     <SearchUsersTemplate
-      v-if="users.length > 0"
+      v-if="users && users.length > 0"
       :users="users"
       :loading="loading"
     />

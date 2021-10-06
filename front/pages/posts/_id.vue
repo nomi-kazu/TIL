@@ -12,11 +12,19 @@
           </v-card-subtitle>
 
           <v-card-title>
+            {{ studyTime }}
+          </v-card-title>
+
+          <v-card-title>
             {{ post.title }}
           </v-card-title>
 
+          <v-card-title>
+            {{ post.obtained_exp }}
+          </v-card-title>
+
           <v-carousel
-            v-if="post.images_data.length > 0"
+            v-if="post.images_data && post.images_data.length > 0"
             :continuous="false"
             :cycle="cycle"
             :show-arrows="false"
@@ -120,7 +128,7 @@
       <v-container>
         <v-row justify="center">
           <v-col
-            v-if="comments.length > 0"
+            v-if="comments && comments.length > 0"
             cols="12"
             sm="12"
             lg="10"
@@ -206,7 +214,12 @@ export default {
     ...mapGetters({
       post: 'posts/post',
       comments: 'comments/comments'
-    })
+    }),
+
+    studyTime () {
+      const time = new Date(this.post.study_time)
+      return time.getUTCHours() + '時間' + time.getUTCMinutes() + '分'
+    }
   }
 }
 </script>

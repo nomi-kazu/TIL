@@ -2,23 +2,26 @@ module Api
   module V1
     class UsersController < ApplicationController
       def show
-        user = User.includes({ image_attachment: :blob },
+        @user = User.join_exp.includes({ image_attachment: :blob },
                              { posts: [{ images_attachments: :blob }, { user: { image_attachment: :blob } }, :tags] },
                              { liked_posts: [{ user: { image_attachment: :blob } }, :tags] }, { events: [{ user: { image_attachment: :blob } }, { join_users: { image_attachment: :blob } }, :tags] },
                              { event_joins: [{ user: { image_attachment: :blob } }, { join_users: { image_attachment: :blob } }, :tags] },
                              { followings: { image_attachment: :blob } }, { followers: { image_attachment: :blob } }, :tags).find(params[:id])
-        render json: user.as_json(include: [{ posts: { include: [:tags], methods: :images_data } },
+        required_exp = RequiredExp.find_by(level: @user.level)                 
+        render json: { user: @user.as_json(include: [{ posts: { include: [:tags], methods: :images_data } },
                                             { events: { include: [{ user: { methods: :image_url } }, { join_users: { methods: :image_url } }, :tags], methods: :image_url } },
                                             { liked_posts: { include: [{ user: { methods: :image_url } }, :tags, :liked_users] } },
                                             { event_joins: { include: [{ user: { methods: :image_url } }, { join_users: { methods: :image_url } }, :tags], methods: :image_url } },
                                             { followings: { include: %i[followings followers], methods: :image_url } },
-                                            { followers: { include: %i[followings followers], methods: :image_url } }, :tags], methods: %i[image_url tag_ranking])
+                                            { followers: { include: %i[followings followers], methods: :image_url } }, :tags], methods: %i[image_url tag_ranking]),
+                       required_exp: required_exp }
       end
 
       def create
         user = User.new(user_params)
 
-        if user.save
+        if user.save && user.create_experience!
+          user = User.join_exp.find(user.id)
           render json: user, methods: [:image_url], status: :created
         else
           render json: user.errors, status: :unprocessable_entity

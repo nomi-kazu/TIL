@@ -9,7 +9,7 @@
         画像アップロード(5枚まで)
       </v-col>
 
-      <template v-if="images.length > 0">
+      <template v-if="images && images.length > 0">
         <v-col
           v-for="image in images"
           :key="image.id"

@@ -3,6 +3,7 @@ import Vue from 'vue'
 import { ValidationProvider, ValidationObserver, extend, localize } from 'vee-validate'
 import * as rules from 'vee-validate/dist/rules'
 import ja from 'vee-validate/dist/locale/ja.json'
+import * as CustomRules from '~/utils/custom-rules.js'
 
 // 全てのバリデーションルールを登録する
 Object.keys(rules).forEach((rule) => {
@@ -16,6 +17,10 @@ extend('email', (value) => {
 extend('password', (value) => {
   return /^[\w-]{8,72}$/.test(value) || '8文字以上。半角英数字/ハイフン/アンダーバーが使えます'
 })
+
+for (const rule in CustomRules) {
+  extend(rule, CustomRules[rule])
+}
 
 localize('ja', ja)
 
