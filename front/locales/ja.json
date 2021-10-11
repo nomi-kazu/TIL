@@ -1,0 +1,15 @@
+{
+  "menus": {
+    "home": "ホーム",
+    "about": "TILとは"
+  },
+  "pages": {
+    "signup": "新規登録",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "users": {
+      "edit": "アカウント設定",
+      "password": "パスワード変更"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<template>
+  <v-app>
+    <TheHeader />
+    <TheSidebar />
+    <LevelUpModal />
+    <v-main class="grey lighten-5">
+      <nuxt />
+    </v-main>
+    <Flash />
+    <TheFooter />
+  </v-app>
+</template>
+
+<script>
+import TheHeader from '~/components/organisms/header/TheHeader'
+import TheFooter from '~/components/organisms/footer/TheFooter'
+import Flash from '~/components/atoms/top/Flash'
+import TheSidebar from '~/components/organisms/sidebar/TheSidebar'
+import LevelUpModal from '~/components/organisms/LevelUpModal'
+
+export default {
+  components: {
+    TheHeader,
+    TheFooter,
+    Flash,
+    TheSidebar,
+    LevelUpModal
+  }
+}
+</script>
