@@ -47,6 +47,8 @@ export default {
         underline: true,
         strikethrough: true,
         mark: true,
+        superscript: true,
+        subscript: true,
         quote: true,
         ol: true,
         ul: true,
@@ -54,8 +56,20 @@ export default {
         imagelink: false,
         code: true,
         table: true,
-        fullscreen: false,
-        htmlcode: true
+        fullscreen: true,
+        readmodel: true,
+        htmlcode: true,
+        help: true,
+        undo: true,
+        redo: true,
+        trash: true,
+        save: true,
+        navigation: true,
+        alignleft: true,
+        aligncenter: true,
+        alignright: true,
+        subfield: true,
+        preview: true
       }
     }
   },

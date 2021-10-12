@@ -6,18 +6,18 @@
           <ValidationObserver ref="form" v-slot="{ invalid }" immediate>
             <v-form ref="form">
               <v-card-title>記事の詳細</v-card-title>
-                <AutoCompleteWithValidation
-                  rules="validTime:@分"
-                  v-model="hour"
-                  label="時"
-                  :items="hours"
-                />
-                <AutoCompleteWithValidation
-                  rules="max_value:60|validTime:@時"
-                  v-model="minute"
-                  label="分"
-                  :items="minutes"
-                />
+              <AutoCompleteWithValidation
+                rules="validTime:@分"
+                v-model="hour"
+                label="時"
+                :items="hours"
+              />
+              <AutoCompleteWithValidation
+                rules="max_value:60|validTime:@時"
+                v-model="minute"
+                label="分"
+                :items="minutes"
+              />
               <TextFieldWithValidation
                 v-model="title"
                 laber="タイトル"
@@ -27,9 +27,9 @@
                 outlined
               />
 
-              <InputImages
+              <!-- <InputImages
                 v-model="images"
-              />
+              /> -->
 
               <InputContent
                 v-model="content"
@@ -65,7 +65,7 @@
 <script>
 import AutoCompleteWithValidation from '~/components/molecles/input/AutoCompleteWithValidation'
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import InputImages from '~/components/atoms/input/InputImages'
+// import InputImages from '~/components/atoms/input/InputImages'
 import InputContent from '~/components/atoms/input/InputContent'
 import InputTags from '~/components/atoms/input/InputTags'
 
@@ -73,7 +73,7 @@ export default {
   components: {
     AutoCompleteWithValidation,
     TextFieldWithValidation,
-    InputImages,
+    // InputImages,
     InputContent,
     InputTags
   },
