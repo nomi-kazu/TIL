@@ -1,6 +1,5 @@
 class Post < ApplicationRecord
   belongs_to :user
-  has_many_attached :images
   has_many :post_tag_maps, dependent: :destroy
   has_many :tags, through: :post_tag_maps
   has_many :comments, dependent: :destroy
@@ -14,12 +13,6 @@ class Post < ApplicationRecord
   validates :content, presence: true
   validates :study_time, presence: true
   validates :study_date, presence: true
-
-  def images_data
-    url_list = []
-    images.each { |image| url_list.push({ id: image.blob_id, url: url_for(image) }) } if images.attached?
-    url_list
-  end
 
   def save_tags(tags)
     current_tags = self.tags.pluck(:name) unless self.tags.nil?

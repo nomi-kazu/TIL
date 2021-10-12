@@ -6,8 +6,7 @@
     :max="max"
     :entries="entries"
     :color-range="colorRange"
-  >
-</VuejsHeatmap>
+  />
 </template>
 
 <script>
@@ -43,8 +42,8 @@ export default {
     entries () {
       const entries = this.posts.map((value) => {
         return {
-          counting: value.obtained_exp,
-          created_at: value.created_at.split('T')[0]
+          counting: value.experience_record.obtained_exp,
+          created_at: value.study_date.split('T')[0]
         }
       })
       const group = entries.reduce((result, current) => {

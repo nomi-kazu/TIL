@@ -12,11 +12,15 @@
           </v-card-title>
 
           <v-card-title>
+            {{ studyDate }}
+          </v-card-title>
+
+          <v-card-title>
             {{ post.title }}
           </v-card-title>
 
           <v-card-title>
-            {{ post.obtained_exp }}
+            {{ post.experience_record.obtained_exp }}EXP
           </v-card-title>
 
           <v-carousel
@@ -213,6 +217,14 @@ export default {
     studyTime () {
       const time = new Date(this.post.study_time)
       return time.getUTCHours() + '時間' + time.getUTCMinutes() + '分'
+    },
+
+    studyDate () {
+      const studyDate = this.post.study_date
+      const date = studyDate.substr(0, 16).split('T')[0]
+        .replace(/(\d{4})-(\d{2})-(\d{2})/, '$1年$2月$3日')
+      const time = studyDate.substr(0, 16).split('T')[1]
+      return date + ' ' + time
     }
   }
 }
