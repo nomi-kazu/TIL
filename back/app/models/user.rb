@@ -8,7 +8,7 @@ class User < ApplicationRecord
   # 他テーブルとのアソシエーション
   has_one_attached :image
   has_many :posts, dependent: :destroy
-  has_many :relationships, dependent: :destroy
+  has_many :relationships, -> { order(study_date: :desc) }, dependent: :destroy
   has_many :followings, through: :relationships, source: :follow
   has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'follow_id', dependent: :destroy
   has_many :followers, through: :reverse_of_relationships, source: :user

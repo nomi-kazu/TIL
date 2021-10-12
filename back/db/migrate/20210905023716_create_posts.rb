@@ -5,6 +5,7 @@ class CreatePosts < ActiveRecord::Migration[6.1]
       t.string :title, null: false, :limit => 50
       t.text :content, null: false
       t.time :study_time, null: false
+      t.datetime :study_date, null: false
       t.timestamps
     end
   end

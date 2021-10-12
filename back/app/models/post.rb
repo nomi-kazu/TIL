@@ -13,6 +13,7 @@ class Post < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50, allow_blank: true }
   validates :content, presence: true
   validates :study_time, presence: true
+  validates :study_date, presence: true
 
   def images_data
     url_list = []
