@@ -30,36 +30,25 @@
             <span id="notice-sublink">通知一覧</span>
           </v-card>
         </v-card-title>
-        <v-card-text v-for="notice in notices" :key="notice.id">
-          <v-card flat :to="notice.noticeLink">
-            <v-row>
-              <v-col>
-                <v-avatar size="25">
-                  <v-img
-                    v-if="notice.action_user.image_url !== null"
-                    :src="notice.action_user.image_url"
-                  />
-                  <v-icon v-else>
-                    mdi-account-circle
-                  </v-icon>
-                </v-avatar>
-                <span>{{ notice.noticeActionUser }}</span>
-                <span>{{ notice.noticeAction }}</span>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
-                {{ notice.noticeTime }}
-              </v-col>
-            </v-row>
-          </v-card>
+        <v-card-text>
+          <Notice
+            v-for="notice in notices"
+            :key="notice.id"
+            :notice="notice"
+          />
+          <span v-if="!notices.length">通知はありません。</span>
         </v-card-text>
       </v-card>
     </v-list>
   </v-menu>
 </template>
 <script>
+import Notice from '~/components/molecules/Notice'
+
 export default {
+  components: {
+    Notice
+  },
   data () {
     return {
       count: 0,
