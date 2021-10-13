@@ -2,7 +2,7 @@
   <v-app dark>
     <v-container>
       <v-card-text v-if="error.statusCode === 404">
-      {{ pageNotFound }}
+        {{ pageNotFound }}
       </v-card-text>
       <v-card-text v-else>
         {{ otherError }}
