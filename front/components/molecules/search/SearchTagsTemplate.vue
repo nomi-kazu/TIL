@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import TagFollowBtnGroup from '~/components/molecles/tags/TagFollowBtnGroup'
+import TagFollowBtnGroup from '~/components/molecules/tags/TagFollowBtnGroup'
 
 export default {
   components: {

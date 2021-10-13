@@ -12,7 +12,6 @@ module.exports = {
     'plugin:nuxt/recommended'
   ],
   plugins: [
-    'jest'
   ],
   // add your custom rules here
   rules: {}

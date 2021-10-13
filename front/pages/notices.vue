@@ -16,51 +16,26 @@
           </v-toolbar>
           <v-container>
             <v-row>
-              <v-col cols="12" v-if="loading">
+              <v-col v-if="loading" cols="12">
                 <v-skeleton-loader
-                  class="mx-auto"
-                  type="card"
                   v-for="n in 5"
                   :key="n.id"
+                  class="mx-auto"
+                  type="card"
                 />
               </v-col>
-              <v-col cols="12" v-if="loading === false">
-                <v-row
-                  dense
-                  v-for="(notice, index) in notices"
-                  :key="index"
-                >
-                  <v-col cols="12">
-                    <v-card
-                      flat
-                      :to="notice.noticeLink"
-                    >
-                      <v-card-text>
-                        <v-row>
-                          <v-col>
-                            <v-avatar size="25">
-                              <v-img
-                                v-if="notice.action_user.image_url !== null"
-                                :src="notice.action_user.image_url"
-                              />
-                              <v-icon v-else>
-                                mdi-account-circle
-                              </v-icon>
-                            </v-avatar>
-                            <span>{{ notice.noticeActionUser }}</span>
-                            <span>{{ notice.noticeAction }}</span>
-                          </v-col>
-                        </v-row>
-                        <v-row>
-                          <v-col>
-                            <span>{{ notice.noticeTime }}</span>
-                          </v-col>
-                        </v-row>
-                      </v-card-text>
-                    </v-card>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-divider />
+              <v-col cols="12">
+                <NoticesWithPagination
+                  class="mb-4"
+                  :notices="notices"
+                />
+                <v-row>
+                  <v-col
+                    v-if="!notices.length"
+                    cols="12"
+                    class="text-center"
+                  >
+                    <span>通知がありません</span>
                   </v-col>
                 </v-row>
               </v-col>
@@ -73,12 +48,11 @@
 </template>
 
 <script>
+import NoticesWithPagination from '~/components/organisms/NoticesWithPagination'
+
 export default {
-  data () {
-    return {
-      loading: true,
-      notices: []
-    }
+  components: {
+    NoticesWithPagination
   },
   async asyncData ({ $axios, $auth, $moment }) {
     return await $axios.$get('/api/v1/notices', {
@@ -119,6 +93,12 @@ export default {
           notices: response
         }
       })
+  },
+  data () {
+    return {
+      loading: true,
+      notices: []
+    }
   },
   mounted () {
     this.loading = false

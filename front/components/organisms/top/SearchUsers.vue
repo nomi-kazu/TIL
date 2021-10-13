@@ -18,7 +18,7 @@
 
 <script>
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import SearchUsersTemplate from '~/components/molecles/search/SearchUsersTemplate'
+import SearchUsersTemplate from '~/components/molecules/search/SearchUsersTemplate'
 
 export default {
   components: {

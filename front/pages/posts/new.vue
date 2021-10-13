@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import AutoCompleteWithValidation from '~/components/molecles/input/AutoCompleteWithValidation'
+import AutoCompleteWithValidation from '~/components/molecules/input/AutoCompleteWithValidation'
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
 import InputContent from '~/components/atoms/input/InputContent'
 import InputTags from '~/components/atoms/input/InputTags'

@@ -91,7 +91,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import LikeBtnGroup from '~/components/molecles/posts/LikeBtnGroup'
+import LikeBtnGroup from '~/components/molecules/posts/LikeBtnGroup'
 
 export default {
   components: {

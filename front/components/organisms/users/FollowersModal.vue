@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import FollowFollowersTemplate from '~/components/molecles/users/FollowFollowersTemplate'
+import FollowFollowersTemplate from '~/components/molecules/users/FollowFollowersTemplate'
 
 export default {
   components: {

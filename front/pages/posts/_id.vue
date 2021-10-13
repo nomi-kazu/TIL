@@ -183,10 +183,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import TwitterBtn from '~/components/atoms/posts/TwitterBtn'
-import Comment from '~/components/molecles/posts/Comment'
-import CommentArea from '~/components/molecles/posts/CommentArea'
-import LikeBtnGroup from '~/components/molecles/posts/LikeBtnGroup'
-import FollowBtnGroup from '~/components/molecles/users/FollowBtnGroup'
+import Comment from '~/components/molecules/posts/Comment'
+import CommentArea from '~/components/molecules/posts/CommentArea'
+import LikeBtnGroup from '~/components/molecules/posts/LikeBtnGroup'
+import FollowBtnGroup from '~/components/molecules/users/FollowBtnGroup'
 
 export default {
   components: {

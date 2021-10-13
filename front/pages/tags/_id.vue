@@ -75,7 +75,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import TagFollowBtnGroup from '~/components/molecles/tags/TagFollowBtnGroup'
+import TagFollowBtnGroup from '~/components/molecules/tags/TagFollowBtnGroup'
 import TagPosts from '~/components/organisms/tags/TagPosts'
 
 export default {

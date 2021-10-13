@@ -261,8 +261,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import BarChart from '~/components/organisms/users/BarChart'
-import Heatmap from '~/components/molecles/Heatmap'
-import FollowBtnGroup from '~/components/molecles/users/FollowBtnGroup'
+import Heatmap from '~/components/molecules/Heatmap'
+import FollowBtnGroup from '~/components/molecules/users/FollowBtnGroup'
 import FollowersModal from '~/components/organisms/users/FollowersModal'
 import FollowingsModal from '~/components/organisms/users/FollowingsModal'
 import UserLikedPosts from '~/components/organisms/users/UserLikedPosts'

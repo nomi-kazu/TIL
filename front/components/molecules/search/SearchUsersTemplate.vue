@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import FollowBtnGroup from '~/components/molecles/users/FollowBtnGroup'
+import FollowBtnGroup from '~/components/molecules/users/FollowBtnGroup'
 
 export default {
   components: {
