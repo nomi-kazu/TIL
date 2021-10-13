@@ -6,14 +6,31 @@
           <ValidationObserver ref="form" v-slot="{ invalid }" immediate>
             <v-form ref="form">
               <v-card-title>記事の詳細</v-card-title>
+              <v-col
+                cols="3"
+                @click="datePicker = !datePicker"
+              >
+                <v-row justify="center" style="margin-top: 20px">
+                  <span style="font-size: 1.4em">
+                    {{ studyDate.split(' ')[0] }}
+                  </span>
+                </v-row>
+              </v-col>
+              <v-date-picker
+                v-if="datePicker"
+                v-model="studyDate"
+                locale="ja"
+                :allowed-dates="allowedDates"
+                @input="datePicker = false"
+              />
               <AutoCompleteWithValidation
                 rules="validTime:@分"
                 v-model="hour"
-                label="時"
+                label="学習時間"
                 :items="hours"
               />
               <AutoCompleteWithValidation
-                rules="max_value:60|validTime:@時"
+                rules="max_value:60|validTime:@学習時間"
                 v-model="minute"
                 label="分"
                 :items="minutes"
@@ -26,10 +43,6 @@
                 rules="max:50|required"
                 outlined
               />
-
-              <!-- <InputImages
-                v-model="images"
-              /> -->
 
               <InputContent
                 v-model="content"
@@ -65,7 +78,6 @@
 <script>
 import AutoCompleteWithValidation from '~/components/molecles/input/AutoCompleteWithValidation'
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-// import InputImages from '~/components/atoms/input/InputImages'
 import InputContent from '~/components/atoms/input/InputContent'
 import InputTags from '~/components/atoms/input/InputTags'
 
@@ -73,7 +85,6 @@ export default {
   components: {
     AutoCompleteWithValidation,
     TextFieldWithValidation,
-    // InputImages,
     InputContent,
     InputTags
   },
@@ -85,6 +96,10 @@ export default {
       hour: '',
       minute: '',
       study_time: '',
+      studyDate: new Date().toLocaleString().substr(0, 10).replace(/\//g, '-').trim().replace(/(^\d+-)(\d-\d+$)/, '$10$2'),
+      studyDateHour: this.initStudyDateHours,
+      studyDateMinute: this.initStudyDateMinutes,
+      datePicker: false,
       title: '',
       content: '',
       isEnter: false,
@@ -110,6 +125,10 @@ export default {
       const minutes = []
       for (let i = 0; i < 60; i++) { minutes.push(i.toString()) }
       return minutes
+    },
+    studyDateProcessing () {
+      return this.studyDate.toString() + ' ' + this.studyDateHour +
+        ':' + this.studyDateMinute
     }
   },
 
@@ -121,6 +140,7 @@ export default {
 
       if (isValid) {
         formData.append('post[study_time]', this.timeProcess)
+        formData.append('post[study_date]', this.studyDateProcessing)
         formData.append('post[user_id]', this.$auth.user.id)
         formData.append('post[title]', this.title)
         formData.append('post[content]', this.content)
@@ -151,12 +171,13 @@ export default {
               this.study_time = ''
               this.title = ''
               this.content = ''
-              this.images = []
+              this.studyDate = new Date().toLocaleString().substr(0, 10).replace(/\//g, '-').trim().replace(/(^\d+-)(\d-\d+$)/, '$10$2')
+              this.studyDateHour = new Date().getHours().toString()
+              this.studyDateMinute = new Date().getMinutes().toString()
               this.$refs.form.reset()
               this.$router.push(`/posts/${response.post.id}`)
             },
             (error) => {
-              console.log(error)
               this.$store.dispatch(
                 'flash/showMessage',
                 {
@@ -171,6 +192,19 @@ export default {
           )
         this.loading = false
       }
+    },
+    allowedDates: (val) => {
+      const today = new Date()
+      let week = []
+      week.unshift(new Date(today))
+      for (let i = 0; i < 7; i++) {
+        week.unshift(new Date(today.setDate(today.getDate() - 1)))
+      }
+      week = week.map((dt) => {
+        return dt.toLocaleString().substr(0, 10).replace(/\//g, '-').trim()
+          .replace(/(^\d+-)(\d-\d+$)/, '$10$2')
+      })
+      return week.includes(val)
     }
   }
 }
