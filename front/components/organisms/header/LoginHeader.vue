@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import LoginBar from '~/components/molecules/top/LoginBar'
-import NoticeFeed from '~/components/molecules/top/NoticeFeed'
+import LoginBar from '~/components/molecules/LoginBar'
+import NoticeFeed from '~/components/molecules/NoticeFeed'
 
 export default {
   components: {
