@@ -131,11 +131,10 @@
               <v-card-text>
                 {{ user.description }}
               </v-card-text>
-              <v-card-subtitle class="pb-0">
-                登録したタグ
-              </v-card-subtitle>
+              <v-card-title>登録したタグ</v-card-title>
+              <v-divider />
               <v-card-text
-                v-if="user.tags"
+                v-if="user.tags && user.tags.length > 0"
                 class="pb-0"
               >
                 <v-chip-group
@@ -159,7 +158,7 @@
                 </v-chip-group>
               </v-card-text>
               <v-card-text v-else>
-                登録したタグはありません
+                なし
               </v-card-text>
               <v-card-title>
                 ユーザーのトレンド
@@ -288,8 +287,7 @@ export default {
         { name: 'プロフィール詳細' },
         { name: '投稿レビュー' },
         { name: 'お気に入りレビュー' }
-      ],
-      tagNameList: []
+      ]
     }
   },
 
