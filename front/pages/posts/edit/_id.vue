@@ -53,7 +53,7 @@
                     :disabled="invalid || loading"
                     :loading="loading"
                     block
-                    @click="createPost"
+                    @click="updatePost"
                   >
                     作成
                   </v-btn>
@@ -144,7 +144,7 @@ export default {
   },
 
   methods: {
-    async createPost () {
+    async updatePost () {
       const isValid = await this.$refs.form.validate()
       const formData = new FormData()
       this.loading = true

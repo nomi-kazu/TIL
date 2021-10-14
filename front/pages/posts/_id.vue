@@ -120,7 +120,7 @@
       </v-col>
     </v-row>
 
-    <v-card class="mt-10">
+    <v-card class="mt-5">
       <v-card-title>
         コメント一覧
       </v-card-title>
