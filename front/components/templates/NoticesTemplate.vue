@@ -61,8 +61,8 @@ export default {
       required: true
     },
     loading: {
-      type: null,
-      default: ''
+      type: Boolean,
+      default: false
     }
   }
 }

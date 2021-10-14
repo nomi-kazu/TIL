@@ -54,12 +54,19 @@ export default {
   },
   data () {
     return {
-      loading: true,
+      loading: false,
       notices: []
     }
   },
   mounted () {
     this.loading = true
+    setTimeout(this.stopLoading, 500)
+  },
+
+  methods: {
+    stopLoading () {
+      this.loading = false
+    }
   }
 }
 </script>
