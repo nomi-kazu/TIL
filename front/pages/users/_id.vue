@@ -212,7 +212,7 @@
                   投稿作成
                 </v-btn>
               </v-card-text>
-              <UserPosts
+              <PostsWithPagination
                 :posts="posts"
               />
             </template>
@@ -240,7 +240,7 @@
         <v-tab-item>
           <v-container class="grey lighten-5">
             <template v-if="likedPosts && likedPosts.length > 0">
-              <UserLikedPosts
+              <PostsWithPagination
                 :posts="likedPosts"
               />
             </template>
@@ -265,8 +265,7 @@ import Heatmap from '~/components/molecules/Heatmap'
 import FollowBtnGroup from '~/components/molecules/users/FollowBtnGroup'
 import FollowersModal from '~/components/organisms/users/FollowersModal'
 import FollowingsModal from '~/components/organisms/users/FollowingsModal'
-import UserLikedPosts from '~/components/organisms/users/UserLikedPosts'
-import UserPosts from '~/components/organisms/users/UserPosts'
+import PostsWithPagination from '~/components/organisms/posts/PostsWithPagination'
 
 export default {
   components: {
@@ -275,8 +274,7 @@ export default {
     FollowBtnGroup,
     FollowersModal,
     FollowingsModal,
-    UserLikedPosts,
-    UserPosts
+    PostsWithPagination
   },
 
   data () {
