@@ -4,9 +4,9 @@
     :color="color"
     transition="slide-x-reverse-transition"
     left
-    bottom
     dense
     text
+    top
   >
     {{ message }}
   </v-snackbar>

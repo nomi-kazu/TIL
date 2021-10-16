@@ -8,7 +8,7 @@
       prepend-icon="mdi-magnify"
       @keyup="searchUsers"
     />
-    <SearchUsersTemplate
+    <UsersWithPagination
       v-if="users && users.length > 0"
       :users="users"
       :loading="loading"
@@ -18,12 +18,12 @@
 
 <script>
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import SearchUsersTemplate from '~/components/molecles/search/SearchUsersTemplate'
+import UsersWithPagination from '~/components/organisms/users/UsersWithPagination'
 
 export default {
   components: {
     TextFieldWithValidation,
-    SearchUsersTemplate
+    UsersWithPagination
   },
 
   data () {
@@ -42,7 +42,6 @@ export default {
           keyword: this.keyword
         }
       }).then((response) => {
-        console.log(response)
         this.users = response.data
       }).catch((error) => {
         return error

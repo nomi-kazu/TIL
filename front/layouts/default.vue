@@ -1,12 +1,12 @@
 <template>
   <v-app>
+    <Flash />
     <TheHeader />
     <TheSidebar />
     <LevelUpModal />
     <v-main class="grey lighten-5">
       <nuxt />
     </v-main>
-    <Flash />
     <TheFooter />
   </v-app>
 </template>

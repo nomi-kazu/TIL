@@ -45,14 +45,34 @@
             background-color="brown lighten-5"
           >
             <v-tab>
+              ユーザー
+            </v-tab>
+            <v-tab>
               投稿
             </v-tab>
           </v-tabs>
           <v-tabs-items v-model="tab" touchless>
             <v-tab-item>
               <v-container>
+                <template v-if="users && users.length > 0">
+                  <UsersWithPagination
+                    :users="users"
+                    :loading="loading"
+                  />
+                </template>
+                <template v-else>
+                  <v-card>
+                    <v-card-text>
+                      該当するユーザーはいません
+                    </v-card-text>
+                  </v-card>
+                </template>
+              </v-container>
+            </v-tab-item>
+            <v-tab-item>
+              <v-container>
                 <template v-if="posts && posts.length > 0">
-                  <TagPosts
+                  <PostsWithPagination
                     :posts="posts"
                     :loading="loading"
                   />
@@ -75,13 +95,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import TagFollowBtnGroup from '~/components/molecles/tags/TagFollowBtnGroup'
-import TagPosts from '~/components/organisms/tags/TagPosts'
+import TagFollowBtnGroup from '~/components/molecules/tags/TagFollowBtnGroup'
+import UsersWithPagination from '~/components/organisms/users/UsersWithPagination'
+import PostsWithPagination from '~/components/organisms/posts/PostsWithPagination'
 
 export default {
   components: {
     TagFollowBtnGroup,
-    TagPosts
+    UsersWithPagination,
+    PostsWithPagination
   },
 
   data () {
@@ -96,6 +118,7 @@ export default {
       .then((response) => {
         store.commit('tags/setTag', response.data, { root: true })
         store.commit('tags/setPosts', response.data.posts, { root: true })
+        store.commit('tags/setUsers', response.data.users, { root: true })
       })
       .catch((error) => {
         return error
@@ -104,6 +127,7 @@ export default {
 
   computed: {
     ...mapGetters({ tag: 'tags/tag' }),
+    ...mapGetters({ users: 'tags/users' }),
     ...mapGetters({ posts: 'tags/posts' })
   },
 

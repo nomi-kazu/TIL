@@ -1,7 +1,7 @@
 module Api
   module V1
     class TagsController < ApplicationController
-      before_action :set_tags, only: %i[create destroy]
+      before_action :set_tag, only: %i[create destroy]
 
       def show
         tag = Tag.includes({ users: { image_attachment: :blob } }, { posts: [{ user: { image_attachment: :blob } }, :liked_users, :tags] }).find(params[:id])
@@ -34,7 +34,7 @@ module Api
 
       private
 
-      def set_tags
+      def set_tag
         @tag = Tag.find(params[:id])
         @user = User.find(params[:user_id])
       end

@@ -23,11 +23,6 @@
             </v-tab>
             <v-tab>
               <v-icon>
-                mdi-calendar-clock
-              </v-icon>
-            </v-tab>
-            <v-tab>
-              <v-icon>
                 mdi-tag
               </v-icon>
             </v-tab>

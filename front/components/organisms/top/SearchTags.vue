@@ -8,7 +8,7 @@
       prepend-icon="mdi-magnify"
       @keyup="searchTags"
     />
-    <SearchTagsTemplate
+    <TagsWithPagination
       v-if="tags && tags.length > 0"
       :tags="tags"
       :loading="loading"
@@ -18,12 +18,12 @@
 
 <script>
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import SearchTagsTemplate from '~/components/molecles/search/SearchTagsTemplate'
+import TagsWithPagination from '~/components/organisms/tags/TagsWithPagination'
 
 export default {
   components: {
     TextFieldWithValidation,
-    SearchTagsTemplate
+    TagsWithPagination
   },
 
   data () {
@@ -42,7 +42,6 @@ export default {
           keyword: this.keyword
         }
       }).then((response) => {
-        console.log(response)
         this.tags = response.data
       }).catch((error) => {
         return error

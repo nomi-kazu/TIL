@@ -67,12 +67,12 @@
             </v-tab>
             <v-tab>
               <v-icon>
-                mdi-calendar-clock
+                mdi-tag
               </v-icon>
             </v-tab>
             <v-tab>
               <v-icon>
-                mdi-tag
+                mdi-comment
               </v-icon>
             </v-tab>
           </v-tabs>
@@ -117,15 +117,12 @@ export default {
     AllUsers,
     AllComments
   },
-
   middleware: 'loginAuth',
-
   data () {
     return {
       tab: null
     }
   },
-
   mounted () {
     if (!this.$auth.user.admin) {
       this.$router.push('/')

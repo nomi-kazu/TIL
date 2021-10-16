@@ -8,7 +8,7 @@
       prepend-icon="mdi-magnify"
       @keyup="searchPosts"
     />
-    <SearchPostsTemplate
+    <PostsWithPagination
       v-if="posts && posts.length > 0"
       :posts="posts"
       :loading="loading"
@@ -18,12 +18,12 @@
 
 <script>
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import SearchPostsTemplate from '~/components/molecles/search/SearchPostsTemplate'
+import PostsWithPagination from '~/components/organisms/posts/PostsWithPagination'
 
 export default {
   components: {
     TextFieldWithValidation,
-    SearchPostsTemplate
+    PostsWithPagination
   },
 
   data () {
@@ -42,7 +42,6 @@ export default {
           keyword: this.keyword
         }
       }).then((response) => {
-        console.log(response)
         this.posts = response.data
       }).catch((error) => {
         return error

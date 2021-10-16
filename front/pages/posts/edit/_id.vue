@@ -53,7 +53,7 @@
                     :disabled="invalid || loading"
                     :loading="loading"
                     block
-                    @click="createPost"
+                    @click="updatePost"
                   >
                     作成
                   </v-btn>
@@ -69,7 +69,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import AutoCompleteWithValidation from '~/components/molecles/input/AutoCompleteWithValidation'
+import AutoCompleteWithValidation from '~/components/molecules/input/AutoCompleteWithValidation'
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
 import InputImages from '~/components/atoms/input/InputImages'
 import InputContent from '~/components/atoms/input/InputContent'
@@ -144,7 +144,7 @@ export default {
   },
 
   methods: {
-    async createPost () {
+    async updatePost () {
       const isValid = await this.$refs.form.validate()
       const formData = new FormData()
       this.loading = true

@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import SidebarActionBtn from '~/components/molecles/btns/SidebarActionBtn'
-import BaseListItem from '~/components/molecles/list/BaseListItem'
+import SidebarActionBtn from '~/components/molecules/btns/SidebarActionBtn'
+import BaseListItem from '~/components/molecules/list/BaseListItem'
 
 export default {
   components: {
