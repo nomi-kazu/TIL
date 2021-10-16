@@ -18,6 +18,11 @@
         mdi-heart-outline
       </v-icon>
     </v-btn>
+    <div>
+      <span>
+        {{ post.liked_users.length }}
+      </span>
+    </div>
   </div>
 </template>
 
