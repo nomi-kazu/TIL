@@ -33,7 +33,6 @@ export default {
       loading: null
     }
   },
-
   methods: {
     async searchTags () {
       this.loading = true

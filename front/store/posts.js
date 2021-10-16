@@ -34,7 +34,7 @@ export const mutations = {
   },
 
   updatePost (state, postData) {
-    state.posts = state.posts.famousPosts((post) => {
+    state.posts = state.posts.map((post) => {
       if (post.id === postData.id) {
         post = postData
       }

@@ -14,38 +14,43 @@ module Api
         post = Post.new(post_params)
         post.user = @user
 
-        if post.save
-          post.save_tags(tags_params[:tags]) if tags_params[:tags]
-          experience_record = ExperienceRecorder.new(post.user).record(post)
-          experience = Experience.find_by(user_id: post.user.id)
-          required_exp = RequiredExp.find_by(level: experience.level)
-          render json: { post: post, experience_record: experience_record, experience: experience, required_exp: required_exp, message: '投稿を作成しました' }, status: :created
-        else
-          render json: post.errors, status: :unprocessable_entity
+        ActiveRecord::Base.transaction do
+          if post.save
+            post.save_tags(tags_params[:tags]) if tags_params[:tags]
+            experience_record = ExperienceRecorder.new(post.user).record(post)
+            experience = Experience.find_by(user_id: post.user.id)
+            required_exp = RequiredExp.find_by(level: experience.level)
+            render json: { post: post, experience_record: experience_record, experience: experience, required_exp: required_exp, message: '投稿を作成しました' }, status: :created
+          else
+            render json: post.errors, status: :unprocessable_entity
+          end
         end
       end
 
       def update
-        if @post.update(post_params)
-          @post.save_tags(tags_params[:tags]) if tags_params[:tags]
-          experience_record = ExperienceRecorder.new(post.user).record(post)
-          experience = Experience.find_by(user_id: post.user.id)
-          required_exp = RequiredExp.find_by(level: experience.level)
-          render json: { post: @post, experience_record: experience_record, experience: experience, required_exp: required_exp, message: '投稿を編集しました' }
-        else
-          render json: @post.errors, status: :unprocessable_entity
+        ActiveRecord::Base.transaction do
+          if @post.update(post_params)
+            @post.save_tags(tags_params[:tags]) if tags_params[:tags]
+            experience_record = ExperienceRecorder.new(@post.user).record(@post)
+            experience = Experience.find_by(user_id: @post.user.id)
+            required_exp = RequiredExp.find_by(level: experience.level)
+            render json: { post: @post, experience_record: experience_record, experience: experience, required_exp: required_exp, message: '投稿を編集しました' }
+          else
+            render json: @post.errors, status: :unprocessable_entity
+          end
         end
       end
 
       def destroy
-        if @post.destroy
-          ExperienceRecorder.new(user).delete_record(post)
-          post.destroy!
-          experience = user.experience
-          required_exp = RequiredExp.find_by(level: experience.level)
-          render json: { experience: experience, required_exp: required_exp, message: '投稿を削除しました', status: :ok }
-        else
-          render json: @post.errors, status: :unprocessable_entity
+        ActiveRecord::Base.transaction do
+          if @post.destroy
+            ExperienceRecorder.new(@post.user).delete_record(@post)
+            experience = @post.user.experience
+            required_exp = RequiredExp.find_by(level: experience.level)
+            render json: { experience: experience, required_exp: required_exp, message: '投稿を削除しました', status: :ok }
+          else
+            render json: @post.errors, status: :unprocessable_entity
+          end
         end
       end
 

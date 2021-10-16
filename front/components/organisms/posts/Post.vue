@@ -99,7 +99,40 @@ export default {
     }
   },
   methods: {
-
+    async deletePost (postId) {
+      if (window.confirm('投稿を削除してもよろしいですか？')) {
+        await this.$axios.$delete(`/api/v1/posts/${postId}`, { data: { user_id: this.$auth.user.id } })
+          .then(
+            (response) => {
+              this.$store.commit('experience/setExperience', response.experience, { root: true })
+              this.$store.commit('experience/setRequiredExp', response.required_exp, { root: true })
+              this.$store.commit('posts/deletePost', postId, { root: true })
+              this.$store.commit('posts/deleteLikedPost', postId, { root: true })
+              this.$store.dispatch(
+                'flash/showMessage',
+                {
+                  message: response.message,
+                  color: 'primary',
+                  status: true
+                },
+                { root: true }
+              )
+            },
+            (error) => {
+              this.$store.dispatch(
+                'flash/showMessage',
+                {
+                  message: error,
+                  color: 'error',
+                  status: true
+                },
+                { root: true }
+              )
+              return error
+            }
+          )
+      }
+    }
   }
 }
 </script>

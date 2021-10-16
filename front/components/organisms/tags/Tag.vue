@@ -29,7 +29,7 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-col cols="2">
+    <v-col v-if="$auth.user.admin" cols="2">
       <v-btn
         icon
         @click="deleteTag(tag.id)"
@@ -59,6 +59,19 @@ export default {
     tag: {
       type: Object,
       default: () => {}
+    }
+  },
+  methods: {
+    async deleteTag (tagId) {
+      if (window.confirm('削除してもよろしいですか？')) {
+        await this.$axios.delete(`/api/v1/tags/${tagId}/delete_tag`)
+          .then((response) => {
+            this.tags = this.tags.filter(tag => tag.id !== tagId)
+          })
+          .catch((error) => {
+            return error
+          })
+      }
     }
   }
 }
