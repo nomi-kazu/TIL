@@ -97,6 +97,9 @@ export default {
       type: Object,
       default: () => {}
     }
+  },
+  methods: {
+
   }
 }
 </script>

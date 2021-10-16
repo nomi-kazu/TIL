@@ -5,117 +5,31 @@
       prepend-icon="mdi-magnify"
       @keyup="searchPosts"
     />
-    <template v-if="loading">
-      <v-card
-        v-for="n in 5"
-        :key="n"
-        class="mb-8"
-      >
-        <v-skeleton-loader
-          type="article, actions"
-        />
-      </v-card>
-    </template>
-    <template v-else>
-      <v-card
-        v-for="post in displayPosts"
-        :key="post.id"
-        class="mb-8"
-      >
-        <v-card-text class="pb-0">
-          {{ $moment(post.created_at).format('YYYY/MM/DD HH:MM') }}
-        </v-card-text>
-        <nuxt-link
-          :to="{ path: `/posts/${post.id}` }"
-          style="color: inherit; text-decoration: none;"
-        >
-          <v-card-title class="pb-0" style="font-size: 15px;">
-            {{ post.title }}
-          </v-card-title>
-        </nuxt-link>
-        <v-card-text class="py-0">
-          <v-chip-group
-            v-if="post.tags && post.tags.length > 0"
-            class="w-100"
-            active-class="primary--text"
-            column
-          >
-            <v-chip
-              v-for="tag in post.tags"
-              :key="tag.id"
-              color="info"
-              outlined
-              small
-            >
-              <nuxt-link
-                :to="{ path: `/tags/${tag.id}` }"
-                style="color: inherit; text-decoration: none;"
-              >
-                {{ tag.name }}
-              </nuxt-link>
-            </v-chip>
-          </v-chip-group>
-        </v-card-text>
-        <v-card-text class="pt-0">
-          <v-btn
-            :to="{ path: `/posts/edit/${post.id}` }"
-            icon
-          >
-            <v-icon>
-              mdi-square-edit-outline
-            </v-icon>
-          </v-btn>
-          <v-btn
-            icon
-            @click="deletePost(post.id)"
-          >
-            <v-icon>
-              mdi-trash-can-outline
-            </v-icon>
-          </v-btn>
-        </v-card-text>
-      </v-card>
-    </template>
-    <v-card-text>
-      <v-pagination
-        v-model="page"
-        color="info"
-        :length="PostsLength"
-        @input="pageChange"
-      />
-    </v-card-text>
+    <PostsWithPagination
+      v-if="posts && posts.length > 0"
+      :posts="posts"
+      :loading="loading"
+    />
   </div>
 </template>
 
 <script>
 import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
+import PostsWithPagination from '~/components/organisms/posts/PostsWithPagination'
 
 export default {
   components: {
-    TextFieldWithValidation
+    TextFieldWithValidation,
+    PostsWithPagination
   },
 
   data () {
     return {
-      page: 1,
-      length: 0,
-      pageSize: 5,
       loading: false,
       posts: [],
       keyword: ''
     }
   },
-
-  computed: {
-    displayPosts () {
-      return this.posts.slice(this.pageSize * (this.page - 1), this.pageSize * (this.page))
-    },
-
-    PostsLength () {
-      return Math.ceil(this.posts.length / this.pageSize)
-    }
-  },
-
   async mounted () {
     this.loading = true
     await this.$axios.get('api/v1/admin/posts')
@@ -126,7 +40,6 @@ export default {
       })
     this.loading = false
   },
-
   methods: {
     async searchPosts () {
       this.loading = true
@@ -152,10 +65,6 @@ export default {
             return error
           }
         )
-    },
-
-    pageChange (pageNumber) {
-      this.displayPosts.slice(this.pageSize * (pageNumber - 1), this.pageSize * (pageNumber))
     }
   }
 }

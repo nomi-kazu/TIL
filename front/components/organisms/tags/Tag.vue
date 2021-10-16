@@ -29,6 +29,16 @@
         </v-col>
       </v-row>
     </v-col>
+    <v-col cols="2">
+      <v-btn
+        icon
+        @click="deleteTag(tag.id)"
+      >
+        <v-icon>
+          mdi-trash-can-outline
+        </v-icon>
+      </v-btn>
+    </v-col>
     <v-col cols="5">
       <TagFollowBtnGroup
         :tag="tag"
