@@ -77,7 +77,7 @@
         {{ post.user.name }}
       </nuxt-link>
       <LikeBtnGroup
-        v-if="$auth.loggedIn && Number($route.params.id)==$auth.user.id"
+        v-if="$auth.loggedIn"
         class="float-right"
         :post="post"
       />
