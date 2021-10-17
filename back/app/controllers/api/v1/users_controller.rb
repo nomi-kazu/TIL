@@ -8,7 +8,7 @@ module Api
                                        { followings: { image_attachment: :blob } },
                                        { followers: { image_attachment: :blob } }, :tags).find(params[:id])
         required_exp = RequiredExp.find_by(level: @user.level)
-        render json: { user: @user.as_json(include: [{ posts: { include: %i[tags experience_record] } },
+        render json: { user: @user.as_json(include: [{ posts: { include: [{ user: { methods: :image_url } }, :tags, :liked_users, :experience_record] } },
                                                      { liked_posts: { include: [{ user: { methods: :image_url } }, :tags, :liked_users, :experience_record] } },
                                                      { followings: { include: %i[followings followers], methods: :image_url } },
                                                      { followers: { include: %i[followings followers], methods: :image_url } }, :tags], methods: %i[image_url tag_ranking]),

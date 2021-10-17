@@ -18,11 +18,22 @@
         mdi-heart-outline
       </v-icon>
     </v-btn>
+    <div class="float-right">
+      <LikedUsersModal
+        v-if="post.liked_users && post.liked_users.length > 0"
+        :post="post"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import LikedUsersModal from '~/components/organisms/users/LikedUsersModal'
+
 export default {
+  components: {
+    LikedUsersModal
+  },
   props: {
     post: {
       type: Object,
