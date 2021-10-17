@@ -85,7 +85,7 @@ class User < ApplicationRecord
   def self.exp_ranking(term = nil)
     if term
       User.includes(posts: :experience_record)
-          .joins(posts: :experience_record)
+          .left_joins(posts: :experience_record)
           .select('SUM(experience_records.obtained_exp) AS exp, users.name, users.id')
           .where('posts.study_date >= ?', term)
           .group('users.id')
