@@ -5,6 +5,27 @@
         <v-card>
           <v-card-subtitle v-if="post.study_date">
             {{ studyDate }}
+            <div
+              v-if="$auth.loggedIn&&$auth.user.id==post.user_id||$auth.user.admin"
+              class="float-right pt-0"
+            >
+              <v-btn
+                :to="{ path: `/posts/edit/${post.id}` }"
+                icon
+              >
+                <v-icon>
+                  mdi-square-edit-outline
+                </v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                @click="deletePost(post.id)"
+              >
+                <v-icon>
+                  mdi-trash-can-outline
+                </v-icon>
+              </v-btn>
+            </div>
           </v-card-subtitle>
 
           <v-card-text>
@@ -225,6 +246,43 @@ export default {
       const date = studyDate.substr(0, 16).split('T')[0].replace(/(\d{4})-(\d{2})-(\d{2})/, '$1年$2月$3日')
       const time = studyDate.substr(0, 16).split('T')[1]
       return date + ' ' + time
+    }
+  },
+  methods: {
+    async deletePost (postId) {
+      if (window.confirm('投稿を削除してもよろしいですか？')) {
+        await this.$axios.$delete(`/api/v1/posts/${postId}`, { data: { user_id: this.$auth.user.id } })
+          .then(
+            (response) => {
+              this.$store.commit('experience/setExperience', response.experience, { root: true })
+              this.$store.commit('experience/setRequiredExp', response.required_exp, { root: true })
+              this.$store.commit('posts/deletePost', postId, { root: true })
+              this.$store.commit('posts/deleteLikedPost', postId, { root: true })
+              this.$store.dispatch(
+                'flash/showMessage',
+                {
+                  message: response.message,
+                  color: 'primary',
+                  status: true
+                },
+                { root: true }
+              )
+              this.$router.push('/')
+            },
+            (error) => {
+              this.$store.dispatch(
+                'flash/showMessage',
+                {
+                  message: error,
+                  color: 'error',
+                  status: true
+                },
+                { root: true }
+              )
+              return error
+            }
+          )
+      }
     }
   }
 }
