@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :top, only: [:index]
+      resources :top, only: [:index] do
+        get :exp_ranking, on: :collection
+      end
       resources :admin do
         get :users, on: :collection
         get :posts, on: :collection

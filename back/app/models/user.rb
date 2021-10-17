@@ -82,6 +82,23 @@ class User < ApplicationRecord
     tags_data.first(5)
   end
 
+  def self.exp_ranking(term = nil)
+    if term
+      User.includes(posts: :experience_record)
+          .left_joins(posts: :experience_record)
+          .select('SUM(experience_records.obtained_exp) AS exp, users.name, users.id')
+          .where('posts.study_date >= ?', term)
+          .group('users.id')
+          .limit(10)
+          .order('exp DESC')
+    else
+      User.joins(:experience)
+          .select('experiences.lifelong_exp AS exp, users.name, users.id')
+          .where(id: Experience.lifelong_exp_ranking)
+          .order('experiences.lifelong_exp DESC')
+    end
+  end
+
   def notice_follow(action_user_id, received_user_id)
     action_user = User.find(action_user_id)
     received_user = User.find(received_user_id)
