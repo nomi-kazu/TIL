@@ -42,25 +42,12 @@
                 </v-card-subtitle>
               </v-list-item>
               <v-list-item>
-                <v-col cols="3">
-                  <v-row justify="center">
-                    <h1>lv.{{ user.level }}</h1>
-                  </v-row>
-                </v-col>
-                <v-col cols="3">
-                  <v-row justify="center" class="ml-2">
-                    <h1>{{ user.lifelong_exp }}</h1>
-                  </v-row>
-                </v-col>
-                <v-col cols="3">
-                  <v-row justify="center" class="ml-2">
-                    <v-progress-linear height="10px" :value="progressProportion" />
-                  </v-row>
-                </v-col>
-                <v-col cols="3">
-                  <v-row justify="center" class="ml-2">
-                    <h1>{{ progressNumeretor }}/{{ requiredExp.required_exp }}</h1>
-                  </v-row>
+                <v-col cols="12" lg="8">
+                  <UserExpCard
+                    :user="user"
+                    :requiredExp="requiredExp"
+                    :posts="posts"
+                  />
                 </v-col>
               </v-list-item>
             </v-list>
@@ -260,6 +247,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import UserExpCard from '~/components/organisms/users/UserExpCard'
 import BarChart from '~/components/organisms/users/BarChart'
 import Heatmap from '~/components/molecules/Heatmap'
 import FollowBtnGroup from '~/components/molecules/users/FollowBtnGroup'
@@ -269,6 +257,7 @@ import PostsWithPagination from '~/components/organisms/posts/PostsWithPaginatio
 
 export default {
   components: {
+    UserExpCard,
     BarChart,
     Heatmap,
     FollowBtnGroup,
