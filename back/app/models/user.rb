@@ -21,6 +21,7 @@ class User < ApplicationRecord
   has_many :passive_notices, class_name: 'Notice', foreign_key: 'received_user_id', dependent: :destroy
   has_many :experience_records, dependent: :destroy
   has_one :experience, dependent: :destroy
+  has_one :setting, dependent: :destroy
 
   scope :join_exp, -> { joins(:experience).select('users.*, experiences.experience_to_next, experiences.lifelong_exp, experiences.level') }
 
@@ -100,14 +101,16 @@ class User < ApplicationRecord
   end
 
   def notice_follow(action_user_id, received_user_id)
-    action_user = User.find(action_user_id)
-    received_user = User.find(received_user_id)
-    follow_notice = action_user.active_notices.new(
-      action_user_id: action_user.id,
-      received_user_id: received_user.id,
-      action: 'follow'
-    )
-    follow_notice.save
+    if user.setting.notice_follow
+      action_user = User.find(action_user_id)
+      received_user = User.find(received_user_id)
+      notice = action_user.active_notices.new(
+        action_user_id: action_user.id,
+        received_user_id: received_user.id,
+        action: 'follow'
+      )
+      notice.save
+    end
   end
 
   private

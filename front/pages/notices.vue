@@ -33,12 +33,6 @@ export default {
               n.noticeLink = `/posts/${n.post.id}`
               n.noticeTime = $moment(n.created_at).format('YYYY年MM月DD日 HH時mm分')
               break
-            case ('post_comments'):
-              n.noticeActionUser = `${n.action_user.name}さんが`
-              n.noticeAction = '投稿にコメントしました'
-              n.noticeLink = `/posts/${n.post.id}`
-              n.noticeTime = $moment(n.created_at).format('YYYY年MM月DD日 HH時mm分')
-              break
             case ('follow'):
               n.noticeActionUser = `${n.action_user.name}さんが`
               n.noticeAction = 'あなたをフォローしました'

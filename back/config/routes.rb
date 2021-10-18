@@ -25,6 +25,7 @@ Rails.application.routes.draw do
         get :tags,   on: :collection
       end
       resources :notices, only: [:index]
+      resource :setting, only: %i[edit update]
       get '/notices/unchecked', to: 'notices#unchecked'
       get '/notices/checked', to: 'notices#checked'
       # ログイン/ログアウト処理
