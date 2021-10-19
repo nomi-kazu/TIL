@@ -6,7 +6,7 @@ class Comment < ApplicationRecord
   # カラムのバリデーション
   validates :content, presence: true
 
-  def notice_comment(action_user_id, post_id)
+  def notice(action_user_id, post_id)
     post = Post.find(post_id)
     action_user = User.find(action_user_id)
 

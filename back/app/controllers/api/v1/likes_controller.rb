@@ -6,7 +6,7 @@ module Api
       def create
         like = @user.likes.create(like_params)
         if like.save
-          like.notice_post_like(like.user_id, like.post_id)
+          like.notice(like.user_id, like.post_id)
           render json: like.as_json(include: %i[post user]), status: :created
         end
       end

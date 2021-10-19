@@ -100,7 +100,8 @@ class User < ApplicationRecord
     end
   end
 
-  def notice_follow(action_user_id, received_user_id)
+  def notice(action_user_id, received_user_id)
+    user = User.find(received_user_id)
     if user.setting.notice_follow
       action_user = User.find(action_user_id)
       received_user = User.find(received_user_id)

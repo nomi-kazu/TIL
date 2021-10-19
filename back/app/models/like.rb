@@ -2,7 +2,7 @@ class Like < ApplicationRecord
   belongs_to :user
   belongs_to :post
 
-  def notice_post_like(action_user_id, post_id)
+  def notice(action_user_id, post_id)
     post = Post.find(post_id)
     action_user = User.find(action_user_id)
 
