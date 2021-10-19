@@ -293,17 +293,6 @@ export default {
   },
 
   computed: {
-    progressProportion () {
-      const proportion = 100 - this.user.experience_to_next / this.requiredExp.required_exp * 100
-      if (proportion === 100) {
-        return 0
-      } else {
-        return proportion
-      }
-    },
-    progressNumeretor () {
-      return this.requiredExp.required_exp - this.user.experience_to_next
-    },
     ...mapGetters({ user: 'user/user' }),
     ...mapGetters({ followings: 'user/followings' }),
     ...mapGetters({ followers: 'user/followers' }),

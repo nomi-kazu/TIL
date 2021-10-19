@@ -10,20 +10,7 @@ RSpec.describe Post, type: :model do
     end
 
     it '各項目が未入力で失敗' do
-      post.title = ''
       post.content = ''
-      expect(post).to_not be_valid
-    end
-  end
-
-  context 'レビュー記事更新時' do
-    it 'titleカラムの文字数が、50字以下で成功' do
-      post.title = user.description = Faker::Lorem.characters(number: 45)
-      expect(post).to be_valid
-    end
-
-    it 'titleカラムの文字数が、50字より多い場合失敗' do
-      post.title = Faker::Lorem.characters(number: 51)
       expect(post).to_not be_valid
     end
   end

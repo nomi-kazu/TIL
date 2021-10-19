@@ -9,7 +9,6 @@ class Post < ApplicationRecord
   has_one :experience_record, dependent: :destroy
 
   # カラムのバリデーション
-  validates :title, presence: true, length: { maximum: 50, allow_blank: true }
   validates :content, presence: true
   validates :study_time, presence: true
   validates :study_date, presence: true

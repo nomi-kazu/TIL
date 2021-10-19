@@ -65,7 +65,7 @@ module Api
       end
 
       def post_params
-        params.require(:post).permit(:user_id, :title, :content, :study_time, :study_date)
+        params.require(:post).permit(:user_id, :content, :study_time, :study_date)
       end
 
       def tags_params
