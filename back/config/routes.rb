@@ -18,7 +18,9 @@ Rails.application.routes.draw do
       end
       resources :likes, only: %i[create destroy]
       resources :comments, only: %i[create destroy]
-      resources :users, except: [:edit]
+      resources :users, except: [:edit] do
+        resource :setting, only: %i[edit update]
+      end
       resources :search do
         get :users,  on: :collection
         get :posts,  on: :collection

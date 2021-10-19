@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_03_102319) do
+ActiveRecord::Schema.define(version: 2021_10_18_122055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,16 @@ ActiveRecord::Schema.define(version: 2021_10_03_102319) do
     t.index ["level"], name: "index_required_exps_on_level", unique: true
   end
 
+  create_table "settings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.boolean "notice_post_like", default: true
+    t.boolean "notice_comment", default: true
+    t.boolean "notice_follow", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_settings_on_user_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name", limit: 25, null: false
     t.datetime "created_at", precision: 6, null: false
@@ -172,6 +182,7 @@ ActiveRecord::Schema.define(version: 2021_10_03_102319) do
   add_foreign_key "post_tag_maps", "tags"
   add_foreign_key "relationships", "users"
   add_foreign_key "relationships", "users", column: "follow_id"
+  add_foreign_key "settings", "users"
   add_foreign_key "user_tag_maps", "tags"
   add_foreign_key "user_tag_maps", "users"
 end
