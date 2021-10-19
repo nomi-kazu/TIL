@@ -70,8 +70,9 @@
 
           <div
             class="mx-4 mt-5"
-            v-html="$md.render(post.content)"
-          />
+          >
+            {{ post.content }}
+          </div>
 
           <v-card-text
             v-if="post.tags"

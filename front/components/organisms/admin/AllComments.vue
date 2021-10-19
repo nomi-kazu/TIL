@@ -44,7 +44,9 @@
               {{ comment.user.name }}
             </span>
           </v-card-actions>
-          <v-card-text v-html="$md.render(comment.content)" />
+          <v-card-text>
+            {{ comment.content }}
+          </v-card-text>
           <v-card-subtitle class="pb-0">
             {{ $moment(comment.created_at).format('YYYY/MM/DD HH:MM') }}
             <v-btn icon>

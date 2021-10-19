@@ -64,8 +64,9 @@
               <v-tab-item>
                 <v-card-text
                   style="min-height: 200px;"
-                  v-html="$md.render(content)"
-                />
+                >
+                  {{ content }}
+                </v-card-text>
               </v-tab-item>
             </v-tabs-items>
           </v-form>
