@@ -89,6 +89,18 @@
                   v-model="tags"
                 />
 
+                <InputImages
+                  v-if="!editValue"
+                  v-model="images"
+                />
+
+                <InputImages
+                  v-else
+                  v-model="images"
+                  :images_url="editValue.images_data"
+                  @deletelIds="deletelIdList"
+                />
+
                 <v-card-text class="px-0">
                   <v-btn
                     color="warning"
@@ -119,6 +131,7 @@
 import AutoCompleteWithValidation from '~/components/molecules/AutoCompleteWithValidation'
 import TextAreaWithValidation from '~/components/atoms/TextAreaWithValidation'
 import InputTags from '~/components/atoms/InputTags'
+import InputImages from '~/components/atoms/InputImages'
 import ExpDownAlert from '~/components/organisms/ExpDownAlert'
 
 export default {
@@ -126,6 +139,7 @@ export default {
     AutoCompleteWithValidation,
     TextAreaWithValidation,
     InputTags,
+    InputImages,
     ExpDownAlert
   },
 
@@ -156,7 +170,9 @@ export default {
       loading: false,
       datePicker: false,
       displayAlert: false,
-      tags: []
+      tags: [],
+      deleteIds: [],
+      images: []
     }
   },
 
@@ -224,6 +240,16 @@ export default {
             formData.append('post[tags][]', tag)
           })
         }
+        if (this.images) {
+          this.images.forEach((image) => {
+            formData.append('images[]', image)
+          })
+        }
+        if (this.deleteIds) {
+          this.deleteIds.forEach((deleteId) => {
+            formData.append('post[delete_ids][]', deleteId)
+          })
+        }
         if (this.editValue) {
           // 経験値が減る場合は警告を出す
           const oldExp = this.editValue.experience_record.obtained_exp
@@ -239,6 +265,7 @@ export default {
           this.minute = '1'
           this.content = ''
           this.tags = []
+          this.images = []
           this.studyDate = this.dateFormat(new Date())
           this.studyDateHour = new Date().getHours().toString()
           this.studyDateMinute = new Date().getMinutes().toString()
@@ -259,6 +286,11 @@ export default {
       if (this.tags) {
         this.tags.forEach((tag) => {
           formData.append('post[tags][]', tag)
+        })
+      }
+      if (this.images) {
+        this.images.forEach((image) => {
+          formData.append('images[]', image)
         })
       }
       this.displayAlert = false
@@ -282,6 +314,9 @@ export default {
       const monthStr = ('0' + month).slice(-2)
       const dayStr = ('0' + day).slice(-2)
       return `${year}-${monthStr}-${dayStr}`
+    },
+    deletelIdList (id) {
+      this.deleteIds.push(id)
     }
   }
 }

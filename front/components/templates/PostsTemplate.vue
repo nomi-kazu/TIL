@@ -60,7 +60,21 @@
               </v-col>
             </v-row>
           </v-card-text>
-
+          <v-carousel
+            :continuous="false"
+            :show-arrows="false"
+            hide-delimiter-background
+            delimiter-icon="mdi-minus"
+            height="auto"
+            align="center"
+          >
+            <v-carousel-item
+              v-for="(image, i) in post.images_data"
+              :key="i"
+              :src="image.url"
+              width="80%"
+            />
+          </v-carousel>
           <div
             class="mx-4 mt-5"
           >
