@@ -20,8 +20,6 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    { src: '~/node_modules/highlight.js/styles/hopscotch.css', lang: 'css' },
-    '~/assets/sass/main.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -29,8 +27,7 @@ export default {
     'plugins/auth',
     'plugins/axios',
     'plugins/vee-validate',
-    'plugins/localStorage',
-    'plugins/vue-mavon-editor'
+    'plugins/localStorage'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -53,36 +50,9 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/markdownit',
     'nuxt-i18n',
     'nuxt-client-init-module'
   ],
-
-  markdownit: {
-    injected: true,
-    breaks: true,
-    html: true,
-    linkify: true,
-    typography: true,
-    langPrefix: '',
-    use: [
-      'markdown-it-mark',
-      'markdown-it-ins',
-      'markdown-it-emoji'
-    ],
-    highlight: (str, lang) => {
-      const hljs = require('highlight.js')
-      if (lang && hljs.getLanguage(lang)) {
-        try {
-          return '<pre class="hljs"><code>' +
-                  hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-                  '</code></pre>'
-        } catch (__) {}
-      }
-      // 言語設定がない場合、プレーンテキストとして表示する
-      return '<pre class="hljs"><code>' + hljs.highlight('plaintext', str, true).value + '</code></pre>'
-    }
-  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

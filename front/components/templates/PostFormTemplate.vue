@@ -79,24 +79,26 @@
                   </v-col>
                 </v-row>
 
-                <TextFieldWithValidation
-                  v-model="title"
-                  label="タイトル"
-                  placeholder="記事のタイトル"
-                  :counter="50"
-                  rules="max:50|required"
+                <TextAreaWithValidation
+                  v-model="content"
+                  label="メモ"
                   outlined
                 />
 
-                <InputContent
-                  v-model="content"
-                  label="本文"
-                  rules="required"
-                />
-
-                <v-card-subtitle>タグを入力</v-card-subtitle>
                 <InputTags
                   v-model="tags"
+                />
+
+                <InputImages
+                  v-if="!editValue"
+                  v-model="images"
+                />
+
+                <InputImages
+                  v-else
+                  v-model="images"
+                  :images_url="editValue.images_data"
+                  @deletelIds="deletelIdList"
                 />
 
                 <v-card-text class="px-0">
@@ -126,18 +128,18 @@
 </template>
 
 <script>
-import AutoCompleteWithValidation from '~/components/molecules/input/AutoCompleteWithValidation'
-import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import InputContent from '~/components/atoms/input/InputContent'
-import InputTags from '~/components/atoms/input/InputTags'
+import AutoCompleteWithValidation from '~/components/molecules/AutoCompleteWithValidation'
+import TextAreaWithValidation from '~/components/atoms/TextAreaWithValidation'
+import InputTags from '~/components/atoms/InputTags'
+import InputImages from '~/components/atoms/InputImages'
 import ExpDownAlert from '~/components/organisms/ExpDownAlert'
 
 export default {
   components: {
     AutoCompleteWithValidation,
-    TextFieldWithValidation,
-    InputContent,
+    TextAreaWithValidation,
     InputTags,
+    InputImages,
     ExpDownAlert
   },
 
@@ -163,13 +165,14 @@ export default {
       studyDate: new Date().toLocaleDateString().replace(/\//g, '-'),
       studyDateHour: this.initStudyDateHours,
       studyDateMinute: this.initStudyDateMinutes,
-      title: '',
       content: '',
       isEnter: false,
       loading: false,
       datePicker: false,
       displayAlert: false,
-      tags: []
+      tags: [],
+      deleteIds: [],
+      images: []
     }
   },
 
@@ -212,7 +215,6 @@ export default {
       const studyDate = new Date(this.editValue.study_date)
       this.hour = hour.toString()
       this.minute = minute.toString()
-      this.title = this.editValue.title
       this.content = this.editValue.content
       this.studyDate = this.dateFormat(studyDate)
     } else {
@@ -230,11 +232,22 @@ export default {
         formData.append('post[study_time]', this.timeProcess)
         formData.append('post[study_date]', this.studyDateProcessing)
         formData.append('post[user_id]', this.$auth.user.id)
-        formData.append('post[title]', this.title)
-        formData.append('post[content]', this.content)
+        if (this.content) {
+          formData.append('post[content]', this.content)
+        }
         if (this.tags) {
           this.tags.forEach((tag) => {
             formData.append('post[tags][]', tag)
+          })
+        }
+        if (this.images) {
+          this.images.forEach((image) => {
+            formData.append('images[]', image)
+          })
+        }
+        if (this.deleteIds) {
+          this.deleteIds.forEach((deleteId) => {
+            formData.append('post[delete_ids][]', deleteId)
           })
         }
         if (this.editValue) {
@@ -250,9 +263,9 @@ export default {
           this.$emit('record', { formData })
           this.hour = '0'
           this.minute = '1'
-          this.title = ''
           this.content = ''
           this.tags = []
+          this.images = []
           this.studyDate = this.dateFormat(new Date())
           this.studyDateHour = new Date().getHours().toString()
           this.studyDateMinute = new Date().getMinutes().toString()
@@ -269,11 +282,15 @@ export default {
       formData.append('post[study_time]', this.timeProcess)
       formData.append('post[study_date]', this.studyDateProcessing)
       formData.append('post[user_id]', this.$auth.user.id)
-      formData.append('post[title]', this.title)
       formData.append('post[content]', this.content)
       if (this.tags) {
         this.tags.forEach((tag) => {
           formData.append('post[tags][]', tag)
+        })
+      }
+      if (this.images) {
+        this.images.forEach((image) => {
+          formData.append('images[]', image)
         })
       }
       this.displayAlert = false
@@ -297,6 +314,9 @@ export default {
       const monthStr = ('0' + month).slice(-2)
       const dayStr = ('0' + day).slice(-2)
       return `${year}-${monthStr}-${dayStr}`
+    },
+    deletelIdList (id) {
+      this.deleteIds.push(id)
     }
   }
 }

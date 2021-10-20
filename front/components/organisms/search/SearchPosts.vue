@@ -1,48 +1,48 @@
 <template>
   <v-container>
     <v-card-title>
-      ユーザー
+      投稿
     </v-card-title>
     <TextFieldWithValidation
       v-model="keyword"
       prepend-icon="mdi-magnify"
-      @keyup="searchUsers"
+      @keyup="searchPosts"
     />
-    <UsersWithPagination
-      v-if="users && users.length > 0"
-      :users="users"
+    <PostsWithPagination
+      v-if="posts && posts.length > 0"
+      :posts="posts"
       :loading="loading"
     />
   </v-container>
 </template>
 
 <script>
-import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import UsersWithPagination from '~/components/organisms/users/UsersWithPagination'
+import TextFieldWithValidation from '~/components/atoms/TextFieldWithValidation'
+import PostsWithPagination from '~/components/organisms/posts/PostsWithPagination'
 
 export default {
   components: {
     TextFieldWithValidation,
-    UsersWithPagination
+    PostsWithPagination
   },
 
   data () {
     return {
       keyword: '',
-      users: [],
+      posts: [],
       loading: null
     }
   },
 
   methods: {
-    async searchUsers () {
+    async searchPosts () {
       this.loading = true
-      await this.$axios.get('/api/v1/search/users', {
+      await this.$axios.get('/api/v1/search/posts', {
         params: {
           keyword: this.keyword
         }
       }).then((response) => {
-        this.users = response.data
+        this.posts = response.data
       }).catch((error) => {
         return error
       })

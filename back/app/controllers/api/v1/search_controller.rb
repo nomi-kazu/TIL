@@ -14,7 +14,7 @@ module Api
         posts = if params[:keyword].empty?
                   []
                 else
-                  Post.where('title Like ? OR content Like ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+                  Post.where('content Like ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
                 end
         render json: posts.as_json(include: [{ user: { methods: :image_url } }, :liked_users, :tags])
       end

@@ -60,18 +60,26 @@
               </v-col>
             </v-row>
           </v-card-text>
-          <v-divider />
-
-          <v-card-title>
-            {{ post.title }}
-          </v-card-title>
-
-          <v-divider />
-
+          <v-carousel
+            :continuous="false"
+            :show-arrows="false"
+            hide-delimiter-background
+            delimiter-icon="mdi-minus"
+            height="auto"
+            align="center"
+          >
+            <v-carousel-item
+              v-for="(image, i) in post.images_data"
+              :key="i"
+              :src="image.url"
+              width="80%"
+            />
+          </v-carousel>
           <div
             class="mx-4 mt-5"
-            v-html="$md.render(post.content)"
-          />
+          >
+            {{ post.content }}
+          </div>
 
           <v-card-text
             v-if="post.tags"
@@ -103,10 +111,6 @@
               v-if="$auth.loggedIn"
               :post="post"
             />
-          </v-card-text>
-
-          <v-card-text>
-            <TwitterBtn :post="post" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -208,15 +212,13 @@
 </template>
 
 <script>
-import TwitterBtn from '~/components/atoms/posts/TwitterBtn'
-import Comment from '~/components/molecules/posts/Comment'
-import CommentArea from '~/components/molecules/posts/CommentArea'
-import LikeBtnGroup from '~/components/molecules/posts/LikeBtnGroup'
-import FollowBtnGroup from '~/components/molecules/users/FollowBtnGroup'
+import Comment from '~/components/molecules/Comment'
+import CommentArea from '~/components/molecules/CommentArea'
+import LikeBtnGroup from '~/components/molecules/LikeBtnGroup'
+import FollowBtnGroup from '~/components/molecules/FollowBtnGroup'
 
 export default {
   components: {
-    TwitterBtn,
     Comment,
     CommentArea,
     LikeBtnGroup,

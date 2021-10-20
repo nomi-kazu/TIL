@@ -9,7 +9,6 @@ RSpec.describe 'Api::V1::Posts', type: :request do
       json = JSON.parse(response.body)
       # responseの可否判定
       expect(response).to have_http_status(:success)
-      expect(json['title']).to eq(post.title)
       expect(json['content']).to eq(post.content)
     end
   end
@@ -25,12 +24,11 @@ RSpec.describe 'Api::V1::Posts', type: :request do
 
     it '投稿の情報を更新できること' do
       post = create(:post)
-      update = { post: { title: 'testpost', content: 'testcontent' } }
+      update = { post: { content: 'testcontent' } }
       put "/api/v1/posts/#{post.id}", params: update
       json = JSON.parse(response.body)
       # responseの可否判定
       expect(response).to have_http_status(:success)
-      expect(json['post']['title']).to eq(update[:post][:title])
       expect(json['post']['content']).to eq(update[:post][:content])
     end
   end

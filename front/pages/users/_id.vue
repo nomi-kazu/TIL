@@ -250,7 +250,7 @@ import { mapGetters } from 'vuex'
 import UserExpCard from '~/components/organisms/users/UserExpCard'
 import BarChart from '~/components/organisms/users/BarChart'
 import Heatmap from '~/components/molecules/Heatmap'
-import FollowBtnGroup from '~/components/molecules/users/FollowBtnGroup'
+import FollowBtnGroup from '~/components/molecules/FollowBtnGroup'
 import FollowersModal from '~/components/organisms/users/FollowersModal'
 import FollowingsModal from '~/components/organisms/users/FollowingsModal'
 import PostsWithPagination from '~/components/organisms/posts/PostsWithPagination'
@@ -293,17 +293,6 @@ export default {
   },
 
   computed: {
-    progressProportion () {
-      const proportion = 100 - this.user.experience_to_next / this.requiredExp.required_exp * 100
-      if (proportion === 100) {
-        return 0
-      } else {
-        return proportion
-      }
-    },
-    progressNumeretor () {
-      return this.requiredExp.required_exp - this.user.experience_to_next
-    },
     ...mapGetters({ user: 'user/user' }),
     ...mapGetters({ followings: 'user/followings' }),
     ...mapGetters({ followers: 'user/followers' }),

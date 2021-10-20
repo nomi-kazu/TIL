@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import FollowBtnGroup from '~/components/molecules/users/FollowBtnGroup'
+import FollowBtnGroup from '~/components/molecules/FollowBtnGroup'
 
 export default {
   components: {

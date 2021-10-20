@@ -59,8 +59,8 @@
 </template>
 
 <script>
-import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import FormTemplate from '~/components/organisms/top/FormTemplate'
+import TextFieldWithValidation from '~/components/atoms/TextFieldWithValidation'
+import FormTemplate from '~/components/organisms/FormTemplate'
 
 export default {
   components: {

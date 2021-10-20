@@ -13,7 +13,7 @@
         <v-icon left>
           mdi-comment-outline
         </v-icon>
-        コメントを投稿する
+        コメントする
       </v-btn>
     </template>
 
@@ -33,41 +33,17 @@
           </v-icon>
         </v-btn>
       </v-banner>
-      <v-tabs
-        v-model="tab"
-        color="info"
-        fixed-tabs
-      >
-        <v-tab
-          v-for="(item, index) in items"
-          :key="index"
-        >
-          {{ item.name }}
-        </v-tab>
-      </v-tabs>
       <ValidationObserver ref="form" v-slot="{ invalid }" immediate>
         <v-container>
           <v-form>
-            <v-tabs-items
-              v-model="tab"
-            >
-              <v-tab-item>
-                <v-card-text class="pb-0">
-                  <TextAreaWithValidation
-                    v-model="content"
-                    label="コメント"
-                    rules="required"
-                    outlined
-                  />
-                </v-card-text>
-              </v-tab-item>
-              <v-tab-item>
-                <v-card-text
-                  style="min-height: 200px;"
-                  v-html="$md.render(content)"
-                />
-              </v-tab-item>
-            </v-tabs-items>
+            <v-card-text class="pb-0">
+              <TextAreaWithValidation
+                v-model="content"
+                label="コメント"
+                rules="required"
+                outlined
+              />
+            </v-card-text>
           </v-form>
           <v-card-text>
             <v-btn
@@ -88,7 +64,7 @@
 </template>
 
 <script>
-import TextAreaWithValidation from '~/components/atoms/input/TextAreaWithValidation'
+import TextAreaWithValidation from '~/components/atoms/TextAreaWithValidation'
 
 export default {
   components: {
@@ -107,11 +83,7 @@ export default {
       content: '',
       dialog: false,
       loading: false,
-      tab: null,
-      items: [
-        { name: '編集' },
-        { name: 'プレビュー' }
-      ]
+      tab: null
     }
   },
 

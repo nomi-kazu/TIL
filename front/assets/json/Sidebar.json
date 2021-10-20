@@ -22,7 +22,7 @@
       "exact": true,
       "name": "設定",
       "icon": "mdi-cog",
-      "to": "/"
+      "to": "/settings"
     },
     "profile": {
       "exact": true,

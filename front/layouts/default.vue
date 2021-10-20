@@ -14,7 +14,7 @@
 <script>
 import TheHeader from '~/components/organisms/header/TheHeader'
 import TheFooter from '~/components/organisms/footer/TheFooter'
-import Flash from '~/components/atoms/top/Flash'
+import Flash from '~/components/atoms/Flash'
 import TheSidebar from '~/components/organisms/sidebar/TheSidebar'
 import LevelUpModal from '~/components/organisms/LevelUpModal'
 

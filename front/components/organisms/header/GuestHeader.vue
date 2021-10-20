@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import LoginBtn from '~/components/atoms/top/LoginBtn'
-import SignupBtn from '~/components/atoms/top/SignupBtn'
+import LoginBtn from '~/components/atoms/LoginBtn'
+import SignupBtn from '~/components/atoms/SignupBtn'
 
 export default {
   components: {

@@ -56,8 +56,7 @@ ActiveRecord::Schema.define(version: 2021_10_18_122055) do
   create_table "experience_records", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id"
-    t.integer "obtained_exp", null: false
-    t.float "bonus_multiplier", default: 1.0
+    t.integer "obtained_exp", null: false, comment: "獲得経験値"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_experience_records_on_post_id"
@@ -67,8 +66,8 @@ ActiveRecord::Schema.define(version: 2021_10_18_122055) do
   create_table "experiences", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "level", default: 1, null: false
-    t.integer "lifelong_exp", default: 0, null: false
-    t.integer "experience_to_next", default: 50, null: false
+    t.integer "lifelong_exp", default: 0, null: false, comment: "合計経験値"
+    t.integer "experience_to_next", default: 50, null: false, comment: "現レベルにおける次のレベルまでに必要な経験値"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_experiences_on_user_id"
@@ -106,8 +105,7 @@ ActiveRecord::Schema.define(version: 2021_10_18_122055) do
 
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "title", limit: 50, null: false
-    t.text "content", null: false
+    t.text "content"
     t.time "study_time", null: false
     t.datetime "study_date", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -128,7 +126,7 @@ ActiveRecord::Schema.define(version: 2021_10_18_122055) do
   create_table "required_exps", force: :cascade do |t|
     t.integer "level", null: false
     t.integer "required_exp", null: false, comment: "次のレベルまでに必要な経験値"
-    t.integer "lifelong_exp", null: false
+    t.integer "lifelong_exp", null: false, comment: "合計経験値"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["level"], name: "index_required_exps_on_level", unique: true

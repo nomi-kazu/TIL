@@ -3,8 +3,8 @@ class CreateExperiences < ActiveRecord::Migration[6.1]
     create_table :experiences do |t|
       t.references :user, null: false, foreign_key: true
       t.integer :level, null: false, default: 1
-      t.integer :lifelong_exp, null: false, default: 0
-      t.integer :experience_to_next, null: false, default: 50
+      t.integer :lifelong_exp, null: false, default: 0, comment: "合計経験値"
+      t.integer :experience_to_next, null: false, default: 50, comment: "現レベルにおける次のレベルまでに必要な経験値"
       t.timestamps
     end
   end

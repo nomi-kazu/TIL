@@ -14,7 +14,7 @@ module Api
         posts = if params[:keyword].nil?
                   Post.includes({ user: { image_attachment: :blob } }, :liked_users, :tags).all
                 else
-                  Post.includes({ user: { image_attachment: :blob } }, :liked_users, :tags).where('title Like ? OR content Like ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+                  Post.includes({ user: { image_attachment: :blob } }, :liked_users, :tags).where('content Like ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
                 end
         render json: posts.as_json(include: [{ user: { methods: :image_url } }, :liked_users, :tags])
       end

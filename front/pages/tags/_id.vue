@@ -95,7 +95,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import TagFollowBtnGroup from '~/components/molecules/tags/TagFollowBtnGroup'
+import TagFollowBtnGroup from '~/components/molecules/TagFollowBtnGroup'
 import UsersWithPagination from '~/components/organisms/users/UsersWithPagination'
 import PostsWithPagination from '~/components/organisms/posts/PostsWithPagination'
 
