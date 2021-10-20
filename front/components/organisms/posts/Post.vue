@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import LikeBtnGroup from '~/components/molecules/posts/LikeBtnGroup'
+import LikeBtnGroup from '~/components/molecules/LikeBtnGroup'
 
 export default {
   components: {

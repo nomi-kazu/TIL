@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
+import TextFieldWithValidation from '~/components/atoms/TextFieldWithValidation'
 import PostsWithPagination from '~/components/organisms/posts/PostsWithPagination'
 
 export default {

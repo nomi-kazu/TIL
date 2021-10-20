@@ -9,7 +9,6 @@ class Post < ApplicationRecord
   has_one :experience_record, dependent: :destroy
 
   # カラムのバリデーション
-  validates :content, presence: true
   validates :study_time, presence: true
   validates :study_date, presence: true
 

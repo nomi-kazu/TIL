@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import LikedUsersTemplate from '~/components/molecules/users/LikedUsersTemplate'
+import LikedUsersTemplate from '~/components/molecules/LikedUsersTemplate'
 export default {
   components: {
     LikedUsersTemplate

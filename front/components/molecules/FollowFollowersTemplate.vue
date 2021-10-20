@@ -14,7 +14,7 @@
         </v-col>
       </v-row>
     </template>
-    <template v-else-if="displayUsers.length > 0">
+    <template v-else-if="displayUsers && displayUsers.length > 0">
       <v-row
         v-for="user in displayUsers"
         :key="user.id"
@@ -58,27 +58,44 @@
           />
         </v-col>
       </v-row>
-      <v-pagination
-        v-if="post.liked_users.length > 10"
-        v-model="page"
-        color="info"
-        :length="UsersLength"
-        @input="pageChange"
-      />
+      <v-card-text>
+        <v-pagination
+          v-model="page"
+          color="info"
+          :length="UsersLength"
+          @input="pageChange"
+        />
+      </v-card-text>
+    </template>
+    <template v-else>
+      <v-row>
+        <v-col>
+          <v-card>
+            <v-card-text>
+              ユーザーが存在しません
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
     </template>
   </v-container>
 </template>
 
 <script>
-import FollowBtnGroup from '~/components/molecules/users/FollowBtnGroup'
+import FollowBtnGroup from '~/components/molecules/FollowBtnGroup'
+
 export default {
-  components: { FollowBtnGroup },
+  components: {
+    FollowBtnGroup
+  },
+
   props: {
-    post: {
-      type: Object,
-      default: () => {}
+    users: {
+      type: Array,
+      default: () => []
     }
   },
+
   data () {
     return {
       page: 1,
@@ -87,27 +104,27 @@ export default {
       loading: false
     }
   },
+
   computed: {
     displayUsers () {
-      console.log(this.post.liked_users)
-      if (this.post.liked_users.length > 10) {
-        return this.post.liked_users.slice(this.pageSize * (this.page - 1), this.pageSize * (this.page))
-      } else {
-        return this.post.liked_users
-      }
+      return this.users.slice(this.pageSize * (this.page - 1), this.pageSize * (this.page))
     },
+
     UsersLength () {
-      return Math.ceil(this.post.liked_users.length / this.pageSize)
+      return Math.ceil(this.users.length / this.pageSize)
     }
   },
+
   mounted () {
     this.loading = true
     setTimeout(this.stopLoading, 500)
   },
+
   methods: {
     pageChange (pageNumber) {
       this.displayUsers.slice(this.pageSize * (pageNumber - 1), this.pageSize * (pageNumber))
     },
+
     stopLoading () {
       this.loading = false
     }

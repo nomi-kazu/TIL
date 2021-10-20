@@ -60,13 +60,6 @@
               </v-col>
             </v-row>
           </v-card-text>
-          <v-divider />
-
-          <v-card-title>
-            {{ post.title }}
-          </v-card-title>
-
-          <v-divider />
 
           <div
             class="mx-4 mt-5"
@@ -104,10 +97,6 @@
               v-if="$auth.loggedIn"
               :post="post"
             />
-          </v-card-text>
-
-          <v-card-text>
-            <TwitterBtn :post="post" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -209,15 +198,13 @@
 </template>
 
 <script>
-import TwitterBtn from '~/components/atoms/posts/TwitterBtn'
-import Comment from '~/components/molecules/posts/Comment'
-import CommentArea from '~/components/molecules/posts/CommentArea'
-import LikeBtnGroup from '~/components/molecules/posts/LikeBtnGroup'
-import FollowBtnGroup from '~/components/molecules/users/FollowBtnGroup'
+import Comment from '~/components/molecules/Comment'
+import CommentArea from '~/components/molecules/CommentArea'
+import LikeBtnGroup from '~/components/molecules/LikeBtnGroup'
+import FollowBtnGroup from '~/components/molecules/FollowBtnGroup'
 
 export default {
   components: {
-    TwitterBtn,
     Comment,
     CommentArea,
     LikeBtnGroup,

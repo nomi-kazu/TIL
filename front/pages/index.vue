@@ -52,7 +52,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import FamousPosts from '~/components/organisms/top/FamousPosts'
+import FamousPosts from '~/components/organisms/FamousPosts'
 
 export default {
   components: {

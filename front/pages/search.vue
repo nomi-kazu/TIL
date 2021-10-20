@@ -51,9 +51,9 @@
 </template>
 
 <script>
-import SearchPosts from '~/components/organisms/top/SearchPosts'
-import SearchTags from '~/components/organisms/top/SearchTags'
-import SearchUsers from '~/components/organisms/top/SearchUsers'
+import SearchPosts from '~/components/organisms/search/SearchPosts'
+import SearchTags from '~/components/organisms/search/SearchTags'
+import SearchUsers from '~/components/organisms/search/SearchUsers'
 
 export default {
   components: {

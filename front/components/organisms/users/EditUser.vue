@@ -76,9 +76,9 @@
 </template>
 
 <script>
-import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
-import TextAreaWithValidation from '~/components/atoms/input/TextAreaWithValidation'
-import ImageFileWithValidation from '~/components/atoms/input/ImageFileWithValidation'
+import TextFieldWithValidation from '~/components/atoms/TextFieldWithValidation'
+import TextAreaWithValidation from '~/components/atoms/TextAreaWithValidation'
+import ImageFileWithValidation from '~/components/atoms/ImageFileWithValidation'
 
 export default {
   components: {

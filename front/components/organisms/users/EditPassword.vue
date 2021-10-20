@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import TextFieldWithValidation from '~/components/atoms/input/TextFieldWithValidation'
+import TextFieldWithValidation from '~/components/atoms/TextFieldWithValidation'
 
 export default {
   components: {
