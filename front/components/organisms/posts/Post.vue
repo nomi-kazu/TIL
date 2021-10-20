@@ -1,88 +1,121 @@
 <template>
-  <v-card class="mb-8">
-    <v-card-text>
-      {{ $moment(post.created_at).format('YYYY/MM/DD HH:MM') }}
-    </v-card-text>
-    <nuxt-link
-      :to="{ path: `/posts/${post.id}` }"
-      style="color: inherit; text-decoration: none;"
-    >
-      <v-card-title class="pb-0" style="font-size: 15px;">
-        {{ post.title }}
-      </v-card-title>
-    </nuxt-link>
-    <v-card-text class="py-0">
-      <v-chip-group
-        v-if="post.tags && post.tags.length > 0"
-        class="w-100"
-        active-class="primary--text"
-        column
-      >
-        <v-chip
-          v-for="tag in post.tags"
-          :key="tag.id"
-          color="info"
-          outlined
-          small
-        >
-          <nuxt-link
-            :to="{ path: `/tags/${tag.id}` }"
-            style="color: inherit; text-decoration: none;"
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <v-card>
+          <v-card-subtitle v-if="post.study_date">
+            {{ studyDate }}
+            <div
+              v-if="$auth.loggedIn&&$auth.user.id==post.user_id||$auth.user.admin"
+              class="float-right pt-0"
+            >
+              <v-btn
+                :to="{ path: `/posts/edit/${post.id}` }"
+                icon
+              >
+                <v-icon>
+                  mdi-square-edit-outline
+                </v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                @click="deletePost(post.id)"
+              >
+                <v-icon>
+                  mdi-trash-can-outline
+                </v-icon>
+              </v-btn>
+            </div>
+          </v-card-subtitle>
+
+          <v-card-text>
+            <v-row>
+              <v-col>
+                <v-card-title>
+                  <v-icon small>
+                    mdi-clock
+                  </v-icon>
+                  <h1>{{ studyHour }}</h1>
+                  <span>時間</span>
+                  <h1>
+                    {{ studyMinute }}
+                  </h1>
+                  <span>分</span>
+                </v-card-title>
+              </v-col>
+              <v-col>
+                <v-card-title>
+                  <v-icon small>
+                    mdi-pencil
+                  </v-icon>
+                  <h1
+                    v-if="post.experience_record"
+                  >
+                    {{ post.experience_record.obtained_exp }}
+                  </h1>
+                  <h3>
+                    EXP
+                  </h3>
+                </v-card-title>
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-carousel
+            :continuous="false"
+            :show-arrows="false"
+            hide-delimiter-background
+            delimiter-icon="mdi-minus"
+            height="auto"
+            align="center"
           >
-            {{ tag.name }}
-          </nuxt-link>
-        </v-chip>
-      </v-chip-group>
-    </v-card-text>
-    <v-card-text
-      v-if="$auth.loggedIn&&$auth.user.id==post.user_id||$auth.user.admin"
-      class="pt-0"
-    >
-      <v-btn
-        :to="{ path: `/posts/edit/${post.id}` }"
-        icon
-      >
-        <v-icon>
-          mdi-square-edit-outline
-        </v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click="deletePost(post.id)"
-      >
-        <v-icon>
-          mdi-trash-can-outline
-        </v-icon>
-      </v-btn>
-    </v-card-text>
-    <v-card-text>
-      <nuxt-link
-        :to="{ path: `/users/${post.user.id}` }"
-        style="color: inherit; text-decoration: none;"
-      >
-        <v-avatar
-          v-if="post.user.image_url"
-          size="20"
-        >
-          <v-img
-            :src="post.user.image_url"
-          />
-        </v-avatar>
-        <v-icon
-          v-else
-          size="20"
-        >
-          mdi-account-circle
-        </v-icon>
-        {{ post.user.name }}
-      </nuxt-link>
-      <LikeBtnGroup
-        v-if="$auth.loggedIn"
-        class="float-right"
-        :post="post"
-      />
-    </v-card-text>
-  </v-card>
+            <v-carousel-item
+              v-for="(image, i) in post.images_data"
+              :key="i"
+              :src="image.url"
+              width="80%"
+            />
+          </v-carousel>
+          <div
+            class="mx-4 mt-5"
+          >
+            {{ post.content }}
+          </div>
+
+          <v-card-text
+            v-if="post.tags"
+            class="pb-0"
+          >
+            <v-chip-group
+              active-class="primary--text"
+              column
+            >
+              <v-chip
+                v-for="tag in post.tags"
+                :key="tag"
+                color="info"
+                outlined
+                small
+              >
+                <nuxt-link
+                  :to="{ path: `/tags/${tag.id}` }"
+                  style="color: inherit; text-decoration: none;"
+                >
+                  {{ tag.name }}
+                </nuxt-link>
+              </v-chip>
+            </v-chip-group>
+          </v-card-text>
+
+          <v-card-text class="py-0">
+            <LikeBtnGroup
+              v-if="$auth.loggedIn"
+              :post="post"
+            />
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -94,8 +127,24 @@ export default {
   },
   props: {
     post: {
-      type: Object,
+      type: [Object, String],
       default: () => {}
+    }
+  },
+  computed: {
+    studyHour () {
+      const time = new Date(this.post.study_time)
+      return time.getHours()
+    },
+    studyMinute () {
+      const time = new Date(this.post.study_time)
+      return time.getMinutes()
+    },
+    studyDate () {
+      const studyDate = this.post.study_date
+      const date = studyDate.substr(0, 16).split('T')[0].replace(/(\d{4})-(\d{2})-(\d{2})/, '$1年$2月$3日')
+      const time = studyDate.substr(0, 16).split('T')[1]
+      return date + ' ' + time
     }
   },
   methods: {
