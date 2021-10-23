@@ -1,5 +1,10 @@
 <template>
-  <HeaderContainer @click="onClick">
+  <v-app-bar app clipped-left color="amber lighten-2" dense fixed>
+    <v-toolbar-title>
+      <nuxt-link to="/" class="text--secondary text-decoration-none">
+        <h2>TIL</h2>
+      </nuxt-link>
+    </v-toolbar-title>
     <v-spacer />
 
     <keep-alive>
@@ -7,24 +12,17 @@
 
       <GuestHeader v-else />
     </keep-alive>
-  </HeaderContainer>
+  </v-app-bar>
 </template>
 
 <script>
-import HeaderContainer from '~/components/organisms/header/HeaderContainer'
 import LoginHeader from '~/components/organisms/header/LoginHeader'
 import GuestHeader from '~/components/organisms/header/GuestHeader'
 
 export default {
   components: {
-    HeaderContainer,
     LoginHeader,
     GuestHeader
-  },
-  methods: {
-    onClick () {
-      return this.$emit('click')
-    }
   }
 }
 </script>

@@ -34,10 +34,6 @@
 
       <v-divider />
 
-      <v-subheader>
-        アカウント
-      </v-subheader>
-
       <v-list-item
         v-if="$auth.user.admin"
         :to="{ path: '/admin' }"
@@ -52,17 +48,6 @@
         </v-list-item-title>
       </v-list-item>
 
-      <v-list-item :to="{ path: '/search' }">
-        <v-list-item-icon class="mr-2">
-          <v-icon size="22">
-            mdi-magnify
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-title>
-          検索
-        </v-list-item-title>
-      </v-list-item>
-
       <v-list-item :to="{ path: `/users/${$auth.user.id}` }">
         <v-list-item-icon class="mr-2">
           <v-icon size="22">
@@ -70,7 +55,7 @@
           </v-icon>
         </v-list-item-icon>
         <v-list-item-title>
-          プロフィール詳細
+          マイページ
         </v-list-item-title>
       </v-list-item>
 
@@ -81,18 +66,7 @@
           </v-icon>
         </v-list-item-icon>
         <v-list-item-title>
-          プロフィール編集
-        </v-list-item-title>
-      </v-list-item>
-
-      <v-list-item :to="{ path: '/notices' }">
-        <v-list-item-icon class="mr-2">
-          <v-icon size="22">
-            mdi-bell-outline
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-title>
-          通知
+          設定
         </v-list-item-title>
       </v-list-item>
 
